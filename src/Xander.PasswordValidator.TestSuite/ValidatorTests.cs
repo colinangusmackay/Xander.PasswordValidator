@@ -13,31 +13,31 @@ namespace Xander.PasswordValidator.TestSuite
     [SetUp]
     public void SetUp()
     {
-      validator = new Validator(8);
+      validator = new Validator(8, false);
     }
 
     [Test]
     public void Validate_1CharacterPassword_FailValidation()
     {
-      bool actualResult = validator.Validate("1");
+      var actualResult = validator.Validate("1");
 
-      Assert.AreEqual(false, actualResult);
+      Assert.AreEqual(ValidationResult.FailTooShort, actualResult);
     }
 
     [Test]
     public void Validate_10CharacterPassword_PassValidation()
     {
-      bool actualResult = validator.Validate("1234567890");
+      var actualResult = validator.Validate("1234567890");
 
-      Assert.AreEqual(true, actualResult);
+      Assert.AreEqual(ValidationResult.Success, actualResult);
     }
 
     [Test]
     public void Validate_8CharacterPassword_PassValidaton()
     {
-      bool actualResult = validator.Validate("12345678");
+      var actualResult = validator.Validate("12345678");
 
-      Assert.AreEqual(true, actualResult);
+      Assert.AreEqual(ValidationResult.Success, actualResult);
     }
 
     [Test]
@@ -47,6 +47,27 @@ namespace Xander.PasswordValidator.TestSuite
       PasswordValidationSection.Refresh();
       validator = new Validator();
       Assert.AreEqual(8, validator.MinPasswordLength);
+    }
+
+    [Test]
+    public void Validate_NeedsNumber_FailsValidation()
+    {
+      validator = new Validator(2, true);
+      Assert.AreEqual(ValidationResult.FailNumberRequired, validator.Validate("ab"));
+    }
+
+    [Test]
+    public void Validate_NeedsNumber_PassValidation()
+    {
+      validator = new Validator(2, true);
+      Assert.AreEqual(ValidationResult.Success, validator.Validate("z1"));
+    }
+
+    [Test]
+    public void Constructor_NeedsNumber_True()
+    {
+      validator = new Validator(2, true);
+      Assert.AreEqual(true, validator.NeedsNumber);
     }
   }
 }
