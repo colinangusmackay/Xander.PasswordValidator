@@ -6,6 +6,7 @@ namespace Xander.PasswordValidator.Config
   public class PasswordValidationSection : ConfigurationSection
   {
     private const string MinimumPasswordLengthKey = "minimumPasswordLength";
+    private const string NeedsNumberKey = "needsNumber";
     private const string SectionNameKey = "passwordValidation/rules";
 
     public static PasswordValidationSection Get()
@@ -33,6 +34,13 @@ namespace Xander.PasswordValidator.Config
     {
       get { return (int)this[MinimumPasswordLengthKey]; }
       set { this[MinimumPasswordLengthKey] = value; }
+    }
+
+    [ConfigurationProperty(NeedsNumberKey, DefaultValue = true, IsRequired = false)]
+    public bool NeedsNumber
+    {
+      get { return (bool) this[NeedsNumberKey]; }
+      set { this[NeedsNumberKey] = value; }
     }
   }
 }

@@ -7,6 +7,6 @@
   </configSections>
 
   <passwordValidation>
-    <rules minimumPasswordLength="12"/>
+    <rules minimumPasswordLength="12" needsNumber="false"/>
   </passwordValidation>
 </configuration>

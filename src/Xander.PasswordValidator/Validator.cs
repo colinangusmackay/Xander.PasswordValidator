@@ -17,6 +17,7 @@ namespace Xander.PasswordValidator
     {
       var config = PasswordValidationSection.Get();
       _minPasswordLength = config.MinimumPasswordLength;
+      _needsNumber = config.NeedsNumber;
     }
 
     public int MinPasswordLength

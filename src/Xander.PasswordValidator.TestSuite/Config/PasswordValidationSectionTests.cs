@@ -10,20 +10,20 @@ namespace Xander.PasswordValidator.TestSuite.Config
   public class PasswordValidationSectionTests
   {
     [Test]
-    public void MinimumPasswordLength_RoundtripValue()
-    {
-      var section = new PasswordValidationSection();
-      section.MinimumPasswordLength = 10;
-      Assert.AreEqual(10, section.MinimumPasswordLength);
-    }
-
-    [Test]
     [ExpectedException(ExpectedException = typeof(PasswordValidatorConfigException), ExpectedMessage = "The configuration file does not contain the section <passwordValidation/rules>")]
     public void Get_NoConfigFile_ThrowsException()
     {
       ConfigFileHelper.RemoveConfigFile();
       PasswordValidationSection.Refresh();
       var section = PasswordValidationSection.Get();
+    }
+    
+    [Test]
+    public void MinimumPasswordLength_RoundtripValue()
+    {
+      var section = new PasswordValidationSection();
+      section.MinimumPasswordLength = 10;
+      Assert.AreEqual(10, section.MinimumPasswordLength);
     }
 
     [Test]
@@ -34,5 +34,32 @@ namespace Xander.PasswordValidator.TestSuite.Config
       var config = PasswordValidationSection.Get();
       Assert.AreEqual(12, config.MinimumPasswordLength);
     }
+
+    [Test]
+    public void NeedsNumber_RoundtripValue()
+    {
+      var section = new PasswordValidationSection();
+      section.NeedsNumber = true;
+      Assert.AreEqual(true, section.NeedsNumber);
+    }
+
+    [Test]
+    public void NeedsNumber_DefaultsOnlyConfigFile_ValueIsTrue()
+    {
+      ConfigFileHelper.SetConfigFile(ConfigFiles.DefaultsOnlyConfigFile);
+      PasswordValidationSection.Refresh();
+      var config = PasswordValidationSection.Get();
+      Assert.AreEqual(true, config.NeedsNumber);
+    }
+
+    [Test]
+    public void NeedsNumber_BasicConfigFile_ValueIsFalse()
+    {
+      ConfigFileHelper.SetConfigFile(ConfigFiles.BasicConfigFile);
+      PasswordValidationSection.Refresh();
+      var config = PasswordValidationSection.Get();
+      Assert.AreEqual(false, config.NeedsNumber);
+    }
+  
   }
 }

@@ -66,7 +66,9 @@ namespace Xander.PasswordValidator.TestSuite
     [Test]
     public void Constructor_NeedsNumber_True()
     {
-      validator = new Validator(2, true);
+      ConfigFileHelper.SetConfigFile(ConfigFiles.DefaultsOnlyConfigFile);
+      PasswordValidationSection.Refresh();
+      validator = new Validator();
       Assert.AreEqual(true, validator.NeedsNumber);
     }
   }
