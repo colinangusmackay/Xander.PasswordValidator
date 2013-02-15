@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <configSections>
+    <sectionGroup name="passwordValidation">
+      <section name="rules" type="Xander.PasswordValidator.Config.PasswordValidationSection, Xander.PasswordValidator" allowLocation="true" allowDefinition="Everywhere"/>
+    </sectionGroup>
+  </configSections>
+
+  <!-- This file only has mandatory values to test that the defaults are being processed properly -->
+  <passwordValidation>
+    <rules/>
+  </passwordValidation>
+</configuration>

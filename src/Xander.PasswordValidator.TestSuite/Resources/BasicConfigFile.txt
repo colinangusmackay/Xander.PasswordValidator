@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <configSections>
+    <sectionGroup name="passwordValidation">
+      <section name="rules" type="Xander.PasswordValidator.Config.PasswordValidationSection, Xander.PasswordValidator" allowLocation="true" allowDefinition="Everywhere"/>
+    </sectionGroup>
+  </configSections>
+
+  <passwordValidation>
+    <rules minimumPasswordLength="12"/>
+  </passwordValidation>
+</configuration>
