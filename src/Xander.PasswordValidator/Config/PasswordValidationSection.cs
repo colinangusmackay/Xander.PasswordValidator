@@ -3,10 +3,11 @@ using Xander.PasswordValidator.Exceptions;
 
 namespace Xander.PasswordValidator.Config
 {
-  public class PasswordValidationSection : ConfigurationSection
+  public class PasswordValidationSection : ConfigurationSection, IPasswordValidationSettings
   {
     private const string MinimumPasswordLengthKey = "minimumPasswordLength";
     private const string NeedsNumberKey = "needsNumber";
+    private const string NeedsLetterKey = "needsLetter";
     private const string SectionNameKey = "passwordValidation/rules";
 
     public static PasswordValidationSection Get()
@@ -41,6 +42,13 @@ namespace Xander.PasswordValidator.Config
     {
       get { return (bool) this[NeedsNumberKey]; }
       set { this[NeedsNumberKey] = value; }
+    }
+
+    [ConfigurationProperty(NeedsLetterKey, DefaultValue = true, IsRequired = false)]
+    public bool NeedsLetter
+    {
+      get { return (bool) this[NeedsLetterKey]; }
+      set { this[NeedsLetterKey] = value; }
     }
   }
 }

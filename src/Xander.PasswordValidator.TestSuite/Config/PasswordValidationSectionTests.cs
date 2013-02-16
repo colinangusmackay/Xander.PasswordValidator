@@ -41,6 +41,8 @@ namespace Xander.PasswordValidator.TestSuite.Config
       var section = new PasswordValidationSection();
       section.NeedsNumber = true;
       Assert.AreEqual(true, section.NeedsNumber);
+      section.NeedsNumber = false;
+      Assert.AreEqual(false, section.NeedsNumber);
     }
 
     [Test]
@@ -60,6 +62,16 @@ namespace Xander.PasswordValidator.TestSuite.Config
       var config = PasswordValidationSection.Get();
       Assert.AreEqual(false, config.NeedsNumber);
     }
-  
+
+    [Test]
+    public void NeedsLetter_RoundtripValue()
+    {
+      var section = new PasswordValidationSection();
+      section.NeedsLetter = true;
+      Assert.AreEqual(true, section.NeedsLetter);
+      section.NeedsLetter = false;
+      Assert.AreEqual(false, section.NeedsLetter);
+    }
+
   }
 }

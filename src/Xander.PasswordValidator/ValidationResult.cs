@@ -4,6 +4,7 @@
   {
     Success,
     FailTooShort,
-    FailNumberRequired
+    FailNumberRequired,
+    FailLetterRequired
   }
 }

@@ -7,17 +7,18 @@ namespace Xander.PasswordValidator
   {
     private readonly int _minPasswordLength;
     private readonly bool _needsNumber;
-    public Validator(int minPasswordLength, bool needsNumber)
+    private readonly bool _needsLetter;
+
+    public Validator(IPasswordValidationSettings settings)
     {
-      _minPasswordLength = minPasswordLength;
-      _needsNumber = needsNumber;
+      _minPasswordLength = settings.MinimumPasswordLength;
+      _needsNumber = settings.NeedsNumber;
+      _needsLetter = settings.NeedsLetter;
     }
 
     public Validator()
+      : this(PasswordValidationSection.Get())
     {
-      var config = PasswordValidationSection.Get();
-      _minPasswordLength = config.MinimumPasswordLength;
-      _needsNumber = config.NeedsNumber;
     }
 
     public int MinPasswordLength
@@ -30,6 +31,11 @@ namespace Xander.PasswordValidator
       get { return _needsNumber; }
     }
 
+    public bool NeedsLetter
+    {
+      get { return _needsLetter; }
+    }
+
     public ValidationResult Validate(string password)
     {
       if (password.Length < _minPasswordLength)
@@ -37,6 +43,9 @@ namespace Xander.PasswordValidator
 
       if ((_needsNumber) && (!password.Any(char.IsDigit)))
         return ValidationResult.FailNumberRequired;
+
+      if ((_needsLetter) && (!password.Any(char.IsLetter)))
+        return ValidationResult.FailLetterRequired;
 
       return ValidationResult.Success;
     }
