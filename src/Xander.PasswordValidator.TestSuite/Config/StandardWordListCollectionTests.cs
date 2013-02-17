@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using NUnit.Framework;
@@ -107,6 +108,34 @@ namespace Xander.PasswordValidator.TestSuite.Config
         Assert.AreEqual(element.Value, destination[i], "i = " + i);
         i++;
       }
+    }
+
+    [Test]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void CopyTo_NoArrayPassed_ExceptionThrown()
+    {
+      var collection = new StandardWordListCollection();
+      collection.CopyTo(null, 0);
+    }
+
+    [Test]
+    [ExpectedException(typeof(ArgumentOutOfRangeException))]
+    public void CopyTo_ArrayIndexIsNegative_ExceptionThrown()
+    {
+      var collection = new StandardWordListCollection();
+      StandardWordList[] array = new StandardWordList[1];
+      collection.CopyTo(array, -1);
+    }
+
+    [Test]
+    [ExpectedException(typeof(ArgumentException))]
+    public void CopyTo_DestinationOverflow_ExceptionThrown()
+    {
+      var collection = new StandardWordListCollection();
+      collection.Add(StandardWordList.FemaleNames);
+      collection.Add(StandardWordList.MaleNames);
+      StandardWordList[] array = new StandardWordList[1];
+      collection.CopyTo(array, 0);
     }
   }
 }
