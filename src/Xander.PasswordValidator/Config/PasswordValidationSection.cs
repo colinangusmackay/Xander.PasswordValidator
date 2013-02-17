@@ -1,4 +1,6 @@
-﻿using System.Configuration;
+﻿using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
 using Xander.PasswordValidator.Exceptions;
 
 namespace Xander.PasswordValidator.Config
@@ -8,6 +10,7 @@ namespace Xander.PasswordValidator.Config
     private const string MinimumPasswordLengthKey = "minimumPasswordLength";
     private const string NeedsNumberKey = "needsNumber";
     private const string NeedsLetterKey = "needsLetter";
+    private const string StandardWordListsKey = "standardWordLists";
     private const string SectionNameKey = "passwordValidation/rules";
 
     public static PasswordValidationSection Get()
@@ -49,6 +52,18 @@ namespace Xander.PasswordValidator.Config
     {
       get { return (bool) this[NeedsLetterKey]; }
       set { this[NeedsLetterKey] = value; }
+    }
+
+    [ConfigurationProperty(StandardWordListsKey, IsRequired = false)]
+    public StandardWordListCollection StandardWordLists
+    {
+      get { return (StandardWordListCollection) base[StandardWordListsKey]; }
+      set { base[StandardWordListsKey] = value; }
+    }
+
+    ICollection<StandardWordList> IPasswordValidationSettings.StandardWordLists
+    {
+      get { return StandardWordLists; }
     }
   }
 }

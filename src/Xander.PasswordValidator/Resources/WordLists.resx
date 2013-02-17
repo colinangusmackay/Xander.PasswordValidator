@@ -118,16 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="AllWordsConfig" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>allwordsconfig.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="FemaleNames" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>FemaleNames.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="BasicConfigFile" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>basicconfigfile.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="MaleNames" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>MaleNames.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="DefaultsOnlyConfigFile" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>defaultsonlyconfigfile.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="MostCommon500Passwords" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>MostCommon500Passwords.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="EmptyConfigFiles" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>EmptyConfigFiles.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="Surnames" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Surnames.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
 </root>

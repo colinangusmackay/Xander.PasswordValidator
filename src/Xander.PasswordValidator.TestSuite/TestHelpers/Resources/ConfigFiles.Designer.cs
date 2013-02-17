@@ -70,7 +70,28 @@ namespace Xander.PasswordValidator.TestSuite.TestHelpers.Resources {
         ///  &lt;/configSections&gt;
         ///
         ///  &lt;passwordValidation&gt;
-        ///    &lt;rules minimumPasswordLength=&quot;12&quot;/&gt;
+        ///    &lt;rules minimumPasswordLength=&quot;12&quot; needsNumber=&quot;false&quot;/&gt;
+        ///    &lt;standardWordLists&gt;
+        ///      &lt;standardWordList value=&quot;FemaleNames&quot;/&gt;
+        ///      &lt;standard [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string AllWordsConfig {
+            get {
+                return ResourceManager.GetString("AllWordsConfig", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///&lt;configuration&gt;
+        ///  &lt;configSections&gt;
+        ///    &lt;sectionGroup name=&quot;passwordValidation&quot;&gt;
+        ///      &lt;section name=&quot;rules&quot; type=&quot;Xander.PasswordValidator.Config.PasswordValidationSection, Xander.PasswordValidator&quot; allowLocation=&quot;true&quot; allowDefinition=&quot;Everywhere&quot;/&gt;
+        ///    &lt;/sectionGroup&gt;
+        ///  &lt;/configSections&gt;
+        ///
+        ///  &lt;passwordValidation&gt;
+        ///    &lt;rules minimumPasswordLength=&quot;12&quot; needsNumber=&quot;false&quot;/&gt;
         ///  &lt;/passwordValidation&gt;
         ///&lt;/configuration&gt;.
         /// </summary>

@@ -8,6 +8,5 @@
 
   <!-- This file only has mandatory values to test that the defaults are being processed properly -->
   <passwordValidation>
-    <rules/>
   </passwordValidation>
 </configuration>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <configSections>
+    <sectionGroup name="passwordValidation">
+      <section name="rules" type="Xander.PasswordValidator.Config.PasswordValidationSection, Xander.PasswordValidator" allowLocation="true" allowDefinition="Everywhere"/>
+    </sectionGroup>
+  </configSections>
+
+  <passwordValidation>
+    <rules minimumPasswordLength="13" needsNumber="true" needsLetter="true">
+      <standardWordLists>
+        <add value="FemaleNames"/>
+        <add value="MaleNames"/>
+        <add value="MostCommon500Passwords"/>
+        <add value="Surnames"/>
+      </standardWordLists>
+    </rules>
+  </passwordValidation>
+</configuration>
