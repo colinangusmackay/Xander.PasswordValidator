@@ -40,6 +40,7 @@ namespace Xander.PasswordValidator.Config
     private const string NeedsNumberKey = "needsNumber";
     private const string NeedsLetterKey = "needsLetter";
     private const string StandardWordListsKey = "standardWordLists";
+    private const string CustomWordListsKey = "customWordLists";
     private const string SectionNameKey = "passwordValidation/rules";
 
     public static PasswordValidationSection Get()
@@ -94,5 +95,18 @@ namespace Xander.PasswordValidator.Config
     {
       get { return StandardWordLists; }
     }
+
+    [ConfigurationProperty(CustomWordListsKey, IsRequired = false)]
+    public CustomWordListCollection CustomWordLists
+    {
+      get { return (CustomWordListCollection)base[CustomWordListsKey]; }
+      set { base[CustomWordListsKey] = value; }
+    }
+
+    ICollection<string> IPasswordValidationSettings.CustomWordLists
+    {
+      get { return CustomWordLists; }
+    }
+
   }
 }

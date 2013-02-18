@@ -14,6 +14,10 @@
         <add value="MostCommon500Passwords"/>
         <add value="Surnames"/>
       </standardWordLists>
+      <customWordLists>
+        <add file="MyCustomWordList.txt" />
+        <add file="MyOtherCustomWordList.txt" />
+      </customWordLists>
     </rules>
   </passwordValidation>
 </configuration>

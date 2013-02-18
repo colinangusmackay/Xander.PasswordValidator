@@ -38,5 +38,6 @@ namespace Xander.PasswordValidator
     bool NeedsNumber { get; set; }
     bool NeedsLetter { get; set; }
     ICollection<StandardWordList> StandardWordLists { get; }
+    ICollection<string> CustomWordLists { get; }
   }
 }

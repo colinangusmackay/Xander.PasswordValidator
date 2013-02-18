@@ -28,27 +28,19 @@
  *****************************************************************************/
 #endregion
 
-using System.Collections.Generic;
+using System.Configuration;
 
-namespace Xander.PasswordValidator
+namespace Xander.PasswordValidator.Config
 {
-  public class PasswordValidationSettings : IPasswordValidationSettings
+  public class CustomWordListItem : ConfigurationElement
   {
-    public PasswordValidationSettings()
+    private const string ValueKey = "file";
+
+    [ConfigurationProperty(ValueKey, IsRequired = true, IsKey = true)]
+    public string File
     {
-      StandardWordLists = new List<StandardWordList>();
-      CustomWordLists = new List<string>();
+      get { return (string)base[ValueKey]; }
+      set { base[ValueKey] = value; }
     }
-    public int MinimumPasswordLength { get; set; }
-    public bool NeedsNumber { get; set; }
-    public bool NeedsLetter { get; set; }
-    public List<StandardWordList> StandardWordLists { get; private set; }
-    public List<string> CustomWordLists { get; private set; }
-
-    ICollection<StandardWordList> IPasswordValidationSettings.StandardWordLists
-    { get { return StandardWordLists; } }
-
-    ICollection<string> IPasswordValidationSettings.CustomWordLists
-    { get { return CustomWordLists; } }
   }
 }
