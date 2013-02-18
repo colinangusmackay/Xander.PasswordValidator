@@ -28,14 +28,46 @@
  *****************************************************************************/
 #endregion
 
-namespace Xander.PasswordValidator
+using System;
+using System.Linq;
+using System.Text;
+namespace Xander.PasswordValidator.Helpers
 {
-  public enum ValidationResult
+  public static class RegularExpressionBuilder
   {
-    Success,
-    FailTooShort,
-    FailNumberRequired,
-    FailLetterRequired,
-    FailFoundInStandardList
+    private const string controlCharacters=@".$^{[(|)*+?\";
+     public static string MatchPasswordExpression(string password)
+     {
+       if (password == null) throw new ArgumentNullException("password");
+
+       var sb = new StringBuilder();
+       AppendStartAnchor(sb);
+       AppendEscapedPassword(password, sb);
+       AppendEndAnchor(sb);
+       return sb.ToString();
+     }
+
+    private static void AppendEndAnchor(StringBuilder sb)
+    {
+      sb.Append("$");
+    }
+
+    private static void AppendStartAnchor(StringBuilder sb)
+    {
+      sb.Append("^");
+    }
+
+    private static void AppendEscapedPassword(string password, StringBuilder sb)
+    {
+      foreach (var c in password.Select(Escape))
+        sb.Append(c);
+    }
+
+    private static string Escape(char c)
+    {
+      if (controlCharacters.Any(cc => cc == c))
+        return "\\" + c;
+      return c.ToString();
+    }
   }
 }

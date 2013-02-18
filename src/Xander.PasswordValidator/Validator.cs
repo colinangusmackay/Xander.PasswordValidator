@@ -30,7 +30,9 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Xander.PasswordValidator.Config;
+using Xander.PasswordValidator.Helpers;
 
 namespace Xander.PasswordValidator
 {
@@ -85,7 +87,26 @@ namespace Xander.PasswordValidator
       if ((_needsLetter) && (!password.Any(char.IsLetter)))
         return ValidationResult.FailLetterRequired;
 
+      if (IsFoundInStandardWordList(password))
+        return ValidationResult.FailFoundInStandardList;
+
       return ValidationResult.Success;
+    }
+
+    private bool IsFoundInStandardWordList(string password)
+    {
+      if (_standardWordLists.Length > 0)
+      {
+        string pattern = RegularExpressionBuilder.MatchPasswordExpression(password);
+        var regex = new Regex(pattern, RegexOptions.IgnoreCase | RegexOptions.Multiline);
+        foreach (var standardWordList in _standardWordLists)
+        {
+          string wordList = StandardWordListRetriever.Retrieve(standardWordList);
+          if (regex.IsMatch(wordList))
+            return true;
+        }
+      }
+      return false;
     }
   }
 }

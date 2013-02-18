@@ -137,5 +137,47 @@ namespace Xander.PasswordValidator.TestSuite
       Assert.IsFalse(validator.StandardWordLists.Any());
     }
 
+    [Test]
+    public void Validate_StandardWordListFemaleNames_FailValidation()
+    {
+      var settings = new PasswordValidationSettings();
+      settings.StandardWordLists.Add(StandardWordList.FemaleNames);
+      var validator = new Validator(settings);
+      Assert.AreEqual(ValidationResult.FailFoundInStandardList, validator.Validate("CaTrIoNa"));
+    }
+
+    [Test]
+    public void Validate_AllStandardWordLists_FailValidation()
+    {
+      var settings = new PasswordValidationSettings();
+      settings.StandardWordLists.Add(StandardWordList.FemaleNames);
+      settings.StandardWordLists.Add(StandardWordList.MaleNames);
+      settings.StandardWordLists.Add(StandardWordList.Surnames);
+      settings.StandardWordLists.Add(StandardWordList.MostCommon500Passwords);
+      var validator = new Validator(settings);
+      Assert.AreEqual(ValidationResult.FailFoundInStandardList, validator.Validate("LetMeIn"));
+    }
+
+    [Test]
+    public void Validate_StandardWordListFemaleNames_PassValidation()
+    {
+      var settings = new PasswordValidationSettings();
+      settings.StandardWordLists.Add(StandardWordList.FemaleNames);
+      var validator = new Validator(settings);
+      Assert.AreEqual(ValidationResult.Success, validator.Validate("CoLiN"));
+    }
+
+    [Test]
+    public void Validate_AllStandardWordLists_PassValidation()
+    {
+      var settings = new PasswordValidationSettings();
+      settings.StandardWordLists.Add(StandardWordList.FemaleNames);
+      settings.StandardWordLists.Add(StandardWordList.MaleNames);
+      settings.StandardWordLists.Add(StandardWordList.Surnames);
+      settings.StandardWordLists.Add(StandardWordList.MostCommon500Passwords);
+      var validator = new Validator(settings);
+      Assert.AreEqual(ValidationResult.Success, validator.Validate("123ThisIsMyPassPhrase321"));
+    }
+  
   }
 }
