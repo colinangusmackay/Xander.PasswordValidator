@@ -61,6 +61,24 @@ namespace Xander.PasswordValidator.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copyright (C) 2013 Colin Angus Mackay
+        ///
+        ///Permission is hereby granted, free of charge, to any person obtaining a copy
+        ///of this software and associated documentation files (the &quot;Software&quot;), to 
+        ///deal in the Software without restriction, including without limitation the 
+        ///rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+        ///sell copies of the Software, and to permit persons to whom the Software is
+        ///furnished to do so, subject to the following conditions:
+        ///
+        ///The above copyright notice a [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string @__License_Information__ {
+            get {
+                return ResourceManager.GetString("__License_Information__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to aaren
         ///aarika
         ///aaron
