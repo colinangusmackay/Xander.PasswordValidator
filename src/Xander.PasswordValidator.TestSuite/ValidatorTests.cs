@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.Linq;
+using NUnit.Framework;
 using Xander.PasswordValidator.Config;
 using Xander.PasswordValidator.TestSuite.TestHelpers;
 using Xander.PasswordValidator.TestSuite.TestHelpers.Resources;
@@ -96,5 +97,15 @@ namespace Xander.PasswordValidator.TestSuite
       var validator = new Validator();
       Assert.AreEqual(true, validator.NeedsLetter);
     }
+
+    [Test]
+    public void Constructor_StandardWordLists_Empty()
+    {
+      ConfigFileHelper.SetConfigFile(ConfigFiles.DefaultsOnlyConfigFile);
+      PasswordValidationSection.Refresh();
+      var validator = new Validator();
+      Assert.IsFalse(validator.StandardWordLists.Any());
+    }
+
   }
 }

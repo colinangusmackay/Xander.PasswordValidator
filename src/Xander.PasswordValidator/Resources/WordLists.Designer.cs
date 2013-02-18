@@ -22,7 +22,7 @@ namespace Xander.PasswordValidator.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class WordLists {
+    public class WordLists {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Xander.PasswordValidator.Resources {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Xander.PasswordValidator.Resources.WordLists", typeof(WordLists).Assembly);
@@ -51,7 +51,7 @@ namespace Xander.PasswordValidator.Resources {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -140,7 +140,7 @@ namespace Xander.PasswordValidator.Resources {
         ///agnes
         ///agne [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string FemaleNames {
+        public static string FemaleNames {
             get {
                 return ResourceManager.GetString("FemaleNames", resourceCulture);
             }
@@ -229,7 +229,7 @@ namespace Xander.PasswordValidator.Resources {
         ///aldon
         ///ald [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string MaleNames {
+        public static string MaleNames {
             get {
                 return ResourceManager.GetString("MaleNames", resourceCulture);
             }
@@ -310,7 +310,7 @@ namespace Xander.PasswordValidator.Resources {
         ///fucker
         ///o [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string MostCommon500Passwords {
+        public static string MostCommon500Passwords {
             get {
                 return ResourceManager.GetString("MostCommon500Passwords", resourceCulture);
             }
@@ -381,7 +381,7 @@ namespace Xander.PasswordValidator.Resources {
         ///Agterberg
         ///A [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string Surnames {
+        public static string Surnames {
             get {
                 return ResourceManager.GetString("Surnames", resourceCulture);
             }

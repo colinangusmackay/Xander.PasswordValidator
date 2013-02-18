@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Xander.PasswordValidator.Config;
 
 namespace Xander.PasswordValidator
@@ -8,12 +9,14 @@ namespace Xander.PasswordValidator
     private readonly int _minPasswordLength;
     private readonly bool _needsNumber;
     private readonly bool _needsLetter;
+    private readonly StandardWordList[] _standardWordLists;
 
     public Validator(IPasswordValidationSettings settings)
     {
       _minPasswordLength = settings.MinimumPasswordLength;
       _needsNumber = settings.NeedsNumber;
       _needsLetter = settings.NeedsLetter;
+      _standardWordLists = settings.StandardWordLists.ToArray();
     }
 
     public Validator()
@@ -34,6 +37,11 @@ namespace Xander.PasswordValidator
     public bool NeedsLetter
     {
       get { return _needsLetter; }
+    }
+
+    public IEnumerable<StandardWordList> StandardWordLists
+    {
+      get { return _standardWordLists; }
     }
 
     public ValidationResult Validate(string password)
