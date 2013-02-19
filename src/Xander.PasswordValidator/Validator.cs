@@ -42,6 +42,7 @@ namespace Xander.PasswordValidator
     private readonly bool _needsNumber;
     private readonly bool _needsLetter;
     private readonly StandardWordList[] _standardWordLists;
+    private readonly string[] _customWordLists;
 
     public Validator(IPasswordValidationSettings settings)
     {
@@ -49,6 +50,7 @@ namespace Xander.PasswordValidator
       _needsNumber = settings.NeedsNumber;
       _needsLetter = settings.NeedsLetter;
       _standardWordLists = settings.StandardWordLists.ToArray();
+      _customWordLists = settings.CustomWordLists.ToArray();
     }
 
     public Validator()
@@ -76,6 +78,11 @@ namespace Xander.PasswordValidator
       get { return _standardWordLists; }
     }
 
+    public IEnumerable<string> CustomWordLists
+    {
+      get { return _customWordLists; }
+    }
+
     public ValidationResult Validate(string password)
     {
       if (password.Length < _minPasswordLength)
@@ -90,15 +97,32 @@ namespace Xander.PasswordValidator
       if (IsFoundInStandardWordList(password))
         return ValidationResult.FailFoundInStandardList;
 
+      if (IsFoundInCustomWordList(password))
+        return ValidationResult.FailFoundInCustomList;
+
       return ValidationResult.Success;
+    }
+
+    private bool IsFoundInCustomWordList(string password)
+    {
+      if (_customWordLists.Length > 0)
+      {
+        var regex = GetRegexForPassword(password);
+        foreach (string fileName in _customWordLists)
+        {
+          string wordList = CustomWordListRetriever.Retrieve(fileName);
+          if (regex.IsMatch(wordList))
+            return true;
+        }
+      }
+      return false;
     }
 
     private bool IsFoundInStandardWordList(string password)
     {
       if (_standardWordLists.Length > 0)
       {
-        string pattern = RegularExpressionBuilder.MatchPasswordExpression(password);
-        var regex = new Regex(pattern, RegexOptions.IgnoreCase | RegexOptions.Multiline);
+        var regex = GetRegexForPassword(password);
         foreach (var standardWordList in _standardWordLists)
         {
           string wordList = StandardWordListRetriever.Retrieve(standardWordList);
@@ -107,6 +131,13 @@ namespace Xander.PasswordValidator
         }
       }
       return false;
+    }
+
+    private static Regex GetRegexForPassword(string password)
+    {
+      string pattern = RegularExpressionBuilder.MatchPasswordExpression(password);
+      var regex = new Regex(pattern, RegexOptions.IgnoreCase | RegexOptions.Multiline);
+      return regex;
     }
   }
 }

@@ -39,6 +39,7 @@ namespace Xander.PasswordValidator.Helpers
       var resourceManager = WordLists.ResourceManager;
       var resourceName = standardWordList.ToString();
       var result = resourceManager.GetString(resourceName);
+      result = result.Replace("\r\n", "\n");
       return result;
     }
   }

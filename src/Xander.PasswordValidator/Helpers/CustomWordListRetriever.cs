@@ -28,15 +28,39 @@
  *****************************************************************************/
 #endregion
 
-namespace Xander.PasswordValidator
+using System;
+using System.IO;
+using Xander.PasswordValidator.Exceptions;
+
+namespace Xander.PasswordValidator.Helpers
 {
-  public enum ValidationResult
+  public static class CustomWordListRetriever
   {
-    Success,
-    FailTooShort,
-    FailNumberRequired,
-    FailLetterRequired,
-    FailFoundInStandardList,
-    FailFoundInCustomList
+    public static string Retrieve(string fileName)
+    {
+      if (fileName == null) throw new ArgumentNullException("fileName");
+      if (!File.Exists(fileName))
+        throw new FileNotFoundException("A file containing a custom list of prohibited passwords was not found.", fileName);
+
+      try
+      {
+        return RetrieveImpl(fileName);
+      }
+      catch (Exception ex)
+      {
+        throw new CustomValidationFileException("Unable to load the file containing the custom list of prohibited passwords.", fileName, ex);
+      }
+    }
+
+    private static string RetrieveImpl(string fileName)
+    {
+      using (var fileStream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
+      {
+        using (var reader = new StreamReader(fileStream))
+        {
+          return reader.ReadToEnd().Replace("\r\n","\n");
+        }
+      }
+    }
   }
 }

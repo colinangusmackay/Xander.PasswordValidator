@@ -1,2 +1,3 @@
-﻿YetAnotherInvalidPassword
+﻿SomeInvalidPassword
+YetAnotherInvalidPassword
 NopeStillIsNotValid

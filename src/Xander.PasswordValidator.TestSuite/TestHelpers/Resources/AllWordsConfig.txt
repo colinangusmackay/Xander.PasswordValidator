@@ -15,8 +15,8 @@
         <add value="Surnames"/>
       </standardWordLists>
       <customWordLists>
-        <add file="MyCustomWordList.txt" />
-        <add file="MyOtherCustomWordList.txt" />
+        <add file="TestHelpers/Files/MyCustomWordList.txt" />
+        <add file="TestHelpers/Files/MyOtherCustomWordList.txt" />
       </customWordLists>
     </rules>
   </passwordValidation>

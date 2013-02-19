@@ -178,6 +178,35 @@ namespace Xander.PasswordValidator.TestSuite
       var validator = new Validator(settings);
       Assert.AreEqual(ValidationResult.Success, validator.Validate("123ThisIsMyPassPhrase321"));
     }
-  
+
+    [Test]
+    public void Constructor_CustomWordLists_Empty()
+    {
+      ConfigFileHelper.SetConfigFile(ConfigFiles.DefaultsOnlyConfigFile);
+      PasswordValidationSection.Refresh();
+      var validator = new Validator();
+      Assert.IsFalse(validator.CustomWordLists.Any());
+    }
+
+    [Test]
+    public void Validate_CustomWordLists_FailValidation()
+    {
+      var settings = new PasswordValidationSettings();
+      settings.CustomWordLists.Add("TestHelpers\\Files\\MyCustomWordList.txt");
+      settings.CustomWordLists.Add("TestHelpers\\Files\\MyOtherCustomWordList.txt");
+      var validator = new Validator(settings);
+      Assert.AreEqual(ValidationResult.FailFoundInCustomList, validator.Validate("YetAnotherInvalidPassword"));
+    }
+
+    [Test]
+    public void Validate_CustomWordLists_PassValidation()
+    {
+      var settings = new PasswordValidationSettings();
+      settings.CustomWordLists.Add("TestHelpers\\Files\\MyCustomWordList.txt");
+      settings.CustomWordLists.Add("TestHelpers\\Files\\MyOtherCustomWordList.txt");
+      var validator = new Validator(settings);
+      Assert.AreEqual(ValidationResult.Success, validator.Validate("ThisPasswordWorks"));
+    }
+
   }
 }
