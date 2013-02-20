@@ -34,6 +34,7 @@ namespace Xander.PasswordValidator.Config
   public class WordListProcessOptionsElement : ConfigurationElement, IWordListProcessOptions
   {
     public const string CheckForNumberSuffixKey = "checkForNumberSuffix";
+    public const string CheckForDoubledUpWordKey = "checkForDoubledUpWord";
 
     [ConfigurationProperty(CheckForNumberSuffixKey)]
     public bool CheckForNumberSuffix
@@ -42,6 +43,11 @@ namespace Xander.PasswordValidator.Config
       set { base[CheckForNumberSuffixKey] = value; }
     }
 
-
+    [ConfigurationProperty(CheckForDoubledUpWordKey)]
+    public bool CheckForDoubledUpWord
+    {
+      get { return (bool)base[CheckForDoubledUpWordKey]; }
+      set { base[CheckForDoubledUpWordKey] = value; }
+    }
   }
 }

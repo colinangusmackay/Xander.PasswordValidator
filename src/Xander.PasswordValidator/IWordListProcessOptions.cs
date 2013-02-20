@@ -33,5 +33,6 @@ namespace Xander.PasswordValidator
   public interface IWordListProcessOptions
   {
     bool CheckForNumberSuffix { get; set; }
+    bool CheckForDoubledUpWord { get; set; }
   }
 }

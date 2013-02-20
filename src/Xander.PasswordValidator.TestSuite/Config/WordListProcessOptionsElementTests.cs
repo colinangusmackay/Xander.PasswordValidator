@@ -44,5 +44,14 @@ namespace Xander.PasswordValidator.TestSuite.Config
       element.CheckForNumberSuffix = true;
       Assert.IsTrue(element.CheckForNumberSuffix);
     }
+
+    [Test]
+    public void CheckForDoubledUpWord_RoundTrip()
+    {
+      WordListProcessOptionsElement element = new WordListProcessOptionsElement();
+      Assert.IsFalse(element.CheckForDoubledUpWord);
+      element.CheckForDoubledUpWord = true;
+      Assert.IsTrue(element.CheckForDoubledUpWord);
+    }
   }
 }

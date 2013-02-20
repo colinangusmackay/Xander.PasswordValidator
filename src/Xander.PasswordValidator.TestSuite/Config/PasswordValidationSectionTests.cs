@@ -49,6 +49,15 @@ namespace Xander.PasswordValidator.TestSuite.Config
       return config;
     }
     
+    private static PasswordValidationSection GetDefaultOnlyConfig()
+    {
+      string defaultOnlyConfig = ConfigFiles.DefaultsOnlyConfigFile;
+      ConfigFileHelper.SetConfigFile(defaultOnlyConfig);
+      PasswordValidationSection.Refresh();
+      var config = PasswordValidationSection.Get();
+      return config;
+    }
+
     [SetUp]
     public void SetUp()
     {
@@ -198,12 +207,9 @@ namespace Xander.PasswordValidator.TestSuite.Config
     }
 
     [Test]
-    void WordListProcessOptions_DefaultsOnlyConfig_DefaultOptions()
+    public void WordListProcessOptions_DefaultsOnlyConfig_CheckForNumberSuffixDefaultOption()
     {
-      string defaultOnlyConfig = ConfigFiles.DefaultsOnlyConfigFile;
-      ConfigFileHelper.SetConfigFile(defaultOnlyConfig);
-      PasswordValidationSection.Refresh();
-      var config = PasswordValidationSection.Get();
+      var config = GetDefaultOnlyConfig();
 
       Assert.IsNotNull(config.WordListProcessOptions);
 
@@ -211,11 +217,24 @@ namespace Xander.PasswordValidator.TestSuite.Config
     }
 
     [Test]
-    public void CheckForNumberSuffix_AllWordsConfig_IsTrue()
+    public void CheckForNumberSuffix_AllWordsConfig_CheckForNumberSuffixIsTrue()
     {
       var config = GetAllWordsConfig();
       Assert.IsTrue(config.WordListProcessOptions.CheckForNumberSuffix);
     }
 
+    [Test]
+    public void WordListProcessOptions_DefaultOnlyConfig_CheckForDoubledUpWordDefaultOption()
+    {
+      var config = GetDefaultOnlyConfig();
+      Assert.IsFalse(config.WordListProcessOptions.CheckForDoubledUpWord);
+    }
+
+    [Test]
+    public void WordListProcessOptions_AllWordsConfig_CheckForDoubledUpWordIsTrue()
+    {
+      var config = GetAllWordsConfig();
+      Assert.IsTrue(config.WordListProcessOptions.CheckForDoubledUpWord);
+    }
   }
 }

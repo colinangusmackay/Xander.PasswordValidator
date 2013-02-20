@@ -40,6 +40,7 @@ namespace Xander.PasswordValidator
     }
 
     public bool CheckForNumberSuffix { get; set; }
+    public bool CheckForDoubledUpWord { get; set; }
 
 
   }
