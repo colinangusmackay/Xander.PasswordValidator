@@ -32,6 +32,15 @@ namespace Xander.PasswordValidator
 {
   public class WordListProcessOptionsSettings : IWordListProcessOptions
   {
+    public static WordListProcessOptionsSettings Create(IWordListProcessOptions options)
+    {
+      var result = new WordListProcessOptionsSettings();
+      result.CheckForNumberSuffix = options.CheckForNumberSuffix;
+      return result;
+    }
+
     public bool CheckForNumberSuffix { get; set; }
+
+
   }
 }

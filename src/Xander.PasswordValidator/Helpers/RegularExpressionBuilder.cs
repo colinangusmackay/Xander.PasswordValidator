@@ -35,17 +35,42 @@ namespace Xander.PasswordValidator.Helpers
 {
   public static class RegularExpressionBuilder
   {
-    private const string controlCharacters=@".$^{[(|)*+?\";
-     public static string MatchPasswordExpression(string password)
-     {
-       if (password == null) throw new ArgumentNullException("password");
+    private const string controlCharacters = @".$^{[(|)*+?\";
 
-       var sb = new StringBuilder();
-       AppendStartAnchor(sb);
-       AppendEscapedPassword(password, sb);
-       AppendEndAnchor(sb);
-       return sb.ToString();
-     }
+    public static string MatchPasswordExpression(string password, WordListProcessOptionsSettings options)
+    {
+      if (password == null) throw new ArgumentNullException("password");
+      if (options == null) throw new ArgumentNullException("options");
+
+      string escapedPassword = EscapePassword(password);
+      var sb = new StringBuilder();
+      AppendStartAnchor(sb);
+      sb.Append(escapedPassword);
+      AppendCheckForPasswordWithNumberedSuffix(options, sb, escapedPassword);
+      AppendEndAnchor(sb);
+      return sb.ToString();
+    }
+
+    private static void AppendCheckForPasswordWithNumberedSuffix(WordListProcessOptionsSettings options, StringBuilder sb,
+                                                                 string escapedPassword)
+    {
+      if (options.CheckForNumberSuffix)
+      {
+        AppendOr(sb);
+        sb.Append(escapedPassword);
+        AppendNumber(sb);
+      }
+    }
+
+    private static void AppendNumber(StringBuilder sb)
+    {
+      sb.Append("[0-9]");
+    }
+
+    private static void AppendOr(StringBuilder sb)
+    {
+      sb.Append("|");
+    }
 
     private static void AppendEndAnchor(StringBuilder sb)
     {
@@ -55,6 +80,13 @@ namespace Xander.PasswordValidator.Helpers
     private static void AppendStartAnchor(StringBuilder sb)
     {
       sb.Append("^");
+    }
+
+    private static string EscapePassword(string password)
+    {
+      StringBuilder sb = new StringBuilder(password.Length);
+      AppendEscapedPassword(password, sb);
+      return sb.ToString();
     }
 
     private static void AppendEscapedPassword(string password, StringBuilder sb)
@@ -69,5 +101,6 @@ namespace Xander.PasswordValidator.Helpers
         return "\\" + c;
       return c.ToString();
     }
+
   }
 }

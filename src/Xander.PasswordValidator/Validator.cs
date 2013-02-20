@@ -43,6 +43,7 @@ namespace Xander.PasswordValidator
     private readonly bool _needsLetter;
     private readonly StandardWordList[] _standardWordLists;
     private readonly string[] _customWordLists;
+    private readonly WordListProcessOptionsSettings _wordListProcessOptions;
 
     public Validator(IPasswordValidationSettings settings)
     {
@@ -51,6 +52,7 @@ namespace Xander.PasswordValidator
       _needsLetter = settings.NeedsLetter;
       _standardWordLists = settings.StandardWordLists.ToArray();
       _customWordLists = settings.CustomWordLists.ToArray();
+      _wordListProcessOptions = WordListProcessOptionsSettings.Create(settings.WordListProcessOptions);
     }
 
     public Validator()
@@ -133,9 +135,9 @@ namespace Xander.PasswordValidator
       return false;
     }
 
-    private static Regex GetRegexForPassword(string password)
+    private Regex GetRegexForPassword(string password)
     {
-      string pattern = RegularExpressionBuilder.MatchPasswordExpression(password);
+      string pattern = RegularExpressionBuilder.MatchPasswordExpression(password, _wordListProcessOptions);
       var regex = new Regex(pattern, RegexOptions.IgnoreCase | RegexOptions.Multiline);
       return regex;
     }
