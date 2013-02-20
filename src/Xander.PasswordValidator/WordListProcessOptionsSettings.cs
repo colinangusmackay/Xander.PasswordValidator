@@ -28,17 +28,10 @@
  *****************************************************************************/
 #endregion
 
-using System.Collections.Generic;
-
 namespace Xander.PasswordValidator
 {
-  public interface IPasswordValidationSettings
+  public class WordListProcessOptionsSettings : IWordListProcessOptions
   {
-    int MinimumPasswordLength { get; set; }
-    bool NeedsNumber { get; set; }
-    bool NeedsLetter { get; set; }
-    ICollection<StandardWordList> StandardWordLists { get; }
-    ICollection<string> CustomWordLists { get; }
-    IWordListProcessOptions WordListProcessOptions { get; }
+    public bool CheckForNumberSuffix { get; set; }
   }
 }

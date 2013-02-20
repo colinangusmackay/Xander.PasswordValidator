@@ -28,17 +28,21 @@
  *****************************************************************************/
 #endregion
 
-using System.Collections.Generic;
+using NUnit.Framework;
+using Xander.PasswordValidator.Config;
 
-namespace Xander.PasswordValidator
+namespace Xander.PasswordValidator.TestSuite.Config
 {
-  public interface IPasswordValidationSettings
+  [TestFixture]
+  public class WordListProcessOptionsElementTests
   {
-    int MinimumPasswordLength { get; set; }
-    bool NeedsNumber { get; set; }
-    bool NeedsLetter { get; set; }
-    ICollection<StandardWordList> StandardWordLists { get; }
-    ICollection<string> CustomWordLists { get; }
-    IWordListProcessOptions WordListProcessOptions { get; }
+    [Test]
+    public void CheckForNumberSuffix_RoundTrip()
+    {
+      WordListProcessOptionsElement element = new WordListProcessOptionsElement();
+      Assert.IsFalse(element.CheckForNumberSuffix);
+      element.CheckForNumberSuffix = true;
+      Assert.IsTrue(element.CheckForNumberSuffix);
+    }
   }
 }

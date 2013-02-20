@@ -28,17 +28,20 @@
  *****************************************************************************/
 #endregion
 
-using System.Collections.Generic;
-
-namespace Xander.PasswordValidator
+using System.Configuration;
+namespace Xander.PasswordValidator.Config
 {
-  public interface IPasswordValidationSettings
+  public class WordListProcessOptionsElement : ConfigurationElement, IWordListProcessOptions
   {
-    int MinimumPasswordLength { get; set; }
-    bool NeedsNumber { get; set; }
-    bool NeedsLetter { get; set; }
-    ICollection<StandardWordList> StandardWordLists { get; }
-    ICollection<string> CustomWordLists { get; }
-    IWordListProcessOptions WordListProcessOptions { get; }
+    public const string CheckForNumberSuffixKey = "checkForNumberSuffix";
+
+    [ConfigurationProperty(CheckForNumberSuffixKey)]
+    public bool CheckForNumberSuffix
+    {
+      get { return (bool) base[CheckForNumberSuffixKey]; }
+      set { base[CheckForNumberSuffixKey] = value; }
+    }
+
+
   }
 }

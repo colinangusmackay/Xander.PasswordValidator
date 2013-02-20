@@ -1,4 +1,4 @@
-﻿#region Copyright notice
+#region Copyright notice
 /******************************************************************************
  * Copyright (C) 2013 Colin Angus Mackay
  * 
@@ -28,17 +28,10 @@
  *****************************************************************************/
 #endregion
 
-using System.Collections.Generic;
-
 namespace Xander.PasswordValidator
 {
-  public interface IPasswordValidationSettings
+  public interface IWordListProcessOptions
   {
-    int MinimumPasswordLength { get; set; }
-    bool NeedsNumber { get; set; }
-    bool NeedsLetter { get; set; }
-    ICollection<StandardWordList> StandardWordLists { get; }
-    ICollection<string> CustomWordLists { get; }
-    IWordListProcessOptions WordListProcessOptions { get; }
+    bool CheckForNumberSuffix { get; set; }
   }
 }

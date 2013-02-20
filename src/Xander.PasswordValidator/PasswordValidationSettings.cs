@@ -38,12 +38,15 @@ namespace Xander.PasswordValidator
     {
       StandardWordLists = new List<StandardWordList>();
       CustomWordLists = new List<string>();
+      WordListProcessOptions = new WordListProcessOptionsSettings();
     }
     public int MinimumPasswordLength { get; set; }
     public bool NeedsNumber { get; set; }
     public bool NeedsLetter { get; set; }
     public List<StandardWordList> StandardWordLists { get; private set; }
     public List<string> CustomWordLists { get; private set; }
+
+    public IWordListProcessOptions WordListProcessOptions { get; private set; }
 
     ICollection<StandardWordList> IPasswordValidationSettings.StandardWordLists
     { get { return StandardWordLists; } }

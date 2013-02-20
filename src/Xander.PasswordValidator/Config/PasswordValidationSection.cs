@@ -41,6 +41,7 @@ namespace Xander.PasswordValidator.Config
     private const string NeedsLetterKey = "needsLetter";
     private const string StandardWordListsKey = "standardWordLists";
     private const string CustomWordListsKey = "customWordLists";
+    private const string WordListProcessOptionsKey = "wordListProcessOptions";
     private const string SectionNameKey = "passwordValidation/rules";
 
     public static PasswordValidationSection Get()
@@ -108,5 +109,16 @@ namespace Xander.PasswordValidator.Config
       get { return CustomWordLists; }
     }
 
+    [ConfigurationProperty(WordListProcessOptionsKey)]
+    public WordListProcessOptionsElement WordListProcessOptions
+    {
+      get { return (WordListProcessOptionsElement) base[WordListProcessOptionsKey]; }
+      set { base[WordListProcessOptionsKey] = value; }
+    }
+
+    IWordListProcessOptions IPasswordValidationSettings.WordListProcessOptions
+    {
+      get { return this.WordListProcessOptions; }
+    }
   }
 }

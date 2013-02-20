@@ -166,5 +166,24 @@ namespace Xander.PasswordValidator.TestSuite.Config
       string[] array = new string[1];
       collection.CopyTo(array, 0);
     }
+
+    [Test]
+    public void Contains_file1_True()
+    {
+      var collection = new CustomWordListCollection();
+      collection.Add("file1.txt");
+      collection.Add("file2.txt");
+      Assert.IsTrue(collection.Contains("file1.txt"));
+    }
+
+    [Test]
+    public void Contains_file3_False()
+    {
+      var collection = new CustomWordListCollection();
+      collection.Add("file1.txt");
+      collection.Add("file2.txt");
+      Assert.IsFalse(collection.Contains("file3.txt"));
+    }
+
   }
 }

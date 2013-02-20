@@ -39,6 +39,16 @@ namespace Xander.PasswordValidator.TestSuite.Config
   [TestFixture]
   public class PasswordValidationSectionTests
   {
+
+    private static PasswordValidationSection GetAllWordsConfig()
+    {
+      string allWordsConfig = ConfigFiles.AllWordsConfig;
+      ConfigFileHelper.SetConfigFile(allWordsConfig);
+      PasswordValidationSection.Refresh();
+      var config = PasswordValidationSection.Get();
+      return config;
+    }
+    
     [SetUp]
     public void SetUp()
     {
@@ -139,10 +149,7 @@ namespace Xander.PasswordValidator.TestSuite.Config
     [Test]
     public void StandardWordLists_AllWordsConfig_FullComplimentOfWordLists()
     {
-      string allWordsConfig = ConfigFiles.AllWordsConfig;
-      ConfigFileHelper.SetConfigFile(allWordsConfig);
-      PasswordValidationSection.Refresh();
-      var config = PasswordValidationSection.Get();
+      var config = GetAllWordsConfig();
       StandardWordListCollection standardWordListCollection = config.StandardWordLists;
       Assert.AreEqual(4, standardWordListCollection.Count);
 
@@ -151,5 +158,64 @@ namespace Xander.PasswordValidator.TestSuite.Config
       Assert.IsTrue(standardWordListCollection.Contains(StandardWordList.MostCommon500Passwords));
       Assert.IsTrue(standardWordListCollection.Contains(StandardWordList.Surnames));
     }
+
+
+    [Test]
+    public void CustomWordLists_RoundTripValue()
+    {
+      var section = new PasswordValidationSection();
+      var collection = new CustomWordListCollection();
+      Assert.AreNotSame(collection, section.CustomWordLists);
+      section.CustomWordLists = collection;
+      Assert.AreSame(collection, section.CustomWordLists);
+    }
+
+    [Test]
+    public void InterfaceCustomLists_RoundtripValue()
+    {
+      var section = new PasswordValidationSection();
+      IPasswordValidationSettings iSection = section;
+      var collection = new CustomWordListCollection();
+      Assert.AreNotSame(collection, iSection.CustomWordLists);
+      section.CustomWordLists = collection;
+      Assert.AreSame(collection, iSection.CustomWordLists);
+    }
+
+
+    [Test]
+    public void WordListProcessOptions_RoundtripValue()
+    {
+      var value = new WordListProcessOptionsElement();
+      var section = new PasswordValidationSection();
+      section.WordListProcessOptions = value;
+
+      // Through the regular getter
+      Assert.AreSame(value, section.WordListProcessOptions);
+
+      // Through the expicit interface getter
+      var options = ((IPasswordValidationSettings) section).WordListProcessOptions;
+      Assert.AreSame(value, options);
+    }
+
+    [Test]
+    void WordListProcessOptions_DefaultsOnlyConfig_DefaultOptions()
+    {
+      string defaultOnlyConfig = ConfigFiles.DefaultsOnlyConfigFile;
+      ConfigFileHelper.SetConfigFile(defaultOnlyConfig);
+      PasswordValidationSection.Refresh();
+      var config = PasswordValidationSection.Get();
+
+      Assert.IsNotNull(config.WordListProcessOptions);
+
+      Assert.IsFalse(config.WordListProcessOptions.CheckForNumberSuffix);
+    }
+
+    [Test]
+    public void CheckForNumberSuffix_AllWordsConfig_IsTrue()
+    {
+      var config = GetAllWordsConfig();
+      Assert.IsTrue(config.WordListProcessOptions.CheckForNumberSuffix);
+    }
+
   }
 }

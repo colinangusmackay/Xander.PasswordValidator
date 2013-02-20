@@ -8,6 +8,7 @@
 
   <passwordValidation>
     <rules minimumPasswordLength="13" needsNumber="true" needsLetter="true">
+      <wordListProcessOptions checkForNumberSuffix="true"/>
       <standardWordLists>
         <add value="FemaleNames"/>
         <add value="MaleNames"/>
