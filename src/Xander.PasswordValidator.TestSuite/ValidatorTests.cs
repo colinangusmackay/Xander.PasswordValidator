@@ -208,5 +208,24 @@ namespace Xander.PasswordValidator.TestSuite
       Assert.AreEqual(ValidationResult.Success, validator.Validate("ThisPasswordWorks"));
     }
 
+    [Test]
+    public void Validate_AllWordsWithDoubledPassword_FailValidation()
+    {
+      ConfigFileHelper.SetConfigFile(ConfigFiles.AllWordsConfig);
+      PasswordValidationSection.Refresh();
+      var validator = new Validator();
+      var result = validator.Validate("Zachariah123Zachariah123");
+      Assert.AreEqual(ValidationResult.FailFoundInCustomList, result);
+    }
+
+    [Test]
+    public void Validate_AllWordsWithDoubledPassword_PassValidation()
+    {
+      ConfigFileHelper.SetConfigFile(ConfigFiles.AllWordsConfig);
+      PasswordValidationSection.Refresh();
+      var validator = new Validator();
+      var result = validator.Validate("Zachariah456Zachariah456");
+      Assert.AreEqual(ValidationResult.Success, result);
+    }
   }
 }

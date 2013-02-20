@@ -65,8 +65,36 @@ namespace Xander.PasswordValidator.Helpers
       AppendStartAnchor();
       AppendEscapedPassword();
       AppendCheckForPasswordWithNumberedSuffix();
+      AppendCheckForDoubledUpWord();
       AppendEndAnchor();
       return _sb.ToString();
+    }
+
+    private void AppendCheckForDoubledUpWord()
+    {
+      if ((_options.CheckForDoubledUpWord) && (IsPasswordDoubledUp))
+      {
+        AppendOr();
+        string firstHalf = GetFirstHalfOfPassword();
+        string escapedHalf = BuildEscapedString(firstHalf);
+        _sb.Append(escapedHalf);
+      }
+    }
+
+    private bool IsPasswordDoubledUp
+    {
+      get
+      {
+        if (_password.Length%2 == 1)
+          return false;
+        string firstHalf = GetFirstHalfOfPassword();
+        return (_password.EndsWith(firstHalf));
+      }
+    }
+
+    private string GetFirstHalfOfPassword()
+    {
+      return _password.Substring(0, _password.Length/2);
     }
 
     private void AppendCheckForPasswordWithNumberedSuffix()
@@ -101,8 +129,13 @@ namespace Xander.PasswordValidator.Helpers
 
     private string GetEscapedPassword()
     {
-      var sb = new StringBuilder(_password.Length);
-      foreach (var c in _password.Select(Escape))
+      return BuildEscapedString(_password);
+    }
+
+    private static string BuildEscapedString(string value)
+    {
+      var sb = new StringBuilder(value.Length);
+      foreach (var c in value.Select(Escape))
         sb.Append(c);
       return sb.ToString();
     }

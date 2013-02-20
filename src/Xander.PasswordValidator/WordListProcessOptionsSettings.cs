@@ -36,6 +36,7 @@ namespace Xander.PasswordValidator
     {
       var result = new WordListProcessOptionsSettings();
       result.CheckForNumberSuffix = options.CheckForNumberSuffix;
+      result.CheckForDoubledUpWord = options.CheckForDoubledUpWord;
       return result;
     }
 

@@ -102,12 +102,41 @@ namespace Xander.PasswordValidator.TestSuite.Helpers
     }
 
     [Test]
-    public void BuildPasswordExpression__ValidRegularExpression()
+    public void BuildPasswordExpression_NumberSuffixOptionOn_ValidRegularExpression()
     {
       var options = new WordListProcessOptionsSettings();
       options.CheckForNumberSuffix = true;
       var result = RegularExpressionBuilder.MatchPasswordExpression("MyPassword", options);
       Assert.AreEqual("^MyPassword|MyPassword[0-9]$", result);
+    }
+
+    [Test]
+    public void BuildPasswordExpression_DoubledUpWordOptionOnWithDoubledUpWord_ValidRegularExpression()
+    {
+      var options = new WordListProcessOptionsSettings();
+      options.CheckForDoubledUpWord = true;
+      var result = RegularExpressionBuilder.MatchPasswordExpression("PasswordPassword", options);
+      Assert.AreEqual("^PasswordPassword|Password$", result);
+    }
+
+    [Test]
+    public void BuildPasswordExpression_DoubledUpWordOptionOnWithoutDoubledUpWord_ValidRegularExpression()
+    {
+      var options = new WordListProcessOptionsSettings();
+      options.CheckForDoubledUpWord = true;
+      var result = RegularExpressionBuilder.MatchPasswordExpression("ThePassword", options);
+      Assert.AreEqual("^ThePassword$", result);
+    }
+    
+    [Test]
+    public void BuildPasswordExpression_AllOptionsOn_ValidRegularExpression()
+    {
+      var options = new WordListProcessOptionsSettings();
+      options.CheckForNumberSuffix = true;
+      options.CheckForDoubledUpWord = true;
+      var result = RegularExpressionBuilder.MatchPasswordExpression("PasswordPassword", options);
+      string expected = "^PasswordPassword|PasswordPassword[0-9]|Password$";
+      Assert.AreEqual(expected, result);
     }
   }
 }
