@@ -33,66 +33,78 @@ using System.Linq;
 using System.Text;
 namespace Xander.PasswordValidator.Helpers
 {
-  public static class RegularExpressionBuilder
+  public class RegularExpressionBuilder
   {
     private const string controlCharacters = @".$^{[(|)*+?\";
+    private readonly string _password;
+    private string _escapedPassword;
+    private readonly WordListProcessOptionsSettings _options;
+    private StringBuilder _sb;
+
 
     public static string MatchPasswordExpression(string password, WordListProcessOptionsSettings options)
     {
       if (password == null) throw new ArgumentNullException("password");
       if (options == null) throw new ArgumentNullException("options");
 
-      string escapedPassword = EscapePassword(password);
-      var sb = new StringBuilder();
-      AppendStartAnchor(sb);
-      sb.Append(escapedPassword);
-      AppendCheckForPasswordWithNumberedSuffix(options, sb, escapedPassword);
-      AppendEndAnchor(sb);
-      return sb.ToString();
+      var reb = new RegularExpressionBuilder(password, options);
+      var result = reb.MatchPasswordExpression();
+      return result;
     }
 
-    private static void AppendCheckForPasswordWithNumberedSuffix(WordListProcessOptionsSettings options, StringBuilder sb,
-                                                                 string escapedPassword)
+    private RegularExpressionBuilder(string password, WordListProcessOptionsSettings options)
     {
-      if (options.CheckForNumberSuffix)
+      _password = password;
+      _options = options;
+    }
+
+    private string MatchPasswordExpression()
+    {
+      _escapedPassword = GetEscapedPassword();
+      _sb = new StringBuilder();
+      AppendStartAnchor();
+      AppendEscapedPassword();
+      AppendCheckForPasswordWithNumberedSuffix();
+      AppendEndAnchor();
+      return _sb.ToString();
+    }
+
+    private void AppendCheckForPasswordWithNumberedSuffix()
+    {
+      if (_options.CheckForNumberSuffix)
       {
-        AppendOr(sb);
-        sb.Append(escapedPassword);
-        AppendNumber(sb);
+        AppendOr();
+        AppendEscapedPassword();
+        AppendNumber();
       }
     }
 
-    private static void AppendNumber(StringBuilder sb)
+    private void AppendNumber()
     {
-      sb.Append("[0-9]");
+      _sb.Append("[0-9]");
     }
 
-    private static void AppendOr(StringBuilder sb)
+    private void AppendOr()
     {
-      sb.Append("|");
+      _sb.Append("|");
     }
 
-    private static void AppendEndAnchor(StringBuilder sb)
+    private void AppendEndAnchor()
     {
-      sb.Append("$");
+      _sb.Append("$");
     }
 
-    private static void AppendStartAnchor(StringBuilder sb)
+    private void AppendStartAnchor()
     {
-      sb.Append("^");
+      _sb.Append("^");
     }
 
-    private static string EscapePassword(string password)
+    private string GetEscapedPassword()
     {
-      StringBuilder sb = new StringBuilder(password.Length);
-      AppendEscapedPassword(password, sb);
-      return sb.ToString();
-    }
-
-    private static void AppendEscapedPassword(string password, StringBuilder sb)
-    {
-      foreach (var c in password.Select(Escape))
+      var sb = new StringBuilder(_password.Length);
+      foreach (var c in _password.Select(Escape))
         sb.Append(c);
+      return sb.ToString();
     }
 
     private static string Escape(char c)
@@ -102,5 +114,9 @@ namespace Xander.PasswordValidator.Helpers
       return c.ToString();
     }
 
+    private void AppendEscapedPassword()
+    {
+      _sb.Append(_escapedPassword);
+    }
   }
 }
