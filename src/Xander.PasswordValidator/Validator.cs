@@ -52,24 +52,21 @@ namespace Xander.PasswordValidator
     {
     }
 
-    public ValidationResult Validate(string password)
+    public bool Validate(string password)
     {
       if (!_validationHandler.Validate(password))
-        return ValidationResult.FailTooShort;
-
-      if ((_settings.NeedsNumber) && (!password.Any(char.IsDigit)))
-        return ValidationResult.FailNumberRequired;
+        return false;
 
       if ((_settings.NeedsLetter) && (!password.Any(char.IsLetter)))
-        return ValidationResult.FailLetterRequired;
+        return false;
 
       if (IsFoundInStandardWordList(password))
-        return ValidationResult.FailFoundInStandardList;
+        return false;
 
       if (IsFoundInCustomWordList(password))
-        return ValidationResult.FailFoundInCustomList;
+        return false;
 
-      return ValidationResult.Success;
+      return true;
     }
 
     private bool IsFoundInCustomWordList(string password)

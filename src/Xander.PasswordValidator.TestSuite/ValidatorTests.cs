@@ -46,7 +46,7 @@ namespace Xander.PasswordValidator.TestSuite
       var validator = new Validator(settings);
       var actualResult = validator.Validate("1");
 
-      Assert.AreEqual(ValidationResult.FailTooShort, actualResult);
+      Assert.IsFalse(actualResult);
     }
 
     [Test]
@@ -56,7 +56,7 @@ namespace Xander.PasswordValidator.TestSuite
       var validator = new Validator(settings);
       var actualResult = validator.Validate("1234567890");
 
-      Assert.AreEqual(ValidationResult.Success, actualResult);
+      Assert.IsTrue(actualResult);
     }
 
     [Test]
@@ -66,7 +66,7 @@ namespace Xander.PasswordValidator.TestSuite
       var validator = new Validator(settings);
       var actualResult = validator.Validate("12345678");
 
-      Assert.AreEqual(ValidationResult.Success, actualResult);
+      Assert.IsTrue(actualResult);
     }
 
     [Test]
@@ -74,7 +74,7 @@ namespace Xander.PasswordValidator.TestSuite
     {
       var settings = new PasswordValidationSettings { MinimumPasswordLength = 2, NeedsNumber = true};
       var validator = new Validator(settings);
-      Assert.AreEqual(ValidationResult.FailNumberRequired, validator.Validate("ab"));
+      Assert.IsFalse(validator.Validate("ab"));
     }
 
     [Test]
@@ -82,7 +82,7 @@ namespace Xander.PasswordValidator.TestSuite
     {
       var settings = new PasswordValidationSettings { MinimumPasswordLength = 2, NeedsNumber = true };
       var validator = new Validator(settings);
-      Assert.AreEqual(ValidationResult.Success, validator.Validate("z1"));
+      Assert.IsTrue(validator.Validate("z1"));
     }
 
     [Test]
@@ -90,7 +90,7 @@ namespace Xander.PasswordValidator.TestSuite
     {
       var settings = new PasswordValidationSettings { MinimumPasswordLength = 2, NeedsLetter = true };
       var validator = new Validator(settings);
-      Assert.AreEqual(ValidationResult.FailLetterRequired, validator.Validate("12"));
+      Assert.IsFalse(validator.Validate("12"));
     }
 
     [Test]
@@ -98,7 +98,7 @@ namespace Xander.PasswordValidator.TestSuite
     {
       var settings = new PasswordValidationSettings { MinimumPasswordLength = 2, NeedsLetter = true };
       var validator = new Validator(settings);
-      Assert.AreEqual(ValidationResult.Success, validator.Validate("Z1"));
+      Assert.IsTrue(validator.Validate("Z1"));
     }
 
     [Test]
@@ -107,7 +107,7 @@ namespace Xander.PasswordValidator.TestSuite
       var settings = new PasswordValidationSettings();
       settings.StandardWordLists.Add(StandardWordList.FemaleNames);
       var validator = new Validator(settings);
-      Assert.AreEqual(ValidationResult.FailFoundInStandardList, validator.Validate("CaTrIoNa"));
+      Assert.IsFalse(validator.Validate("CaTrIoNa"));
     }
 
     [Test]
@@ -119,7 +119,7 @@ namespace Xander.PasswordValidator.TestSuite
       settings.StandardWordLists.Add(StandardWordList.Surnames);
       settings.StandardWordLists.Add(StandardWordList.MostCommon500Passwords);
       var validator = new Validator(settings);
-      Assert.AreEqual(ValidationResult.FailFoundInStandardList, validator.Validate("LetMeIn"));
+      Assert.IsFalse(validator.Validate("LetMeIn"));
     }
 
     [Test]
@@ -128,7 +128,7 @@ namespace Xander.PasswordValidator.TestSuite
       var settings = new PasswordValidationSettings();
       settings.StandardWordLists.Add(StandardWordList.FemaleNames);
       var validator = new Validator(settings);
-      Assert.AreEqual(ValidationResult.Success, validator.Validate("CoLiN"));
+      Assert.IsTrue(validator.Validate("CoLiN"));
     }
 
     [Test]
@@ -140,7 +140,7 @@ namespace Xander.PasswordValidator.TestSuite
       settings.StandardWordLists.Add(StandardWordList.Surnames);
       settings.StandardWordLists.Add(StandardWordList.MostCommon500Passwords);
       var validator = new Validator(settings);
-      Assert.AreEqual(ValidationResult.Success, validator.Validate("123ThisIsMyPassPhrase321"));
+      Assert.IsTrue(validator.Validate("123ThisIsMyPassPhrase321"));
     }
 
     [Test]
@@ -150,7 +150,7 @@ namespace Xander.PasswordValidator.TestSuite
       settings.CustomWordLists.Add("TestHelpers\\Files\\MyCustomWordList.txt");
       settings.CustomWordLists.Add("TestHelpers\\Files\\MyOtherCustomWordList.txt");
       var validator = new Validator(settings);
-      Assert.AreEqual(ValidationResult.FailFoundInCustomList, validator.Validate("YetAnotherInvalidPassword"));
+      Assert.IsFalse(validator.Validate("YetAnotherInvalidPassword"));
     }
 
     [Test]
@@ -160,7 +160,7 @@ namespace Xander.PasswordValidator.TestSuite
       settings.CustomWordLists.Add("TestHelpers\\Files\\MyCustomWordList.txt");
       settings.CustomWordLists.Add("TestHelpers\\Files\\MyOtherCustomWordList.txt");
       var validator = new Validator(settings);
-      Assert.AreEqual(ValidationResult.Success, validator.Validate("ThisPasswordWorks"));
+      Assert.IsTrue(validator.Validate("ThisPasswordWorks"));
     }
 
     [Test]
@@ -170,7 +170,7 @@ namespace Xander.PasswordValidator.TestSuite
       PasswordValidationSection.Refresh();
       var validator = new Validator();
       var result = validator.Validate("Zachariah123Zachariah123");
-      Assert.AreEqual(ValidationResult.FailFoundInCustomList, result);
+      Assert.IsFalse(result);
     }
 
     [Test]
@@ -180,7 +180,7 @@ namespace Xander.PasswordValidator.TestSuite
       PasswordValidationSection.Refresh();
       var validator = new Validator();
       var result = validator.Validate("Zachariah456Zachariah456");
-      Assert.AreEqual(ValidationResult.Success, result);
+      Assert.IsTrue(result);
     }
   }
 }
