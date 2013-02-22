@@ -70,15 +70,6 @@ namespace Xander.PasswordValidator.TestSuite
     }
 
     [Test]
-    public void Constructor_MinPasswordLength_8Characters()
-    {
-      ConfigFileHelper.SetConfigFile(ConfigFiles.DefaultsOnlyConfigFile);
-      PasswordValidationSection.Refresh();
-      var validator = new Validator();
-      Assert.AreEqual(8, validator.MinPasswordLength);
-    }
-
-    [Test]
     public void Validate_NeedsNumber_FailsValidation()
     {
       var settings = new PasswordValidationSettings { MinimumPasswordLength = 2, NeedsNumber = true};
@@ -95,15 +86,6 @@ namespace Xander.PasswordValidator.TestSuite
     }
 
     [Test]
-    public void Constructor_NeedsNumber_True()
-    {
-      ConfigFileHelper.SetConfigFile(ConfigFiles.DefaultsOnlyConfigFile);
-      PasswordValidationSection.Refresh();
-      var validator = new Validator();
-      Assert.AreEqual(true, validator.NeedsNumber);
-    }
-
-    [Test]
     public void Validate_NeedsLetter_FailsValidation()
     {
       var settings = new PasswordValidationSettings { MinimumPasswordLength = 2, NeedsLetter = true };
@@ -117,24 +99,6 @@ namespace Xander.PasswordValidator.TestSuite
       var settings = new PasswordValidationSettings { MinimumPasswordLength = 2, NeedsLetter = true };
       var validator = new Validator(settings);
       Assert.AreEqual(ValidationResult.Success, validator.Validate("Z1"));
-    }
-
-    [Test]
-    public void Constructor_NeedsLetter_True()
-    {
-      ConfigFileHelper.SetConfigFile(ConfigFiles.DefaultsOnlyConfigFile);
-      PasswordValidationSection.Refresh();
-      var validator = new Validator();
-      Assert.AreEqual(true, validator.NeedsLetter);
-    }
-
-    [Test]
-    public void Constructor_StandardWordLists_Empty()
-    {
-      ConfigFileHelper.SetConfigFile(ConfigFiles.DefaultsOnlyConfigFile);
-      PasswordValidationSection.Refresh();
-      var validator = new Validator();
-      Assert.IsFalse(validator.StandardWordLists.Any());
     }
 
     [Test]
@@ -177,15 +141,6 @@ namespace Xander.PasswordValidator.TestSuite
       settings.StandardWordLists.Add(StandardWordList.MostCommon500Passwords);
       var validator = new Validator(settings);
       Assert.AreEqual(ValidationResult.Success, validator.Validate("123ThisIsMyPassPhrase321"));
-    }
-
-    [Test]
-    public void Constructor_CustomWordLists_Empty()
-    {
-      ConfigFileHelper.SetConfigFile(ConfigFiles.DefaultsOnlyConfigFile);
-      PasswordValidationSection.Refresh();
-      var validator = new Validator();
-      Assert.IsFalse(validator.CustomWordLists.Any());
     }
 
     [Test]

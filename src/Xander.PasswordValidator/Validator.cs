@@ -28,7 +28,6 @@
  *****************************************************************************/
 #endregion
 
-using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Xander.PasswordValidator.Config;
@@ -48,31 +47,6 @@ namespace Xander.PasswordValidator
     public Validator()
       : this(PasswordValidationSection.Get())
     {
-    }
-
-    public int MinPasswordLength
-    {
-      get { return _settings.MinimumPasswordLength; }
-    }
-
-    public bool NeedsNumber
-    {
-      get { return _settings.NeedsNumber; }
-    }
-
-    public bool NeedsLetter
-    {
-      get { return _settings.NeedsLetter; }
-    }
-
-    public IEnumerable<StandardWordList> StandardWordLists
-    {
-      get { return _settings.StandardWordLists; }
-    }
-
-    public IEnumerable<string> CustomWordLists
-    {
-      get { return _settings.CustomWordLists; }
     }
 
     public ValidationResult Validate(string password)
