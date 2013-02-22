@@ -38,21 +38,11 @@ namespace Xander.PasswordValidator
 {
   public class Validator
   {
-    private readonly int _minPasswordLength;
-    private readonly bool _needsNumber;
-    private readonly bool _needsLetter;
-    private readonly StandardWordList[] _standardWordLists;
-    private readonly string[] _customWordLists;
-    private readonly WordListProcessOptionsSettings _wordListProcessOptions;
+    private readonly IPasswordValidationSettings _settings;
 
     public Validator(IPasswordValidationSettings settings)
     {
-      _minPasswordLength = settings.MinimumPasswordLength;
-      _needsNumber = settings.NeedsNumber;
-      _needsLetter = settings.NeedsLetter;
-      _standardWordLists = settings.StandardWordLists.ToArray();
-      _customWordLists = settings.CustomWordLists.ToArray();
-      _wordListProcessOptions = WordListProcessOptionsSettings.Create(settings.WordListProcessOptions);
+      _settings = settings;
     }
 
     public Validator()
@@ -62,38 +52,38 @@ namespace Xander.PasswordValidator
 
     public int MinPasswordLength
     {
-      get { return _minPasswordLength; }
+      get { return _settings.MinimumPasswordLength; }
     }
 
     public bool NeedsNumber
     {
-      get { return _needsNumber; }
+      get { return _settings.NeedsNumber; }
     }
 
     public bool NeedsLetter
     {
-      get { return _needsLetter; }
+      get { return _settings.NeedsLetter; }
     }
 
     public IEnumerable<StandardWordList> StandardWordLists
     {
-      get { return _standardWordLists; }
+      get { return _settings.StandardWordLists; }
     }
 
     public IEnumerable<string> CustomWordLists
     {
-      get { return _customWordLists; }
+      get { return _settings.CustomWordLists; }
     }
 
     public ValidationResult Validate(string password)
     {
-      if (password.Length < _minPasswordLength)
+      if (password.Length < _settings.MinimumPasswordLength)
         return ValidationResult.FailTooShort;
 
-      if ((_needsNumber) && (!password.Any(char.IsDigit)))
+      if ((_settings.NeedsNumber) && (!password.Any(char.IsDigit)))
         return ValidationResult.FailNumberRequired;
 
-      if ((_needsLetter) && (!password.Any(char.IsLetter)))
+      if ((_settings.NeedsLetter) && (!password.Any(char.IsLetter)))
         return ValidationResult.FailLetterRequired;
 
       if (IsFoundInStandardWordList(password))
@@ -107,10 +97,10 @@ namespace Xander.PasswordValidator
 
     private bool IsFoundInCustomWordList(string password)
     {
-      if (_customWordLists.Length > 0)
+      if (_settings.CustomWordLists.Any())
       {
         var regex = GetRegexForPassword(password);
-        foreach (string fileName in _customWordLists)
+        foreach (string fileName in _settings.CustomWordLists)
         {
           string wordList = CustomWordListRetriever.Retrieve(fileName);
           if (regex.IsMatch(wordList))
@@ -122,10 +112,10 @@ namespace Xander.PasswordValidator
 
     private bool IsFoundInStandardWordList(string password)
     {
-      if (_standardWordLists.Length > 0)
+      if (_settings.StandardWordLists.Any())
       {
         var regex = GetRegexForPassword(password);
-        foreach (var standardWordList in _standardWordLists)
+        foreach (var standardWordList in _settings.StandardWordLists)
         {
           string wordList = StandardWordListRetriever.Retrieve(standardWordList);
           if (regex.IsMatch(wordList))
@@ -137,7 +127,7 @@ namespace Xander.PasswordValidator
 
     private Regex GetRegexForPassword(string password)
     {
-      string pattern = RegularExpressionBuilder.MatchPasswordExpression(password, _wordListProcessOptions);
+      string pattern = RegularExpressionBuilder.MatchPasswordExpression(password, _settings.WordListProcessOptions);
       var regex = new Regex(pattern, RegexOptions.IgnoreCase | RegexOptions.Multiline);
       return regex;
     }

@@ -38,11 +38,11 @@ namespace Xander.PasswordValidator.Helpers
     private const string controlCharacters = @".$^{[(|)*+?\";
     private readonly string _password;
     private string _escapedPassword;
-    private readonly WordListProcessOptionsSettings _options;
+    private readonly IWordListProcessOptions _options;
     private StringBuilder _sb;
 
 
-    public static string MatchPasswordExpression(string password, WordListProcessOptionsSettings options)
+    public static string MatchPasswordExpression(string password, IWordListProcessOptions options)
     {
       if (password == null) throw new ArgumentNullException("password");
       if (options == null) throw new ArgumentNullException("options");
@@ -52,7 +52,7 @@ namespace Xander.PasswordValidator.Helpers
       return result;
     }
 
-    private RegularExpressionBuilder(string password, WordListProcessOptionsSettings options)
+    private RegularExpressionBuilder(string password, IWordListProcessOptions options)
     {
       _password = password;
       _options = options;
