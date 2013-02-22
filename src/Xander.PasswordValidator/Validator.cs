@@ -31,6 +31,7 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using Xander.PasswordValidator.Config;
+using Xander.PasswordValidator.Handlers;
 using Xander.PasswordValidator.Helpers;
 
 namespace Xander.PasswordValidator
@@ -38,10 +39,12 @@ namespace Xander.PasswordValidator
   public class Validator
   {
     private readonly IPasswordValidationSettings _settings;
+    private readonly ValidationHandler _validationHandler;
 
     public Validator(IPasswordValidationSettings settings)
     {
       _settings = settings;
+      _validationHandler = ValidationServiceLocator.GetValidationHandler(settings);
     }
 
     public Validator()
@@ -51,7 +54,7 @@ namespace Xander.PasswordValidator
 
     public ValidationResult Validate(string password)
     {
-      if (password.Length < _settings.MinimumPasswordLength)
+      if (!_validationHandler.Validate(password))
         return ValidationResult.FailTooShort;
 
       if ((_settings.NeedsNumber) && (!password.Any(char.IsDigit)))
