@@ -28,32 +28,20 @@
  *****************************************************************************/
 #endregion
 
-using NUnit.Framework;
-using Xander.PasswordValidator.Handlers;
+using System.Linq;
 
-namespace Xander.PasswordValidator.TestSuite.Handlers
+namespace Xander.PasswordValidator.Handlers
 {
-  [TestFixture]
-  public class NeedsNumberValidationHandlerTests
+  public class NeedsLetterValidationHandler : ValidationHandler
   {
-    [Test]
-    public void Validate_RequiresNumberAndPasswordWithout_FailsValidation()
+    public NeedsLetterValidationHandler(IPasswordValidationSettings settings)
+      : base(settings)
     {
-      var settings = new PasswordValidationSettings();
-      settings.NeedsNumber = true;
-      var handler = new NeedsNumberValidationHandler(settings);
-      var result = handler.Validate("ThereIsNoNumberHere");
-      Assert.IsFalse(result);
     }
 
-    [Test]
-    public void Validate_RequiresNumberAndPasswordWit_PassesValidation()
+    protected override bool ValidateImpl(string password)
     {
-      var settings = new PasswordValidationSettings();
-      settings.NeedsNumber = true;
-      var handler = new NeedsNumberValidationHandler(settings);
-      var result = handler.Validate("ThereIsANumberHere1");
-      Assert.IsTrue(result);
+      return password.Any(char.IsLetter);
     }
   }
 }

@@ -34,25 +34,25 @@ using Xander.PasswordValidator.Handlers;
 namespace Xander.PasswordValidator.TestSuite.Handlers
 {
   [TestFixture]
-  public class NeedsNumberValidationHandlerTests
+  public class NeedsLetterValidationHandlerTests
   {
     [Test]
-    public void Validate_RequiresNumberAndPasswordWithout_FailsValidation()
+    public void Validate_RequiresLetterAndPasswordWithout_FailsValidation()
     {
       var settings = new PasswordValidationSettings();
-      settings.NeedsNumber = true;
-      var handler = new NeedsNumberValidationHandler(settings);
-      var result = handler.Validate("ThereIsNoNumberHere");
+      settings.NeedsLetter = true;
+      var handler = new NeedsLetterValidationHandler(settings);
+      var result = handler.Validate("1234567890");
       Assert.IsFalse(result);
     }
 
     [Test]
-    public void Validate_RequiresNumberAndPasswordWit_PassesValidation()
+    public void Validate_RequiresLetterAndPasswordWith_PassesValidation()
     {
       var settings = new PasswordValidationSettings();
-      settings.NeedsNumber = true;
-      var handler = new NeedsNumberValidationHandler(settings);
-      var result = handler.Validate("ThereIsANumberHere1");
+      settings.NeedsLetter = true;
+      var handler = new NeedsLetterValidationHandler(settings);
+      var result = handler.Validate("1234567890A");
       Assert.IsTrue(result);
     }
   }

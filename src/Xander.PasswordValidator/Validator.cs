@@ -57,9 +57,6 @@ namespace Xander.PasswordValidator
       if (!_validationHandler.Validate(password))
         return false;
 
-      if ((_settings.NeedsLetter) && (!password.Any(char.IsLetter)))
-        return false;
-
       if (IsFoundInStandardWordList(password))
         return false;
 
