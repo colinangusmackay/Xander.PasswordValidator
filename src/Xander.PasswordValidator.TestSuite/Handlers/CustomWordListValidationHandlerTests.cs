@@ -28,31 +28,34 @@
  *****************************************************************************/
 #endregion
 
-using Xander.PasswordValidator.Config;
+using NUnit.Framework;
 using Xander.PasswordValidator.Handlers;
 
-namespace Xander.PasswordValidator
+namespace Xander.PasswordValidator.TestSuite.Handlers
 {
-  public class Validator
+  [TestFixture]
+  public class CustomWordListValidationHandlerTests
   {
-    private readonly ValidationHandler _validationHandler;
 
-    public Validator(IPasswordValidationSettings settings)
+    [Test]
+    public void Validate_CustomWordLists_FailValidation()
     {
-      _validationHandler = ValidationServiceLocator.GetValidationHandler(settings);
+      var settings = new PasswordValidationSettings();
+      settings.CustomWordLists.Add("TestHelpers\\Files\\MyCustomWordList.txt");
+      settings.CustomWordLists.Add("TestHelpers\\Files\\MyOtherCustomWordList.txt");
+      var validator = new CustomWordListValidationHandler(settings);
+      Assert.IsFalse(validator.Validate("YetAnotherInvalidPassword"));
     }
 
-    public Validator()
-      : this(PasswordValidationSection.Get())
+    [Test]
+    public void Validate_CustomWordLists_PassValidation()
     {
+      var settings = new PasswordValidationSettings();
+      settings.CustomWordLists.Add("TestHelpers\\Files\\MyCustomWordList.txt");
+      settings.CustomWordLists.Add("TestHelpers\\Files\\MyOtherCustomWordList.txt");
+      var validator = new CustomWordListValidationHandler(settings);
+      Assert.IsTrue(validator.Validate("ThisPasswordWorks"));
     }
 
-    public bool Validate(string password)
-    {
-      if (!_validationHandler.Validate(password))
-        return false;
-
-      return true;
-    }
   }
 }

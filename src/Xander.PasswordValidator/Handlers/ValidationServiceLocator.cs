@@ -28,6 +28,8 @@
  *****************************************************************************/
 #endregion
 
+using System.Linq;
+
 namespace Xander.PasswordValidator.Handlers
 {
   public class ValidationServiceLocator
@@ -49,9 +51,30 @@ namespace Xander.PasswordValidator.Handlers
     {
       ValidationHandler result = GetMinimumLengthHandler();
       ValidationHandler tail = GetNeedsNumberHandler(result);
-      GetNeedsLetterHandler(tail);
-
+      tail = GetNeedsLetterHandler(tail);
+      tail = GetStandardWordListHandler(tail);
+      tail = GetCustomWordListHandler(tail);
       return result;
+    }
+
+    private ValidationHandler GetCustomWordListHandler(ValidationHandler tail)
+    {
+      if (!_settings.CustomWordLists.Any())
+        return tail;
+
+      var newTail = new CustomWordListValidationHandler(_settings);
+      tail.Successor = newTail;
+      return newTail;
+    }
+
+    private ValidationHandler GetStandardWordListHandler(ValidationHandler tail)
+    {
+      if (!_settings.StandardWordLists.Any())
+        return tail;
+
+      var newTail = new StandardWordListValidationHandler(_settings);
+      tail.Successor = newTail;
+      return newTail;
     }
 
     private ValidationHandler GetNeedsLetterHandler(ValidationHandler tail)

@@ -28,31 +28,43 @@
  *****************************************************************************/
 #endregion
 
-using Xander.PasswordValidator.Config;
+using NUnit.Framework;
 using Xander.PasswordValidator.Handlers;
 
-namespace Xander.PasswordValidator
+namespace Xander.PasswordValidator.TestSuite.Handlers
 {
-  public class Validator
+  [TestFixture]
+  public class StandardWordListValidationHandlerTests
   {
-    private readonly ValidationHandler _validationHandler;
-
-    public Validator(IPasswordValidationSettings settings)
+    [Test]
+    public void Validate_FemaleName_FailsValidation()
     {
-      _validationHandler = ValidationServiceLocator.GetValidationHandler(settings);
+      var settings = new PasswordValidationSettings();
+      settings.StandardWordLists.Add(StandardWordList.FemaleNames);
+      var validator = new StandardWordListValidationHandler(settings);
+      Assert.IsFalse(validator.Validate("CaThErInE"));
     }
 
-    public Validator()
-      : this(PasswordValidationSection.Get())
+    [Test]
+    public void Validate_AllStandardWordLists_FailValidation()
     {
+      var settings = new PasswordValidationSettings();
+      settings.StandardWordLists.Add(StandardWordList.FemaleNames);
+      settings.StandardWordLists.Add(StandardWordList.MaleNames);
+      settings.StandardWordLists.Add(StandardWordList.Surnames);
+      settings.StandardWordLists.Add(StandardWordList.MostCommon500Passwords);
+      var validator = new StandardWordListValidationHandler(settings);
+      Assert.IsFalse(validator.Validate("PaSsWoRd"));
     }
 
-    public bool Validate(string password)
+    [Test]
+    public void Validate_StandardWordListFemaleNames_PassValidation()
     {
-      if (!_validationHandler.Validate(password))
-        return false;
-
-      return true;
+      var settings = new PasswordValidationSettings();
+      settings.StandardWordLists.Add(StandardWordList.FemaleNames);
+      var validator = new StandardWordListValidationHandler(settings);
+      Assert.IsTrue(validator.Validate("OlIvEr"));
     }
+
   }
 }

@@ -28,30 +28,26 @@
  *****************************************************************************/
 #endregion
 
-using Xander.PasswordValidator.Config;
-using Xander.PasswordValidator.Handlers;
+using Xander.PasswordValidator.Helpers;
 
-namespace Xander.PasswordValidator
+namespace Xander.PasswordValidator.Handlers
 {
-  public class Validator
+  public class CustomWordListValidationHandler : WordListValidationHandler
   {
-    private readonly ValidationHandler _validationHandler;
-
-    public Validator(IPasswordValidationSettings settings)
-    {
-      _validationHandler = ValidationServiceLocator.GetValidationHandler(settings);
-    }
-
-    public Validator()
-      : this(PasswordValidationSection.Get())
+    public CustomWordListValidationHandler(IPasswordValidationSettings settings) 
+      : base(settings)
     {
     }
 
-    public bool Validate(string password)
+    protected override bool ValidateImpl(string password)
     {
-      if (!_validationHandler.Validate(password))
-        return false;
-
+      var regex = GetRegexForPassword(password);
+      foreach (string fileName in Settings.CustomWordLists)
+      {
+        string wordList = CustomWordListRetriever.Retrieve(fileName);
+        if (regex.IsMatch(wordList))
+          return false;
+      }
       return true;
     }
   }
