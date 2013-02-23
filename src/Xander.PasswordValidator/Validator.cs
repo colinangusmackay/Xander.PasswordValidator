@@ -49,10 +49,7 @@ namespace Xander.PasswordValidator
 
     public bool Validate(string password)
     {
-      if (!_validationHandler.Validate(password))
-        return false;
-
-      return true;
+      return _validationHandler.Validate(password);
     }
   }
 }
