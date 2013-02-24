@@ -143,8 +143,9 @@ namespace Xander.PasswordValidator.TestSuite.Builders
       var options = new WordListProcessOptionsSettings();
       options.CheckForNumberSuffix = true;
       options.CheckForDoubledUpWord = true;
+      options.CheckForReversedWord = true;
       var result = RegularExpressionDirector.MatchPasswordExpression("Password1Password1", options);
-      string expected = "^Password1Password1|Password1Password|Password1$";
+      string expected = "^Password1Password1|Password1Password|Password1|1drowssaP1drowssaP$";
       Assert.AreEqual(expected, result);
     }
 
@@ -155,6 +156,16 @@ namespace Xander.PasswordValidator.TestSuite.Builders
       options.CustomBuilders.Add(typeof(PasswordBuilder));
       var result = RegularExpressionDirector.MatchPasswordExpression("mypassword", options);
       string expected = "^mypassword|testpassword1430$";
+      Assert.AreEqual(expected, result);
+    }
+
+    [Test]
+    public void BuildPasswordExpression_ReversedPasswordOn_ValidRegularExpression()
+    {
+      var options = new WordListProcessOptionsSettings();
+      options.CheckForReversedWord = true;
+      var result = RegularExpressionDirector.MatchPasswordExpression("Password1", options);
+      string expected = "^Password1|1drowssaP$";
       Assert.AreEqual(expected, result);
     }
   }

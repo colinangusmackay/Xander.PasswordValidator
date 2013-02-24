@@ -65,6 +65,7 @@ namespace Xander.PasswordValidator.Builders
       _expressionBuilders.Add(new PasswordExpressionBuilder(_options));
       _expressionBuilders.Add(new NumberSuffixExpressionBuilder(_options));
       _expressionBuilders.Add(new DoubledUpWordExpressionBuilder(_options));
+      _expressionBuilders.Add(new ReversedWordExpressionBuilder(_options));
       foreach (var type in _options.CustomBuilders)
       {
         var builder = (WordListRegularExpressionBuilder)Activator.CreateInstance(type, _options);

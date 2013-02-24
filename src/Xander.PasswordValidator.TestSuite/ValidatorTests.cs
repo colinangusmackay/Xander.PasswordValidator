@@ -204,6 +204,14 @@ namespace Xander.PasswordValidator.TestSuite
       Assert.IsFalse(result);
     }
 
-
+    [Test]
+    public void Validate_ReversedPasswordInList_FailValidation()
+    {
+      ConfigFileHelper.SetConfigFile(ConfigFiles.AllWordsConfig);
+      PasswordValidationSection.Refresh();
+      var validator = new Validator();
+      var result = validator.Validate("drowssaP");
+      Assert.IsFalse(result);
+    }
   }
 }
