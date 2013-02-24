@@ -32,6 +32,7 @@ using System;
 using System.Text.RegularExpressions;
 using NUnit.Framework;
 using Xander.PasswordValidator.Builders;
+using Xander.PasswordValidator.TestSuite.TestBuilders;
 
 namespace Xander.PasswordValidator.TestSuite.Builders
 {
@@ -144,6 +145,16 @@ namespace Xander.PasswordValidator.TestSuite.Builders
       options.CheckForDoubledUpWord = true;
       var result = RegularExpressionDirector.MatchPasswordExpression("Password1Password1", options);
       string expected = "^Password1Password1|Password1Password|Password1$";
+      Assert.AreEqual(expected, result);
+    }
+
+    [Test]
+    public void BuildPasswordExpression_CustomBuilders_ValidRegularExpression()
+    {
+      var options = new WordListProcessOptionsSettings();
+      options.CustomBuilders.Add(typeof(PasswordBuilder));
+      var result = RegularExpressionDirector.MatchPasswordExpression("mypassword", options);
+      string expected = "^mypassword|testpassword1430$";
       Assert.AreEqual(expected, result);
     }
   }

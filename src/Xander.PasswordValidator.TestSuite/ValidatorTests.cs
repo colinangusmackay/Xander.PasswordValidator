@@ -33,6 +33,7 @@ using NUnit.Framework;
 using Xander.PasswordValidator.Config;
 using Xander.PasswordValidator.TestSuite.TestHelpers;
 using Xander.PasswordValidator.TestSuite.TestHelpers.Resources;
+using Xander.PasswordValidator.TestSuite.TestValidationHandlers;
 
 namespace Xander.PasswordValidator.TestSuite
 {
@@ -181,6 +182,26 @@ namespace Xander.PasswordValidator.TestSuite
       var validator = new Validator();
       var result = validator.Validate("Zachariah456Zachariah456");
       Assert.IsTrue(result);
+    }
+
+    [Test]
+    public void Validate_CustomValidator_PassValidation()
+    {
+      IPasswordValidationSettings settings = new PasswordValidationSettings();
+      settings.CustomValidators.Add(typeof(AlwaysPassValidationHandler));
+      var validator = new Validator(settings);
+      var result = validator.Validate("ThisIsMyPassword");
+      Assert.IsTrue(result);
+    }
+
+    [Test]
+    public void Validate_CustomValidator_FailValidation()
+    {
+      IPasswordValidationSettings settings = new PasswordValidationSettings();
+      settings.CustomValidators.Add(typeof(AlwaysFailValidationHandler));
+      var validator = new Validator(settings);
+      var result = validator.Validate("ThisIsMyPassword");
+      Assert.IsFalse(result);
     }
   }
 }
