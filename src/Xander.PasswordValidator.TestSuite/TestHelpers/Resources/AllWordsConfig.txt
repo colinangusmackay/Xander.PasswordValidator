@@ -7,7 +7,7 @@
   </configSections>
 
   <passwordValidation>
-    <rules minimumPasswordLength="13" needsNumber="true" needsLetter="true">
+    <rules minimumPasswordLength="13" needsNumber="true" needsLetter="true" needsSymbol="true">
       <wordListProcessOptions checkForNumberSuffix="true" checkForDoubledUpWord="true"/>
       <standardWordLists>
         <add value="FemaleNames"/>

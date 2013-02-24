@@ -170,7 +170,7 @@ namespace Xander.PasswordValidator.TestSuite
       ConfigFileHelper.SetConfigFile(ConfigFiles.AllWordsConfig);
       PasswordValidationSection.Refresh();
       var validator = new Validator();
-      var result = validator.Validate("Zachariah123Zachariah123");
+      var result = validator.Validate("Zachariah123@Zachariah123@");
       Assert.IsFalse(result);
     }
 
@@ -180,7 +180,7 @@ namespace Xander.PasswordValidator.TestSuite
       ConfigFileHelper.SetConfigFile(ConfigFiles.AllWordsConfig);
       PasswordValidationSection.Refresh();
       var validator = new Validator();
-      var result = validator.Validate("Zachariah456Zachariah456");
+      var result = validator.Validate("Zachariah456@Zachariah456@");
       Assert.IsTrue(result);
     }
 
@@ -203,5 +203,7 @@ namespace Xander.PasswordValidator.TestSuite
       var result = validator.Validate("ThisIsMyPassword");
       Assert.IsFalse(result);
     }
+
+
   }
 }

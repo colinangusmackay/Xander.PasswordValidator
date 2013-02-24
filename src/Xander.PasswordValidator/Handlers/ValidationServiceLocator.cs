@@ -53,10 +53,21 @@ namespace Xander.PasswordValidator.Handlers
       ValidationHandler result = GetMinimumLengthHandler();
       ValidationHandler tail = GetNeedsNumberHandler(result);
       tail = GetNeedsLetterHandler(tail);
+      tail = GetNeedsSymbolHandler(tail);
       tail = GetStandardWordListHandler(tail);
       tail = GetCustomWordListHandler(tail);
       tail = GetCustomHandlers(tail);
       return result;
+    }
+
+    private ValidationHandler GetNeedsSymbolHandler(ValidationHandler tail)
+    {
+      if (!_settings.NeedsSymbol)
+        return tail;
+
+      var newTail = new NeedsSymbolValidationHandler(_settings);
+      tail.Successor = newTail;
+      return newTail;
     }
 
     private ValidationHandler GetCustomHandlers(ValidationHandler tail)

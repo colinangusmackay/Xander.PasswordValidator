@@ -101,7 +101,16 @@ namespace Xander.PasswordValidator.TestSuite.Handlers
       var result = ValidationServiceLocator.GetValidationHandler(settings);
       Assert.IsInstanceOf<MinimumLengthValidationHandler>(result);
       Assert.IsInstanceOf<AlwaysFailsValidationHandler>(result.Successor);
-      
+    }
+
+    [Test]
+    public void getValidationHandler_NeedsSymbolIsTrue_ReturnsChainWithNeedsSymbolValidator()
+    {
+      var settings = new PasswordValidationSettings();
+      settings.NeedsSymbol = true;
+      var result = ValidationServiceLocator.GetValidationHandler(settings);
+      Assert.IsInstanceOf<MinimumLengthValidationHandler>(result);
+      Assert.IsInstanceOf<NeedsSymbolValidationHandler>(result.Successor);
     }
   }
 }
