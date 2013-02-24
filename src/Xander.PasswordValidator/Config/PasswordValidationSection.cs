@@ -28,6 +28,7 @@
  *****************************************************************************/
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using Xander.PasswordValidator.Exceptions;
@@ -114,6 +115,11 @@ namespace Xander.PasswordValidator.Config
     {
       get { return (WordListProcessOptionsElement) base[WordListProcessOptionsKey]; }
       set { base[WordListProcessOptionsKey] = value; }
+    }
+
+    ICollection<Type> IPasswordValidationSettings.CustomValidators
+    {
+      get { return new Type[0]; }
     }
 
     IWordListProcessOptions IPasswordValidationSettings.WordListProcessOptions

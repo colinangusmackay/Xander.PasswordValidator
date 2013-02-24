@@ -28,6 +28,7 @@
  *****************************************************************************/
 #endregion
 
+using System;
 using System.Collections.Generic;
 
 namespace Xander.PasswordValidator
@@ -39,12 +40,14 @@ namespace Xander.PasswordValidator
       StandardWordLists = new List<StandardWordList>();
       CustomWordLists = new List<string>();
       WordListProcessOptions = new WordListProcessOptionsSettings();
+      CustomValidators = new List<Type>();
     }
     public int MinimumPasswordLength { get; set; }
     public bool NeedsNumber { get; set; }
     public bool NeedsLetter { get; set; }
     public List<StandardWordList> StandardWordLists { get; private set; }
     public List<string> CustomWordLists { get; private set; }
+    public List<Type> CustomValidators { get; private set; } 
 
     public IWordListProcessOptions WordListProcessOptions { get; private set; }
 
@@ -53,5 +56,8 @@ namespace Xander.PasswordValidator
 
     ICollection<string> IPasswordValidationSettings.CustomWordLists
     { get { return CustomWordLists; } }
+
+    ICollection<Type> IPasswordValidationSettings.CustomValidators 
+    { get { return CustomValidators; } }
   }
 }

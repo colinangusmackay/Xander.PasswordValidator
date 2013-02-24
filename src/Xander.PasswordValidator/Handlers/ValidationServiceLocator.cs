@@ -28,6 +28,7 @@
  *****************************************************************************/
 #endregion
 
+using System;
 using System.Linq;
 
 namespace Xander.PasswordValidator.Handlers
@@ -54,7 +55,20 @@ namespace Xander.PasswordValidator.Handlers
       tail = GetNeedsLetterHandler(tail);
       tail = GetStandardWordListHandler(tail);
       tail = GetCustomWordListHandler(tail);
+      tail = GetCustomHandlers(tail);
       return result;
+    }
+
+    private ValidationHandler GetCustomHandlers(ValidationHandler tail)
+    {
+      ValidationHandler newTail = tail;
+      foreach (Type handlerType in _settings.CustomValidators)
+      {
+        newTail = (ValidationHandler) Activator.CreateInstance(handlerType, _settings);
+        tail.Successor = newTail;
+        tail = newTail;
+      }
+      return newTail;
     }
 
     private ValidationHandler GetCustomWordListHandler(ValidationHandler tail)

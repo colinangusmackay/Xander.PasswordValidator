@@ -35,6 +35,19 @@ namespace Xander.PasswordValidator.TestSuite.Handlers
   [TestFixture]
   public class ValidationServiceLocatorTests
   {
+    public class AlwaysFailsValidationHandler : ValidationHandler
+    {
+      public AlwaysFailsValidationHandler(IPasswordValidationSettings settings)
+        : base(settings)
+      {
+      }
+
+      protected override bool ValidateImpl(string password)
+      {
+        return false;
+      }
+    }
+
      [Test]
      public void GetValidationHandler_SimpleSettings_ReturnsValidationHandlerWithNoSuccessor()
      {
@@ -79,5 +92,16 @@ namespace Xander.PasswordValidator.TestSuite.Handlers
       Assert.IsNull(result.Successor.Successor.Successor);
     }
 
+
+    [Test]
+    public void GetValidationHandler_CustomValidationHandler_ReturnsChainWithCustomHandler()
+    {
+      var settings = new PasswordValidationSettings();
+      settings.CustomValidators.Add(typeof(AlwaysFailsValidationHandler));
+      var result = ValidationServiceLocator.GetValidationHandler(settings);
+      Assert.IsInstanceOf<MinimumLengthValidationHandler>(result);
+      Assert.IsInstanceOf<AlwaysFailsValidationHandler>(result.Successor);
+      
+    }
   }
 }

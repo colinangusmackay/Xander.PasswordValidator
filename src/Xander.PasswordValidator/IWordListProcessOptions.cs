@@ -28,11 +28,16 @@
  *****************************************************************************/
 #endregion
 
+using System;
+using System.Collections.Generic;
+
 namespace Xander.PasswordValidator
 {
   public interface IWordListProcessOptions
   {
     bool CheckForNumberSuffix { get; set; }
     bool CheckForDoubledUpWord { get; set; }
+
+    ICollection<Type> CustomBuilders { get; }
   }
 }

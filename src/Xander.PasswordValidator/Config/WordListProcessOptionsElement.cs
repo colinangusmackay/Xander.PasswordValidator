@@ -28,6 +28,8 @@
  *****************************************************************************/
 #endregion
 
+using System;
+using System.Collections.Generic;
 using System.Configuration;
 namespace Xander.PasswordValidator.Config
 {
@@ -39,7 +41,7 @@ namespace Xander.PasswordValidator.Config
     [ConfigurationProperty(CheckForNumberSuffixKey)]
     public bool CheckForNumberSuffix
     {
-      get { return (bool) base[CheckForNumberSuffixKey]; }
+      get { return (bool)base[CheckForNumberSuffixKey]; }
       set { base[CheckForNumberSuffixKey] = value; }
     }
 
@@ -49,5 +51,8 @@ namespace Xander.PasswordValidator.Config
       get { return (bool)base[CheckForDoubledUpWordKey]; }
       set { base[CheckForDoubledUpWordKey] = value; }
     }
+
+    ICollection<Type> IWordListProcessOptions.CustomBuilders
+    { get { return new Type[0]; } }
   }
 }
