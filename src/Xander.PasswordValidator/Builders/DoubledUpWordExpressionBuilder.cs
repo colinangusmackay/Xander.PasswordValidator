@@ -28,20 +28,13 @@
  *****************************************************************************/
 #endregion
 
-using Xander.PasswordValidator.Helpers;
-
 namespace Xander.PasswordValidator.Builders
 {
-  public class DoubledUpWordExpressionBuilder : WordListRegularExpressionBuilder
+  public class DoubledUpWordExpressionBuilder : WordListRegExBuilder
   {
-    public DoubledUpWordExpressionBuilder(IWordListProcessOptions options) 
-      : base(options)
-    {
-    }
-
     public override string GetRegularExpression(string password)
     {
-      if ((Options.CheckForDoubledUpWord) && (IsPasswordDoubledUp(password)))
+      if (IsPasswordDoubledUp(password))
         return GetRegularExpressionFragment(password);
       return string.Empty;
     }
@@ -49,7 +42,7 @@ namespace Xander.PasswordValidator.Builders
     private string GetRegularExpressionFragment(string password)
     {
       string firstHalf = GetFirstHalfOfPassword(password);
-      string escapedHalf = RegularExpressionEncoder.Encode(firstHalf);
+      string escapedHalf = RegExEncode(firstHalf);
       return escapedHalf;
     }
 

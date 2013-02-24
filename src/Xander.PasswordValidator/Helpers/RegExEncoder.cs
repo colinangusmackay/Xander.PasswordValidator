@@ -33,7 +33,7 @@ using System.Text;
 
 namespace Xander.PasswordValidator.Helpers
 {
-  public static class RegularExpressionEncoder
+  public static class RegExEncoder
   {
     private const string controlCharacters = @".$^{[(|)*+?\";
     public static string Encode(string value)

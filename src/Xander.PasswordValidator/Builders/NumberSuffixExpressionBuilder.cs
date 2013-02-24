@@ -28,47 +28,35 @@
  *****************************************************************************/
 #endregion
 
-using Xander.PasswordValidator.Helpers;
-
 namespace Xander.PasswordValidator.Builders
 {
-  public class NumberSuffixExpressionBuilder : WordListRegularExpressionBuilder
+  public class NumberSuffixExpressionBuilder : WordListRegExBuilder
   {
-    public NumberSuffixExpressionBuilder(IWordListProcessOptions options) 
-      : base(options)
-    {
-    }
-
     public override string GetRegularExpression(string password)
     {
-      if ((PasswordIsLongEnough(password)) && (MustCheckForNumberSuffix) && (LastCharacterIsDigit(password)))
+      if ((PasswordIsLongEnough(password)) && (LastCharacterIsDigit(password)))
         return BuildRegularExpressionFragment(password);
       return string.Empty;
     }
 
-    private static bool PasswordIsLongEnough(string password)
+    private bool PasswordIsLongEnough(string password)
     {
       return password.Length > 1;
     }
 
-    private static string BuildRegularExpressionFragment(string password)
+    private string BuildRegularExpressionFragment(string password)
     {
       string partialPassword = GetPasswordWithoutFinalDigit(password);
-      string result = RegularExpressionEncoder.Encode(partialPassword);
+      string result = RegExEncode(partialPassword);
       return result;
     }
 
-    private static string GetPasswordWithoutFinalDigit(string password)
+    private string GetPasswordWithoutFinalDigit(string password)
     {
       return password.Substring(0, password.Length - 1);
     }
 
-    private bool MustCheckForNumberSuffix
-    {
-      get { return Options.CheckForNumberSuffix; }
-    }
-
-    private static bool LastCharacterIsDigit(string password)
+    private bool LastCharacterIsDigit(string password)
     {
       return char.IsDigit(password[password.Length - 1]);
     }

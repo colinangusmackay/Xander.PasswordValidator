@@ -30,7 +30,6 @@
 
 using System.Text.RegularExpressions;
 using Xander.PasswordValidator.Builders;
-using Xander.PasswordValidator.Helpers;
 
 namespace Xander.PasswordValidator.Handlers
 {

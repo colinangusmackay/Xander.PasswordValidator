@@ -38,9 +38,8 @@ namespace Xander.PasswordValidator.Builders
   {
     private readonly string _password;
     private readonly IWordListProcessOptions _options;
-    private readonly List<WordListRegularExpressionBuilder> _expressionBuilders; 
+    private readonly List<WordListRegExBuilder> _expressionBuilders; 
     private StringBuilder _sb;
-
 
     public static string MatchPasswordExpression(string password, IWordListProcessOptions options)
     {
@@ -57,20 +56,48 @@ namespace Xander.PasswordValidator.Builders
     {
       _password = password;
       _options = options;
-      _expressionBuilders = new List<WordListRegularExpressionBuilder>();
+      _expressionBuilders = new List<WordListRegExBuilder>();
     }
     
     private void InitBuilders()
     {
-      _expressionBuilders.Add(new PasswordExpressionBuilder(_options));
-      _expressionBuilders.Add(new NumberSuffixExpressionBuilder(_options));
-      _expressionBuilders.Add(new DoubledUpWordExpressionBuilder(_options));
-      _expressionBuilders.Add(new ReversedWordExpressionBuilder(_options));
+      AddPasswordBuilder();
+      AddNumberSuffixBuilder();
+      AddDoubledUpWordBuilder();
+      AddReversedWordBuilder();
+      AddCustomBuilders();
+    }
+
+    private void AddCustomBuilders()
+    {
       foreach (var type in _options.CustomBuilders)
       {
-        var builder = (WordListRegularExpressionBuilder)Activator.CreateInstance(type, _options);
+        var builder = (WordListRegExBuilder) Activator.CreateInstance(type);
         _expressionBuilders.Add(builder);
       }
+    }
+
+    private void AddPasswordBuilder()
+    {
+      _expressionBuilders.Add(new PasswordExpressionBuilder());
+    }
+
+    private void AddReversedWordBuilder()
+    {
+      if (_options.CheckForReversedWord)
+        _expressionBuilders.Add(new ReversedWordExpressionBuilder());
+    }
+
+    private void AddDoubledUpWordBuilder()
+    {
+      if (_options.CheckForDoubledUpWord)
+        _expressionBuilders.Add(new DoubledUpWordExpressionBuilder());
+    }
+
+    private void AddNumberSuffixBuilder()
+    {
+      if (_options.CheckForNumberSuffix)
+        _expressionBuilders.Add(new NumberSuffixExpressionBuilder());
     }
 
     private string MatchPasswordExpression()

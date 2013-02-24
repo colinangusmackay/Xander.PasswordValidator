@@ -32,16 +32,11 @@ using Xander.PasswordValidator.Helpers;
 
 namespace Xander.PasswordValidator.Builders
 {
-  public class PasswordExpressionBuilder : WordListRegularExpressionBuilder
+  public class PasswordExpressionBuilder : WordListRegExBuilder
   {
-    public PasswordExpressionBuilder(IWordListProcessOptions options) 
-      : base(options)
-    {
-    }
-
     public override string GetRegularExpression(string password)
     {
-      return RegularExpressionEncoder.Encode(password);
+      return RegExEncoder.Encode(password);
     }
   }
 }

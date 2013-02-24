@@ -28,19 +28,16 @@
  *****************************************************************************/
 #endregion
 
-
+using Xander.PasswordValidator.Helpers;
 namespace Xander.PasswordValidator
 {
-  public abstract class WordListRegularExpressionBuilder
+  public abstract class WordListRegExBuilder
   {
-    private readonly IWordListProcessOptions _options;
-    protected WordListRegularExpressionBuilder(IWordListProcessOptions options)
-    {
-      _options = options;
-    }
-
-    protected IWordListProcessOptions Options { get { return _options; } }
-
     public abstract string GetRegularExpression(string password);
+
+    protected string RegExEncode(string value)
+    {
+      return RegExEncoder.Encode(value);
+    }
   }
 }

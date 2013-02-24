@@ -39,9 +39,7 @@ namespace Xander.PasswordValidator.TestSuite.Builders
     [Test]
     public void GetRegularExpression_Password_EncodedReversedPassword()
     {
-      var options = new WordListProcessOptionsSettings();
-      options.CheckForReversedWord = true;
-      ReversedWordExpressionBuilder builder = new ReversedWordExpressionBuilder(options);
+      ReversedWordExpressionBuilder builder = new ReversedWordExpressionBuilder();
       var result = builder.GetRegularExpression("Password");
       Assert.AreEqual("drowssaP", result);
     }
@@ -49,21 +47,10 @@ namespace Xander.PasswordValidator.TestSuite.Builders
     [Test]
     public void GetRegularExpression_PasswordWithSpecialChars_EncodedReversedPassword()
     {
-      var options = new WordListProcessOptionsSettings();
-      options.CheckForReversedWord = true;
-      ReversedWordExpressionBuilder builder = new ReversedWordExpressionBuilder(options);
+      ReversedWordExpressionBuilder builder = new ReversedWordExpressionBuilder();
       var result = builder.GetRegularExpression(@"Pa\ssword");
       Assert.AreEqual(@"drowss\\aP", result);
     }
 
-    [Test]
-    public void GetRegularExpression_OptionIsFalse_EmptyString()
-    {
-      var options = new WordListProcessOptionsSettings();
-      options.CheckForReversedWord = false;
-      ReversedWordExpressionBuilder builder = new ReversedWordExpressionBuilder(options);
-      var result = builder.GetRegularExpression("Password");
-      Assert.AreEqual(string.Empty, result);
-    }
   }
 }

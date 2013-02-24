@@ -29,30 +29,18 @@
 #endregion
 
 using System.Linq;
-using Xander.PasswordValidator.Helpers;
 
 namespace Xander.PasswordValidator.Builders
 {
-  public class ReversedWordExpressionBuilder : WordListRegularExpressionBuilder
+  public class ReversedWordExpressionBuilder : WordListRegExBuilder
   {
-    public ReversedWordExpressionBuilder(IWordListProcessOptions options) 
-      : base(options)
-    {
-    }
-
     public override string GetRegularExpression(string password)
-    {
-      if (Options.CheckForReversedWord)
-        return GetRegularExpressionImpl(password);
-      return string.Empty;
-    }
-
-    private static string GetRegularExpressionImpl(string password)
     {
       char[] charactersInReverse = password.Reverse().ToArray();
       string reversedPassword = new string(charactersInReverse);
-      string result = RegularExpressionEncoder.Encode(reversedPassword);
+      string result = RegExEncode(reversedPassword);
       return result;
     }
+
   }
 }
