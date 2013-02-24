@@ -38,6 +38,7 @@ namespace Xander.PasswordValidator
     int MinimumPasswordLength { get; set; }
     bool NeedsNumber { get; set; }
     bool NeedsLetter { get; set; }
+    bool NeedsSymbol { get; set; }
     ICollection<StandardWordList> StandardWordLists { get; }
     ICollection<string> CustomWordLists { get; }
     IWordListProcessOptions WordListProcessOptions { get; }

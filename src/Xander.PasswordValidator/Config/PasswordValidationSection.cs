@@ -40,6 +40,7 @@ namespace Xander.PasswordValidator.Config
     private const string MinimumPasswordLengthKey = "minimumPasswordLength";
     private const string NeedsNumberKey = "needsNumber";
     private const string NeedsLetterKey = "needsLetter";
+    private const string NeedsSymbolKey = "needsSymbol";
     private const string StandardWordListsKey = "standardWordLists";
     private const string CustomWordListsKey = "customWordLists";
     private const string WordListProcessOptionsKey = "wordListProcessOptions";
@@ -84,6 +85,13 @@ namespace Xander.PasswordValidator.Config
     {
       get { return (bool) this[NeedsLetterKey]; }
       set { this[NeedsLetterKey] = value; }
+    }
+
+    [ConfigurationProperty(NeedsSymbolKey, DefaultValue = false, IsRequired = false)]
+    public bool NeedsSymbol
+    {
+      get { return (bool)this[NeedsSymbolKey]; }
+      set { this[NeedsSymbolKey] = value; }
     }
 
     [ConfigurationProperty(StandardWordListsKey, IsRequired = false)]

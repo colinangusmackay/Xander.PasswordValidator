@@ -29,7 +29,7 @@
 #endregion
 
 
-namespace Xander.PasswordValidator.Builders
+namespace Xander.PasswordValidator
 {
   public abstract class WordListRegularExpressionBuilder
   {

@@ -45,6 +45,7 @@ namespace Xander.PasswordValidator
     public int MinimumPasswordLength { get; set; }
     public bool NeedsNumber { get; set; }
     public bool NeedsLetter { get; set; }
+    public bool NeedsSymbol { get; set; }
     public List<StandardWordList> StandardWordLists { get; private set; }
     public List<string> CustomWordLists { get; private set; }
     public List<Type> CustomValidators { get; private set; } 

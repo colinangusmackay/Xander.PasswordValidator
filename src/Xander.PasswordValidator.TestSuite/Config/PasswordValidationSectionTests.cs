@@ -236,5 +236,14 @@ namespace Xander.PasswordValidator.TestSuite.Config
       var config = GetAllWordsConfig();
       Assert.IsTrue(config.WordListProcessOptions.CheckForDoubledUpWord);
     }
+
+    [Test]
+    public void NeedsSymbol_RoundTrip()
+    {
+      var section = new PasswordValidationSection();
+      Assert.IsFalse(section.NeedsSymbol);
+      section.NeedsSymbol = true;
+      Assert.IsTrue(section.NeedsSymbol);
+    }
   }
 }
