@@ -53,5 +53,14 @@ namespace Xander.PasswordValidator.TestSuite.Config
       element.CheckForDoubledUpWord = true;
       Assert.IsTrue(element.CheckForDoubledUpWord);
     }
+
+    [Test]
+    public void CheckForReversedWord_RoundTrip()
+    {
+      WordListProcessOptionsElement element = new WordListProcessOptionsElement();
+      Assert.IsFalse(element.CheckForReversedWord);
+      element.CheckForReversedWord = true;
+      Assert.IsTrue(element.CheckForReversedWord);
+    }
   }
 }

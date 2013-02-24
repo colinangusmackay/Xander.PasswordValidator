@@ -37,6 +37,7 @@ namespace Xander.PasswordValidator
   {
     bool CheckForNumberSuffix { get; set; }
     bool CheckForDoubledUpWord { get; set; }
+    bool CheckForReversedWord { get; set; }
 
     ICollection<Type> CustomBuilders { get; }
   }

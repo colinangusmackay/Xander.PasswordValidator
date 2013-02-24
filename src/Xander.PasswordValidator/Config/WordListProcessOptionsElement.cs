@@ -37,6 +37,7 @@ namespace Xander.PasswordValidator.Config
   {
     public const string CheckForNumberSuffixKey = "checkForNumberSuffix";
     public const string CheckForDoubledUpWordKey = "checkForDoubledUpWord";
+    public const string CheckForReversedWordKey = "checkForReversedWord";
 
     [ConfigurationProperty(CheckForNumberSuffixKey)]
     public bool CheckForNumberSuffix
@@ -50,6 +51,13 @@ namespace Xander.PasswordValidator.Config
     {
       get { return (bool)base[CheckForDoubledUpWordKey]; }
       set { base[CheckForDoubledUpWordKey] = value; }
+    }
+
+    [ConfigurationProperty(CheckForReversedWordKey)]
+    public bool CheckForReversedWord
+    {
+      get { return (bool)base[CheckForReversedWordKey]; }
+      set { base[CheckForReversedWordKey] = value; }
     }
 
     ICollection<Type> IWordListProcessOptions.CustomBuilders

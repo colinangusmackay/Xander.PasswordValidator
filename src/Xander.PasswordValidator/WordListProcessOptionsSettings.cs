@@ -42,6 +42,8 @@ namespace Xander.PasswordValidator
     
     public bool CheckForNumberSuffix { get; set; }
     public bool CheckForDoubledUpWord { get; set; }
+    public bool CheckForReversedWord { get; set; }
+
     public List<Type> CustomBuilders { get; private set; }
 
     ICollection<Type> IWordListProcessOptions.CustomBuilders 
