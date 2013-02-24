@@ -28,26 +28,42 @@
  *****************************************************************************/
 #endregion
 
-using System.Text.RegularExpressions;
-using Xander.PasswordValidator.Builders;
 using Xander.PasswordValidator.Helpers;
 
-namespace Xander.PasswordValidator.Handlers
+namespace Xander.PasswordValidator.Builders
 {
-  public abstract class WordListValidationHandler : ValidationHandler
+  public class DoubledUpWordExpressionBuilder : WordListRegularExpressionBuilder
   {
-    protected WordListValidationHandler(IPasswordValidationSettings settings) 
-      : base(settings)
+    public DoubledUpWordExpressionBuilder(IWordListProcessOptions options) 
+      : base(options)
     {
-
     }
 
-    protected Regex GetRegexForPassword(string password)
+    public override string GetRegularExpression(string password)
     {
-      IWordListProcessOptions options = Settings.WordListProcessOptions;
-      string pattern = RegularExpressionDirector.MatchPasswordExpression(password, options);
-      var regex = new Regex(pattern, RegexOptions.IgnoreCase | RegexOptions.Multiline);
-      return regex;
+      if ((Options.CheckForDoubledUpWord) && (IsPasswordDoubledUp(password)))
+        return GetRegularExpressionFragment(password);
+      return string.Empty;
+    }
+
+    private string GetRegularExpressionFragment(string password)
+    {
+      string firstHalf = GetFirstHalfOfPassword(password);
+      string escapedHalf = RegularExpressionEncoder.Encode(firstHalf);
+      return escapedHalf;
+    }
+
+    private bool IsPasswordDoubledUp(string password)
+    {
+      if (password.Length % 2 == 1)
+        return false;
+      string firstHalf = GetFirstHalfOfPassword(password);
+      return (password.EndsWith(firstHalf));
+    }
+
+    private string GetFirstHalfOfPassword(string password)
+    {
+      return password.Substring(0, password.Length / 2);
     }
   }
 }

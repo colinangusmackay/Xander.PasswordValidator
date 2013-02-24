@@ -28,26 +28,27 @@
  *****************************************************************************/
 #endregion
 
-using System.Text.RegularExpressions;
-using Xander.PasswordValidator.Builders;
-using Xander.PasswordValidator.Helpers;
+using System.Linq;
+using System.Text;
 
-namespace Xander.PasswordValidator.Handlers
+namespace Xander.PasswordValidator.Helpers
 {
-  public abstract class WordListValidationHandler : ValidationHandler
+  public static class RegularExpressionEncoder
   {
-    protected WordListValidationHandler(IPasswordValidationSettings settings) 
-      : base(settings)
+    private const string controlCharacters = @".$^{[(|)*+?\";
+    public static string Encode(string value)
     {
-
+      var sb = new StringBuilder(value.Length);
+      foreach (var c in value.Select(Escape))
+        sb.Append(c);
+      return sb.ToString();
     }
 
-    protected Regex GetRegexForPassword(string password)
+    private static string Escape(char c)
     {
-      IWordListProcessOptions options = Settings.WordListProcessOptions;
-      string pattern = RegularExpressionDirector.MatchPasswordExpression(password, options);
-      var regex = new Regex(pattern, RegexOptions.IgnoreCase | RegexOptions.Multiline);
-      return regex;
-    }
+      if (controlCharacters.Any(cc => cc == c))
+        return "\\" + c;
+      return char.ToString(c);
+    } 
   }
 }

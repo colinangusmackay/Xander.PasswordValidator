@@ -28,26 +28,49 @@
  *****************************************************************************/
 #endregion
 
-using System.Text.RegularExpressions;
-using Xander.PasswordValidator.Builders;
 using Xander.PasswordValidator.Helpers;
 
-namespace Xander.PasswordValidator.Handlers
+namespace Xander.PasswordValidator.Builders
 {
-  public abstract class WordListValidationHandler : ValidationHandler
+  public class NumberSuffixExpressionBuilder : WordListRegularExpressionBuilder
   {
-    protected WordListValidationHandler(IPasswordValidationSettings settings) 
-      : base(settings)
+    public NumberSuffixExpressionBuilder(IWordListProcessOptions options) 
+      : base(options)
     {
-
     }
 
-    protected Regex GetRegexForPassword(string password)
+    public override string GetRegularExpression(string password)
     {
-      IWordListProcessOptions options = Settings.WordListProcessOptions;
-      string pattern = RegularExpressionDirector.MatchPasswordExpression(password, options);
-      var regex = new Regex(pattern, RegexOptions.IgnoreCase | RegexOptions.Multiline);
-      return regex;
+      if ((PasswordIsLongEnough(password)) && (MustCheckForNumberSuffix) && (LastCharacterIsDigit(password)))
+        return BuildRegularExpressionFragment(password);
+      return string.Empty;
+    }
+
+    private static bool PasswordIsLongEnough(string password)
+    {
+      return password.Length > 1;
+    }
+
+    private static string BuildRegularExpressionFragment(string password)
+    {
+      string partialPassword = GetPasswordWithoutFinalDigit(password);
+      string result = RegularExpressionEncoder.Encode(partialPassword);
+      return result;
+    }
+
+    private static string GetPasswordWithoutFinalDigit(string password)
+    {
+      return password.Substring(0, password.Length - 1);
+    }
+
+    private bool MustCheckForNumberSuffix
+    {
+      get { return Options.CheckForNumberSuffix; }
+    }
+
+    private static bool LastCharacterIsDigit(string password)
+    {
+      return char.IsDigit(password[password.Length - 1]);
     }
   }
 }

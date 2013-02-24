@@ -31,9 +31,9 @@
 using System;
 using System.Text.RegularExpressions;
 using NUnit.Framework;
-using Xander.PasswordValidator.Helpers;
+using Xander.PasswordValidator.Builders;
 
-namespace Xander.PasswordValidator.TestSuite.Helpers
+namespace Xander.PasswordValidator.TestSuite.Builders
 {
   [TestFixture]
   public class RegularExpressionBuilderTests
@@ -49,7 +49,7 @@ namespace Xander.PasswordValidator.TestSuite.Helpers
     {
       string password = "SimplePassword";
       var options = new WordListProcessOptionsSettings();
-      string result = RegularExpressionBuilder.MatchPasswordExpression(password, options);
+      string result = RegularExpressionDirector.MatchPasswordExpression(password, options);
       Assert.AreEqual("^SimplePassword$", result);
       AssertRegularExpressionIsValid(password, result);
     }
@@ -59,7 +59,7 @@ namespace Xander.PasswordValidator.TestSuite.Helpers
     {
       string password = "S1mpl3P455w0rd";
       var options = new WordListProcessOptionsSettings();
-      string result = RegularExpressionBuilder.MatchPasswordExpression(password, options);
+      string result = RegularExpressionDirector.MatchPasswordExpression(password, options);
       Assert.AreEqual("^S1mpl3P455w0rd$", result);
       AssertRegularExpressionIsValid(password, result);
     }
@@ -70,7 +70,7 @@ namespace Xander.PasswordValidator.TestSuite.Helpers
       string password = @"dot=. dollar=$ Circumflex=^ open-brace={ open-square=[ open-bracket=( vertical-line=| close-bracket=) asterisk=* plus=+ question=? backslash=\";
       string expected = @"^dot=\. dollar=\$ Circumflex=\^ open-brace=\{ open-square=\[ open-bracket=\( vertical-line=\| close-bracket=\) asterisk=\* plus=\+ question=\? backslash=\\$";
       var options = new WordListProcessOptionsSettings();
-      string result = RegularExpressionBuilder.MatchPasswordExpression(password, options);
+      string result = RegularExpressionDirector.MatchPasswordExpression(password, options);
       Assert.AreEqual(expected, result);
       AssertRegularExpressionIsValid(password, result);
     }
@@ -81,7 +81,7 @@ namespace Xander.PasswordValidator.TestSuite.Helpers
       string password = "¬!\"£$%^&*()_+`-={}[]:@~;'#<>?,./|\\";
       string expected = "^¬!\"£\\$%\\^&\\*\\(\\)_\\+`-=\\{}\\[]:@~;'#<>\\?,\\./\\|\\\\$";
       var options = new WordListProcessOptionsSettings();
-      string result = RegularExpressionBuilder.MatchPasswordExpression(password, options);
+      string result = RegularExpressionDirector.MatchPasswordExpression(password, options);
       Assert.AreEqual(expected, result);
       AssertRegularExpressionIsValid(password, result);
     }
@@ -91,23 +91,31 @@ namespace Xander.PasswordValidator.TestSuite.Helpers
     public void BuildPasswordExpression_NullPassword_ThrowsException()
     {
       var options = new WordListProcessOptionsSettings();
-      RegularExpressionBuilder.MatchPasswordExpression(null, options);
+      RegularExpressionDirector.MatchPasswordExpression(null, options);
     }
 
     [Test]
     [ExpectedException(typeof(ArgumentNullException))]
     public void BuildPasswordExpression_NullOptions_ThrowsException()
     {
-      RegularExpressionBuilder.MatchPasswordExpression("this is a password", null);
+      RegularExpressionDirector.MatchPasswordExpression("this is a password", null);
     }
 
     [Test]
-    public void BuildPasswordExpression_NumberSuffixOptionOn_ValidRegularExpression()
+    public void BuildPasswordExpression_NumberSuffixOptionOnWithoutNumberSuffix_ValidRegularExpression()
     {
       var options = new WordListProcessOptionsSettings();
       options.CheckForNumberSuffix = true;
-      var result = RegularExpressionBuilder.MatchPasswordExpression("MyPassword", options);
-      Assert.AreEqual("^MyPassword|MyPassword[0-9]$", result);
+      var result = RegularExpressionDirector.MatchPasswordExpression("MyPassword", options);
+      Assert.AreEqual("^MyPassword$", result);
+    }
+    [Test]
+    public void BuildPasswordExpression_NumberSuffixOptionOnWithNumberSuffix_ValidRegularExpression()
+    {
+      var options = new WordListProcessOptionsSettings();
+      options.CheckForNumberSuffix = true;
+      var result = RegularExpressionDirector.MatchPasswordExpression("MyPassword1", options);
+      Assert.AreEqual("^MyPassword1|MyPassword$", result);
     }
 
     [Test]
@@ -115,7 +123,7 @@ namespace Xander.PasswordValidator.TestSuite.Helpers
     {
       var options = new WordListProcessOptionsSettings();
       options.CheckForDoubledUpWord = true;
-      var result = RegularExpressionBuilder.MatchPasswordExpression("PasswordPassword", options);
+      var result = RegularExpressionDirector.MatchPasswordExpression("PasswordPassword", options);
       Assert.AreEqual("^PasswordPassword|Password$", result);
     }
 
@@ -124,7 +132,7 @@ namespace Xander.PasswordValidator.TestSuite.Helpers
     {
       var options = new WordListProcessOptionsSettings();
       options.CheckForDoubledUpWord = true;
-      var result = RegularExpressionBuilder.MatchPasswordExpression("ThePassword", options);
+      var result = RegularExpressionDirector.MatchPasswordExpression("ThePassword", options);
       Assert.AreEqual("^ThePassword$", result);
     }
     
@@ -134,8 +142,8 @@ namespace Xander.PasswordValidator.TestSuite.Helpers
       var options = new WordListProcessOptionsSettings();
       options.CheckForNumberSuffix = true;
       options.CheckForDoubledUpWord = true;
-      var result = RegularExpressionBuilder.MatchPasswordExpression("PasswordPassword", options);
-      string expected = "^PasswordPassword|PasswordPassword[0-9]|Password$";
+      var result = RegularExpressionDirector.MatchPasswordExpression("Password1Password1", options);
+      string expected = "^Password1Password1|Password1Password|Password1$";
       Assert.AreEqual(expected, result);
     }
   }

@@ -29,16 +29,16 @@
 #endregion
 
 using System;
-using System.Linq;
+using System.Collections.Generic;
 using System.Text;
-namespace Xander.PasswordValidator.Helpers
+
+namespace Xander.PasswordValidator.Builders
 {
-  public class RegularExpressionBuilder
+  public class RegularExpressionDirector
   {
-    private const string controlCharacters = @".$^{[(|)*+?\";
     private readonly string _password;
-    private string _escapedPassword;
     private readonly IWordListProcessOptions _options;
+    private readonly List<WordListRegularExpressionBuilder> _expressionBuilders; 
     private StringBuilder _sb;
 
 
@@ -47,69 +47,67 @@ namespace Xander.PasswordValidator.Helpers
       if (password == null) throw new ArgumentNullException("password");
       if (options == null) throw new ArgumentNullException("options");
 
-      var reb = new RegularExpressionBuilder(password, options);
+      var reb = new RegularExpressionDirector(password, options);
+      reb.InitBuilders();
       var result = reb.MatchPasswordExpression();
       return result;
     }
 
-    private RegularExpressionBuilder(string password, IWordListProcessOptions options)
+    private RegularExpressionDirector(string password, IWordListProcessOptions options)
     {
       _password = password;
       _options = options;
+      _expressionBuilders = new List<WordListRegularExpressionBuilder>();
+    }
+    
+    private void InitBuilders()
+    {
+      _expressionBuilders.Add(new PasswordExpressionBuilder(_options));
+      _expressionBuilders.Add(new NumberSuffixExpressionBuilder(_options));
+      _expressionBuilders.Add(new DoubledUpWordExpressionBuilder(_options));
     }
 
     private string MatchPasswordExpression()
     {
-      _escapedPassword = GetEscapedPassword();
       _sb = new StringBuilder();
       AppendStartAnchor();
-      AppendEscapedPassword();
-      AppendCheckForPasswordWithNumberedSuffix();
-      AppendCheckForDoubledUpWord();
+      AppendExpressionFragments();
       AppendEndAnchor();
       return _sb.ToString();
     }
 
-    private void AppendCheckForDoubledUpWord()
+    private void AppendExpressionFragments()
     {
-      if ((_options.CheckForDoubledUpWord) && (IsPasswordDoubledUp))
+      for (int i = 0; i < _expressionBuilders.Count; i++)
       {
+        var expressionFragment = GetExpressionFragment(i);
+        if (FragmentExists(expressionFragment))
+          AppendExpressionFragment(i, expressionFragment);
+      }
+    }
+
+    private static bool FragmentExists(string expressionFragment)
+    {
+      return !string.IsNullOrEmpty(expressionFragment);
+    }
+
+    private string GetExpressionFragment(int i)
+    {
+      var expressionBuilder = _expressionBuilders[i];
+      string subExpression = expressionBuilder.GetRegularExpression(_password);
+      return subExpression;
+    }
+
+    private void AppendExpressionFragment(int subExpressionNumber, string subExpression)
+    {
+      if (SubsequentExpression(subExpressionNumber))
         AppendOr();
-        string firstHalf = GetFirstHalfOfPassword();
-        string escapedHalf = BuildEscapedString(firstHalf);
-        _sb.Append(escapedHalf);
-      }
+      _sb.Append(subExpression);
     }
 
-    private bool IsPasswordDoubledUp
+    private static bool SubsequentExpression(int subExpressionNumber)
     {
-      get
-      {
-        if (_password.Length%2 == 1)
-          return false;
-        string firstHalf = GetFirstHalfOfPassword();
-        return (_password.EndsWith(firstHalf));
-      }
-    }
-
-    private string GetFirstHalfOfPassword()
-    {
-      return _password.Substring(0, _password.Length/2);
-    }
-
-    private void AppendCheckForPasswordWithNumberedSuffix()
-    {
-      if (_options.CheckForNumberSuffix)
-      {
-        AppendOr();
-        AppendEscapedPassword();
-        AppendNumber();
-      }
-    }
-
-    private void AppendNumber()
-    {
-      _sb.Append("[0-9]");
+      return subExpressionNumber > 0;
     }
 
     private void AppendOr()
@@ -125,31 +123,6 @@ namespace Xander.PasswordValidator.Helpers
     private void AppendStartAnchor()
     {
       _sb.Append("^");
-    }
-
-    private string GetEscapedPassword()
-    {
-      return BuildEscapedString(_password);
-    }
-
-    private static string BuildEscapedString(string value)
-    {
-      var sb = new StringBuilder(value.Length);
-      foreach (var c in value.Select(Escape))
-        sb.Append(c);
-      return sb.ToString();
-    }
-
-    private static string Escape(char c)
-    {
-      if (controlCharacters.Any(cc => cc == c))
-        return "\\" + c;
-      return c.ToString();
-    }
-
-    private void AppendEscapedPassword()
-    {
-      _sb.Append(_escapedPassword);
     }
   }
 }
