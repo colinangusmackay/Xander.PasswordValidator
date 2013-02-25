@@ -30,12 +30,14 @@
 
 using System;
 using System.Linq;
+using System.Reflection;
 
 namespace Xander.PasswordValidator.Handlers
 {
   public class ValidationServiceLocator
   {
     private readonly IPasswordValidationSettings _settings;
+
     public ValidationServiceLocator(IPasswordValidationSettings settings)
     {
       _settings = settings;
@@ -65,7 +67,7 @@ namespace Xander.PasswordValidator.Handlers
       if (!_settings.NeedsSymbol)
         return tail;
 
-      var newTail = new NeedsSymbolValidationHandler(_settings);
+      var newTail = new NeedsSymbolValidationHandler();
       tail.Successor = newTail;
       return newTail;
     }
@@ -75,7 +77,7 @@ namespace Xander.PasswordValidator.Handlers
       ValidationHandler newTail = tail;
       foreach (Type handlerType in _settings.CustomValidators)
       {
-        newTail = (ValidationHandler) Activator.CreateInstance(handlerType, _settings);
+        newTail = (ValidationHandler) Activator.CreateInstance(handlerType);
         tail.Successor = newTail;
         tail = newTail;
       }
@@ -107,7 +109,7 @@ namespace Xander.PasswordValidator.Handlers
       if (!_settings.NeedsLetter)
         return tail;
 
-      var newTail = new NeedsLetterValidationHandler(_settings);
+      var newTail = new NeedsLetterValidationHandler();
       tail.Successor = newTail;
       return newTail;
     }
@@ -117,7 +119,7 @@ namespace Xander.PasswordValidator.Handlers
       if (!_settings.NeedsNumber)
         return tail;
 
-      var newTail = new NeedsNumberValidationHandler(_settings);
+      var newTail = new NeedsNumberValidationHandler();
       tail.Successor = newTail;
       return newTail;
     }

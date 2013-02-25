@@ -37,11 +37,6 @@ namespace Xander.PasswordValidator.TestSuite.Handlers
   {
     public class AlwaysFailsValidationHandler : ValidationHandler
     {
-      public AlwaysFailsValidationHandler(IPasswordValidationSettings settings)
-        : base(settings)
-      {
-      }
-
       protected override bool ValidateImpl(string password)
       {
         return false;

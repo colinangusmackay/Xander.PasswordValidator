@@ -30,7 +30,7 @@
 
 namespace Xander.PasswordValidator.Handlers
 {
-  public class MinimumLengthValidationHandler : ValidationHandler
+  public class MinimumLengthValidationHandler : SettingsBasedValidationHandler
   {
     public MinimumLengthValidationHandler(IPasswordValidationSettings settings) 
       : base(settings)

@@ -28,15 +28,10 @@
  *****************************************************************************/
 #endregion
 
-namespace Xander.PasswordValidator.Handlers
+namespace Xander.PasswordValidator
 {
   public abstract class ValidationHandler
   {
-    protected ValidationHandler(IPasswordValidationSettings settings)
-    {
-      Settings = settings;
-    }
-    protected IPasswordValidationSettings Settings { get; private set; }
 
     public ValidationHandler Successor { get; set; }
 

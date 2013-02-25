@@ -34,11 +34,6 @@ namespace Xander.PasswordValidator.Handlers
 {
   public class NeedsLetterValidationHandler : ValidationHandler
   {
-    public NeedsLetterValidationHandler(IPasswordValidationSettings settings)
-      : base(settings)
-    {
-    }
-
     protected override bool ValidateImpl(string password)
     {
       return password.Any(char.IsLetter);

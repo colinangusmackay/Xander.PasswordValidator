@@ -39,9 +39,7 @@ namespace Xander.PasswordValidator.TestSuite.Handlers
     [Test]
     public void Validate_RequiresLetterAndPasswordWithout_FailsValidation()
     {
-      var settings = new PasswordValidationSettings();
-      settings.NeedsLetter = true;
-      var handler = new NeedsLetterValidationHandler(settings);
+      var handler = new NeedsLetterValidationHandler();
       var result = handler.Validate("1234567890");
       Assert.IsFalse(result);
     }
@@ -49,9 +47,7 @@ namespace Xander.PasswordValidator.TestSuite.Handlers
     [Test]
     public void Validate_RequiresLetterAndPasswordWith_PassesValidation()
     {
-      var settings = new PasswordValidationSettings();
-      settings.NeedsLetter = true;
-      var handler = new NeedsLetterValidationHandler(settings);
+      var handler = new NeedsLetterValidationHandler();
       var result = handler.Validate("1234567890A");
       Assert.IsTrue(result);
     }

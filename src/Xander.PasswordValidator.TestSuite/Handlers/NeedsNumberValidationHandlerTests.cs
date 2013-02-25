@@ -39,9 +39,7 @@ namespace Xander.PasswordValidator.TestSuite.Handlers
     [Test]
     public void Validate_RequiresNumberAndPasswordWithout_FailsValidation()
     {
-      var settings = new PasswordValidationSettings();
-      settings.NeedsNumber = true;
-      var handler = new NeedsNumberValidationHandler(settings);
+      var handler = new NeedsNumberValidationHandler();
       var result = handler.Validate("ThereIsNoNumberHere");
       Assert.IsFalse(result);
     }
@@ -49,9 +47,7 @@ namespace Xander.PasswordValidator.TestSuite.Handlers
     [Test]
     public void Validate_RequiresNumberAndPasswordWit_PassesValidation()
     {
-      var settings = new PasswordValidationSettings();
-      settings.NeedsNumber = true;
-      var handler = new NeedsNumberValidationHandler(settings);
+      var handler = new NeedsNumberValidationHandler();
       var result = handler.Validate("ThereIsANumberHere1");
       Assert.IsTrue(result);
     }

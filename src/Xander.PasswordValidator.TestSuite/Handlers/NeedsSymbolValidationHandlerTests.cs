@@ -11,7 +11,7 @@ namespace Xander.PasswordValidator.TestSuite.Handlers
     {
       var settings = new PasswordValidationSettings();
       settings.NeedsSymbol = true;
-      var handler = new NeedsSymbolValidationHandler(settings);
+      var handler = new NeedsSymbolValidationHandler();
       var result = handler.Validate("ThisHas@Symbol");
       Assert.IsTrue(result);
     }
@@ -21,7 +21,7 @@ namespace Xander.PasswordValidator.TestSuite.Handlers
     {
       var settings = new PasswordValidationSettings();
       settings.NeedsSymbol = true;
-      var handler = new NeedsSymbolValidationHandler(settings);
+      var handler = new NeedsSymbolValidationHandler();
       var result = handler.Validate("ThisHasNoSymbol");
       Assert.IsFalse(result);
     }
