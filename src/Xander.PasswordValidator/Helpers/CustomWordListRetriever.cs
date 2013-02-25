@@ -34,7 +34,7 @@ using Xander.PasswordValidator.Exceptions;
 
 namespace Xander.PasswordValidator.Helpers
 {
-  public static class CustomWordListRetriever
+  internal static class CustomWordListRetriever
   {
     public static string Retrieve(string fileName)
     {

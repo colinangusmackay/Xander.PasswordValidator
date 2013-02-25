@@ -2,7 +2,7 @@
 {
   public abstract class SettingsBasedValidationHandler : ValidationHandler
   {
-    protected SettingsBasedValidationHandler(IPasswordValidationSettings settings)
+    internal SettingsBasedValidationHandler(IPasswordValidationSettings settings)
     {
       Settings = settings;
     }

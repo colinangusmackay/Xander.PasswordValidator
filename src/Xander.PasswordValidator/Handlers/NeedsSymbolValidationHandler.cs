@@ -2,7 +2,7 @@
 
 namespace Xander.PasswordValidator.Handlers
 {
-  public class NeedsSymbolValidationHandler : ValidationHandler
+  internal class NeedsSymbolValidationHandler : ValidationHandler
   {
     protected override bool ValidateImpl(string password)
     {

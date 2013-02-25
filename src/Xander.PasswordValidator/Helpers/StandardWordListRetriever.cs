@@ -32,7 +32,7 @@ using Xander.PasswordValidator.Resources;
 
 namespace Xander.PasswordValidator.Helpers
 {
-  public class StandardWordListRetriever
+  internal class StandardWordListRetriever
   {
     public static string Retrieve(StandardWordList standardWordList)
     {

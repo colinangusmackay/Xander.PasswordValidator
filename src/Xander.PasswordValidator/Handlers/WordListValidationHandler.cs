@@ -33,7 +33,7 @@ using Xander.PasswordValidator.Builders;
 
 namespace Xander.PasswordValidator.Handlers
 {
-  public abstract class WordListValidationHandler : SettingsBasedValidationHandler
+  internal abstract class WordListValidationHandler : SettingsBasedValidationHandler
   {
     protected WordListValidationHandler(IPasswordValidationSettings settings) 
       : base(settings)

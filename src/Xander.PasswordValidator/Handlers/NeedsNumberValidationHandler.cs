@@ -32,7 +32,7 @@ using System.Linq;
 
 namespace Xander.PasswordValidator.Handlers
 {
-  public class NeedsNumberValidationHandler : ValidationHandler
+  internal class NeedsNumberValidationHandler : ValidationHandler
   {
     protected override bool ValidateImpl(string password)
     {

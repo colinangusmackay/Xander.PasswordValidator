@@ -28,15 +28,24 @@
  *****************************************************************************/
 #endregion
 
-using System;
 using System.Linq;
-using System.Reflection;
 
 namespace Xander.PasswordValidator.Handlers
 {
-  public class ValidationServiceLocator
+  internal class ValidationServiceLocator
   {
     private readonly IPasswordValidationSettings _settings;
+
+    private static readonly ValidationHandlerConstructor[] _standardConstructors =
+      new[]
+        {
+          new ValidationHandlerConstructor(typeof (MinimumLengthValidationHandler), s => true),
+          new ValidationHandlerConstructor(typeof(NeedsNumberValidationHandler), s=> s.NeedsNumber),
+          new ValidationHandlerConstructor(typeof(NeedsLetterValidationHandler), s=>s.NeedsLetter),
+          new ValidationHandlerConstructor(typeof(NeedsSymbolValidationHandler), s=>s.NeedsSymbol),
+          new ValidationHandlerConstructor(typeof(StandardWordListValidationHandler), s=>s.StandardWordLists.Any()),
+          new ValidationHandlerConstructor(typeof(CustomWordListValidationHandler), s=>s.CustomWordLists.Any()) 
+        };
 
     public ValidationServiceLocator(IPasswordValidationSettings settings)
     {
@@ -52,81 +61,24 @@ namespace Xander.PasswordValidator.Handlers
 
     public ValidationHandler GetValidationHandler()
     {
-      ValidationHandler result = GetMinimumLengthHandler();
-      ValidationHandler tail = GetNeedsNumberHandler(result);
-      tail = GetNeedsLetterHandler(tail);
-      tail = GetNeedsSymbolHandler(tail);
-      tail = GetStandardWordListHandler(tail);
-      tail = GetCustomWordListHandler(tail);
-      tail = GetCustomHandlers(tail);
-      return result;
-    }
+      var customConstructors = _settings.CustomValidators
+        .Select(t => new ValidationHandlerConstructor(t, s => true));
+      var allConstructors = _standardConstructors
+        .Union(customConstructors)
+        .Where(c => c.Predicate(_settings));
 
-    private ValidationHandler GetNeedsSymbolHandler(ValidationHandler tail)
-    {
-      if (!_settings.NeedsSymbol)
-        return tail;
-
-      var newTail = new NeedsSymbolValidationHandler();
-      tail.Successor = newTail;
-      return newTail;
-    }
-
-    private ValidationHandler GetCustomHandlers(ValidationHandler tail)
-    {
-      ValidationHandler newTail = tail;
-      foreach (Type handlerType in _settings.CustomValidators)
+      ValidationHandler result = null;
+      ValidationHandler tail = null;
+      foreach (var constructor in allConstructors)
       {
-        newTail = (ValidationHandler) Activator.CreateInstance(handlerType);
-        tail.Successor = newTail;
-        tail = newTail;
+        var current = constructor.ConstructHandler(_settings);
+        if (result == null)
+          result = current;
+        if (tail != null)
+          tail.Successor = current;
+        tail = current;
       }
-      return newTail;
-    }
-
-    private ValidationHandler GetCustomWordListHandler(ValidationHandler tail)
-    {
-      if (!_settings.CustomWordLists.Any())
-        return tail;
-
-      var newTail = new CustomWordListValidationHandler(_settings);
-      tail.Successor = newTail;
-      return newTail;
-    }
-
-    private ValidationHandler GetStandardWordListHandler(ValidationHandler tail)
-    {
-      if (!_settings.StandardWordLists.Any())
-        return tail;
-
-      var newTail = new StandardWordListValidationHandler(_settings);
-      tail.Successor = newTail;
-      return newTail;
-    }
-
-    private ValidationHandler GetNeedsLetterHandler(ValidationHandler tail)
-    {
-      if (!_settings.NeedsLetter)
-        return tail;
-
-      var newTail = new NeedsLetterValidationHandler();
-      tail.Successor = newTail;
-      return newTail;
-    }
-
-    private ValidationHandler GetNeedsNumberHandler(ValidationHandler tail)
-    {
-      if (!_settings.NeedsNumber)
-        return tail;
-
-      var newTail = new NeedsNumberValidationHandler();
-      tail.Successor = newTail;
-      return newTail;
-    }
-
-    private MinimumLengthValidationHandler GetMinimumLengthHandler()
-    {
-      return new MinimumLengthValidationHandler(_settings);
+      return result;
     }
   }
 }

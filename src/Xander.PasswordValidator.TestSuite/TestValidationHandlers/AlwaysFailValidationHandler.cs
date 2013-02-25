@@ -1,5 +1,4 @@
-﻿using Xander.PasswordValidator.Handlers;
-namespace Xander.PasswordValidator.TestSuite.TestValidationHandlers
+﻿namespace Xander.PasswordValidator.TestSuite.TestValidationHandlers
 {
   public class AlwaysFailValidationHandler : ValidationHandler
   {
