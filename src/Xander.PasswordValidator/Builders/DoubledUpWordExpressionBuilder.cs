@@ -30,7 +30,7 @@
 
 namespace Xander.PasswordValidator.Builders
 {
-  public class DoubledUpWordExpressionBuilder : WordListRegExBuilder
+  internal class DoubledUpWordExpressionBuilder : WordListRegExBuilder
   {
     public override string GetRegularExpression(string password)
     {

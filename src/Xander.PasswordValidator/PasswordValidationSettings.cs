@@ -41,6 +41,7 @@ namespace Xander.PasswordValidator
       CustomWordLists = new List<string>();
       WordListProcessOptions = new WordListProcessOptionsSettings();
       CustomValidators = new List<Type>();
+      CustomSettings = new Dictionary<Type, object>();
     }
     public int MinimumPasswordLength { get; set; }
     public bool NeedsNumber { get; set; }
@@ -48,7 +49,8 @@ namespace Xander.PasswordValidator
     public bool NeedsSymbol { get; set; }
     public List<StandardWordList> StandardWordLists { get; private set; }
     public List<string> CustomWordLists { get; private set; }
-    public List<Type> CustomValidators { get; private set; } 
+    public List<Type> CustomValidators { get; private set; }
+    public Dictionary<Type, object> CustomSettings { get; private set; } 
 
     public IWordListProcessOptions WordListProcessOptions { get; private set; }
 
@@ -60,5 +62,7 @@ namespace Xander.PasswordValidator
 
     ICollection<Type> IPasswordValidationSettings.CustomValidators 
     { get { return CustomValidators; } }
+
+    IDictionary<Type, object> IPasswordValidationSettings.CustomSettings { get { return CustomSettings; } } 
   }
 }

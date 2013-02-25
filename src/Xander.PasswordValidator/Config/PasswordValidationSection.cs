@@ -130,6 +130,11 @@ namespace Xander.PasswordValidator.Config
       get { return new Type[0]; }
     }
 
+    public IDictionary<Type, object> CustomSettings
+    {
+      get { return new Dictionary<Type, object>(); }
+    }
+
     IWordListProcessOptions IPasswordValidationSettings.WordListProcessOptions
     {
       get { return this.WordListProcessOptions; }

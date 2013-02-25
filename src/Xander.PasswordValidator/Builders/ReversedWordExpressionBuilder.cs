@@ -32,7 +32,7 @@ using System.Linq;
 
 namespace Xander.PasswordValidator.Builders
 {
-  public class ReversedWordExpressionBuilder : WordListRegExBuilder
+  internal class ReversedWordExpressionBuilder : WordListRegExBuilder
   {
     public override string GetRegularExpression(string password)
     {

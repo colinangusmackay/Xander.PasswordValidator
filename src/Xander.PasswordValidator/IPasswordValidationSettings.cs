@@ -42,6 +42,7 @@ namespace Xander.PasswordValidator
     ICollection<StandardWordList> StandardWordLists { get; }
     ICollection<string> CustomWordLists { get; }
     IWordListProcessOptions WordListProcessOptions { get; }
-    ICollection<Type> CustomValidators { get; } 
+    ICollection<Type> CustomValidators { get; }
+    IDictionary<Type, object> CustomSettings { get; } 
   }
 }

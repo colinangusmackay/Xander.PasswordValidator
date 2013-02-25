@@ -32,7 +32,7 @@ using Xander.PasswordValidator.Helpers;
 
 namespace Xander.PasswordValidator.Builders
 {
-  public class PasswordExpressionBuilder : WordListRegExBuilder
+  internal class PasswordExpressionBuilder : WordListRegExBuilder
   {
     public override string GetRegularExpression(string password)
     {

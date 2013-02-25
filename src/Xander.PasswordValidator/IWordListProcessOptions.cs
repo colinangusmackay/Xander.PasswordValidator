@@ -40,5 +40,7 @@ namespace Xander.PasswordValidator
     bool CheckForReversedWord { get; set; }
 
     ICollection<Type> CustomBuilders { get; }
+
+    
   }
 }

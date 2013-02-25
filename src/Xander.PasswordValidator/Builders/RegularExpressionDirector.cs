@@ -34,7 +34,7 @@ using System.Text;
 
 namespace Xander.PasswordValidator.Builders
 {
-  public class RegularExpressionDirector
+  internal class RegularExpressionDirector
   {
     private readonly string _password;
     private readonly IWordListProcessOptions _options;
