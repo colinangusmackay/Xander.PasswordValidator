@@ -24,5 +24,16 @@ namespace Xander.PasswordValidator.TestSuite.Handlers
       var result = constructor.ConstructHandler(settings);
       Assert.IsInstanceOf<ConcreteSettingsBasedValdiationHandler>(result);
     }
+
+    [Test]
+    public void ConstructionHandler_CustomHandler_TheNewValidationHandlerObject()
+    {
+      var settings = new PasswordValidationSettings();
+      var testCustomData = new TestCustomData();
+      settings.CustomSettings.Add(typeof(TestCustomDataHandler), testCustomData);
+      var constructor = new ValidationHandlerConstructor(typeof (TestCustomDataHandler), (s) => true);
+      var constructionResult = constructor.ConstructHandler(settings);
+      Assert.IsInstanceOf<TestCustomDataHandler>(constructionResult);
+    }
   }
 }

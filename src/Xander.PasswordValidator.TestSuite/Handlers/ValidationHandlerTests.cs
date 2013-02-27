@@ -39,7 +39,7 @@ namespace Xander.PasswordValidator.TestSuite.Handlers
     public IPasswordValidationSettings settings = new PasswordValidationSettings();
     public class AlwaysPassesValidationHandler : ValidationHandler
     {
-      protected override bool ValidateImpl(string password)
+      public override bool Validate(string password)
       {
         log = log + "T";
         return true;
@@ -48,7 +48,7 @@ namespace Xander.PasswordValidator.TestSuite.Handlers
 
     public class AlwaysFailsValidationHandler : ValidationHandler
     {
-      protected override bool ValidateImpl(string password)
+      public override bool Validate(string password)
       {
         log = log + "F";
         return false;
@@ -72,20 +72,20 @@ namespace Xander.PasswordValidator.TestSuite.Handlers
     [Test]
     public void Validate_TwoChainedHandlers_LogLengthIsTwo()
     {
-      var handler1 = new AlwaysPassesValidationHandler();
-      var handler2 = new AlwaysPassesValidationHandler();
-      handler1.Successor = handler2;
-      handler1.Validate("");
+      var node1 = new ValidationHandlerNode(new AlwaysPassesValidationHandler());
+      var node2 = new ValidationHandlerNode(new AlwaysPassesValidationHandler());
+      node1.Successor = node2;
+      node1.Validate("");
       Assert.AreEqual(2, log.Length);
     }
 
     [Test]
     public void Validate_TwoChainedHanldersFirstFails_LogLengthIsOne()
     {
-      var handler1 = new AlwaysFailsValidationHandler();
-      var handler2 = new AlwaysPassesValidationHandler();
-      handler1.Successor = handler2;
-      handler1.Validate("");
+      var node1 = new ValidationHandlerNode(new AlwaysFailsValidationHandler());
+      var node2 = new ValidationHandlerNode(new AlwaysPassesValidationHandler());
+      node1.Successor = node2;
+      node1.Validate("");
       Assert.AreEqual(1, log.Length);
       Assert.AreEqual("F", log);
     }
@@ -93,12 +93,12 @@ namespace Xander.PasswordValidator.TestSuite.Handlers
     [Test]
     public void Validate_ThreeChainedHanldersMiddleFails_LogLengthIsTwo()
     {
-      var handler1 = new AlwaysPassesValidationHandler();
-      var handler2 = new AlwaysFailsValidationHandler();
-      var handler3 = new AlwaysPassesValidationHandler();
-      handler1.Successor = handler2;
-      handler2.Successor = handler3;
-      handler1.Validate("");
+      var node1 = new ValidationHandlerNode(new AlwaysPassesValidationHandler());
+      var node2 = new ValidationHandlerNode(new AlwaysFailsValidationHandler());
+      var node3 = new ValidationHandlerNode(new AlwaysPassesValidationHandler());
+      node1.Successor = node2;
+      node2.Successor = node3;
+      node1.Validate("");
       Assert.AreEqual(2, log.Length);
       Assert.AreEqual("TF", log);
     }
@@ -106,12 +106,12 @@ namespace Xander.PasswordValidator.TestSuite.Handlers
     [Test]
     public void Validate_ThreeChainedHanldersAllPass_LogLengthIsThree()
     {
-      var handler1 = new AlwaysPassesValidationHandler();
-      var handler2 = new AlwaysPassesValidationHandler();
-      var handler3 = new AlwaysPassesValidationHandler();
-      handler1.Successor = handler2;
-      handler2.Successor = handler3;
-      bool result = handler1.Validate("");
+      var node1 = new ValidationHandlerNode(new AlwaysPassesValidationHandler());
+      var node2 = new ValidationHandlerNode(new AlwaysPassesValidationHandler());
+      var node3 = new ValidationHandlerNode(new AlwaysPassesValidationHandler());
+      node1.Successor = node2;
+      node2.Successor = node3;
+      bool result = node1.Validate("");
       Assert.AreEqual(3, log.Length);
       Assert.AreEqual("TTT", log);
       Assert.IsTrue(result);

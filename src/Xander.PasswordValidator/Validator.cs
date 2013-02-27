@@ -35,11 +35,11 @@ namespace Xander.PasswordValidator
 {
   public class Validator
   {
-    private readonly ValidationHandler _validationHandler;
+    private readonly ValidationHandlerNode _validationChain;
 
     public Validator(IPasswordValidationSettings settings)
     {
-      _validationHandler = ValidationServiceLocator.GetValidationHandler(settings);
+      _validationChain = ValidationServiceLocator.GetValidationHandlerChain(settings);
     }
 
     public Validator()
@@ -49,7 +49,7 @@ namespace Xander.PasswordValidator
 
     public bool Validate(string password)
     {
-      return _validationHandler.Validate(password);
+      return _validationChain.Validate(password);
     }
   }
 }

@@ -37,7 +37,7 @@ namespace Xander.PasswordValidator.TestSuite.Handlers
   {
     public class AlwaysFailsValidationHandler : ValidationHandler
     {
-      protected override bool ValidateImpl(string password)
+      public override bool Validate(string password)
       {
         return false;
       }
@@ -47,8 +47,8 @@ namespace Xander.PasswordValidator.TestSuite.Handlers
      public void GetValidationHandler_SimpleSettings_ReturnsValidationHandlerWithNoSuccessor()
      {
        var settings = new PasswordValidationSettings();
-       var result = ValidationServiceLocator.GetValidationHandler(settings);
-       Assert.IsInstanceOf<MinimumLengthValidationHandler>(result);
+       var result = ValidationServiceLocator.GetValidationHandlerChain(settings);
+       Assert.IsInstanceOf<MinimumLengthValidationHandler>(result.Handler);
        Assert.IsNull(result.Successor);
      }
 
@@ -57,9 +57,9 @@ namespace Xander.PasswordValidator.TestSuite.Handlers
     {
       var settings = new PasswordValidationSettings();
       settings.NeedsNumber = true;
-      var result = ValidationServiceLocator.GetValidationHandler(settings);
-      Assert.IsInstanceOf<MinimumLengthValidationHandler>(result);
-      Assert.IsInstanceOf<NeedsNumberValidationHandler>(result.Successor);
+      var result = ValidationServiceLocator.GetValidationHandlerChain(settings);
+      Assert.IsInstanceOf<MinimumLengthValidationHandler>(result.Handler);
+      Assert.IsInstanceOf<NeedsNumberValidationHandler>(result.Successor.Handler);
       Assert.IsNull(result.Successor.Successor);
     }
 
@@ -68,9 +68,9 @@ namespace Xander.PasswordValidator.TestSuite.Handlers
     {
       var settings = new PasswordValidationSettings();
       settings.NeedsLetter = true;
-      var result = ValidationServiceLocator.GetValidationHandler(settings);
-      Assert.IsInstanceOf<MinimumLengthValidationHandler>(result);
-      Assert.IsInstanceOf<NeedsLetterValidationHandler>(result.Successor);
+      var result = ValidationServiceLocator.GetValidationHandlerChain(settings);
+      Assert.IsInstanceOf<MinimumLengthValidationHandler>(result.Handler);
+      Assert.IsInstanceOf<NeedsLetterValidationHandler>(result.Successor.Handler);
       Assert.IsNull(result.Successor.Successor);
     }
 
@@ -80,10 +80,10 @@ namespace Xander.PasswordValidator.TestSuite.Handlers
       var settings = new PasswordValidationSettings();
       settings.NeedsLetter = true;
       settings.NeedsNumber = true;
-      var result = ValidationServiceLocator.GetValidationHandler(settings);
-      Assert.IsInstanceOf<MinimumLengthValidationHandler>(result);
-      Assert.IsInstanceOf<NeedsNumberValidationHandler>(result.Successor);
-      Assert.IsInstanceOf<NeedsLetterValidationHandler>(result.Successor.Successor);
+      var result = ValidationServiceLocator.GetValidationHandlerChain(settings);
+      Assert.IsInstanceOf<MinimumLengthValidationHandler>(result.Handler);
+      Assert.IsInstanceOf<NeedsNumberValidationHandler>(result.Successor.Handler);
+      Assert.IsInstanceOf<NeedsLetterValidationHandler>(result.Successor.Successor.Handler);
       Assert.IsNull(result.Successor.Successor.Successor);
     }
 
@@ -93,9 +93,9 @@ namespace Xander.PasswordValidator.TestSuite.Handlers
     {
       var settings = new PasswordValidationSettings();
       settings.CustomValidators.Add(typeof(AlwaysFailsValidationHandler));
-      var result = ValidationServiceLocator.GetValidationHandler(settings);
-      Assert.IsInstanceOf<MinimumLengthValidationHandler>(result);
-      Assert.IsInstanceOf<AlwaysFailsValidationHandler>(result.Successor);
+      var result = ValidationServiceLocator.GetValidationHandlerChain(settings);
+      Assert.IsInstanceOf<MinimumLengthValidationHandler>(result.Handler);
+      Assert.IsInstanceOf<AlwaysFailsValidationHandler>(result.Successor.Handler);
     }
 
     [Test]
@@ -103,9 +103,9 @@ namespace Xander.PasswordValidator.TestSuite.Handlers
     {
       var settings = new PasswordValidationSettings();
       settings.NeedsSymbol = true;
-      var result = ValidationServiceLocator.GetValidationHandler(settings);
-      Assert.IsInstanceOf<MinimumLengthValidationHandler>(result);
-      Assert.IsInstanceOf<NeedsSymbolValidationHandler>(result.Successor);
+      var result = ValidationServiceLocator.GetValidationHandlerChain(settings);
+      Assert.IsInstanceOf<MinimumLengthValidationHandler>(result.Handler);
+      Assert.IsInstanceOf<NeedsSymbolValidationHandler>(result.Successor.Handler);
     }
   }
 }

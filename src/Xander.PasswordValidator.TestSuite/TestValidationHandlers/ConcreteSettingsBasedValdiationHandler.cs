@@ -8,7 +8,7 @@ namespace Xander.PasswordValidator.TestSuite.TestValidationHandlers
     {
     }
 
-    protected override bool ValidateImpl(string password)
+    public override bool Validate(string password)
     {
       return true;
     }

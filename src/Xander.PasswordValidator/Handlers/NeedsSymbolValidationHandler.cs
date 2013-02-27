@@ -34,7 +34,7 @@ namespace Xander.PasswordValidator.Handlers
 {
   internal class NeedsSymbolValidationHandler : ValidationHandler
   {
-    protected override bool ValidateImpl(string password)
+    public override bool Validate(string password)
     {
       // Note: char.IsSymbol does not recognise punctuation, quotation marks,
       // parentheses, etc. as symbols. So a symbol is defined as anything that

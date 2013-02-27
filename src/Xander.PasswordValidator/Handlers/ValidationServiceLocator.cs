@@ -52,33 +52,34 @@ namespace Xander.PasswordValidator.Handlers
       _settings = settings;
     }
 
-    public static ValidationHandler GetValidationHandler(IPasswordValidationSettings settings)
+    public static ValidationHandlerNode GetValidationHandlerChain(IPasswordValidationSettings settings)
     {
       var locator = new ValidationServiceLocator(settings);
-      var result = locator.GetValidationHandler();
+      var result = locator.GetValidationHandlerChain();
       return result;
     }
 
-    public ValidationHandler GetValidationHandler()
+    private ValidationHandlerNode GetValidationHandlerChain()
+    {
+      var nodes = GetValidationHandlerNodes();
+      for (int i = 1; i < nodes.Length; i++)
+        nodes[i - 1].Successor = nodes[i];
+
+      return nodes.First();
+    }
+
+    private ValidationHandlerNode[] GetValidationHandlerNodes()
     {
       var customConstructors = _settings.CustomValidators
-        .Select(t => new ValidationHandlerConstructor(t, s => true));
-      var allConstructors = _standardConstructors
+                                        .Select(t => new ValidationHandlerConstructor(t, s => true));
+      var allRequiredConstructors = _standardConstructors
         .Union(customConstructors)
         .Where(c => c.Predicate(_settings));
-
-      ValidationHandler result = null;
-      ValidationHandler tail = null;
-      foreach (var constructor in allConstructors)
-      {
-        var current = constructor.ConstructHandler(_settings);
-        if (result == null)
-          result = current;
-        if (tail != null)
-          tail.Successor = current;
-        tail = current;
-      }
-      return result;
+      var handlers = allRequiredConstructors
+        .Select(c => c.ConstructHandler(_settings))
+        .Select(h => new ValidationHandlerNode(h))
+        .ToArray();
+      return handlers;
     }
   }
 }

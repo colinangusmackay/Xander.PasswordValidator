@@ -45,15 +45,63 @@ namespace Xander.PasswordValidator.Handlers
 
     public ValidationHandler ConstructHandler(IPasswordValidationSettings settings)
     {
-      if (NeedsSettings(HandlerType))
-        return (ValidationHandler)Activator.CreateInstance(HandlerType, settings);
-      return (ValidationHandler)Activator.CreateInstance(HandlerType);
-
+      if (NeedsSettings)
+        return CreateSettingsBasedHandler(settings);
+      if (IsCustomHandler)
+        return CreateCustomHandler(settings);
+      return CreateBasicHandler();
     }
 
-    private static bool NeedsSettings(Type handlerType)
+    private ValidationHandler CreateCustomHandler(IPasswordValidationSettings settings)
     {
-      return handlerType.GetConstructor(new[] { typeof(IPasswordValidationSettings) }) != null;
+      object customData = GetCustomData(settings);
+      return (ValidationHandler) Activator.CreateInstance(HandlerType, customData);
+    }
+
+    private ValidationHandler CreateBasicHandler()
+    {
+      return (ValidationHandler)Activator.CreateInstance(HandlerType);
+    }
+
+    private ValidationHandler CreateSettingsBasedHandler(IPasswordValidationSettings settings)
+    {
+      return (ValidationHandler)Activator.CreateInstance(HandlerType, settings);
+    }
+
+    private object GetCustomData(IPasswordValidationSettings settings)
+    {
+      var allCustomData = settings.CustomSettings;
+      object result;
+      if (allCustomData.TryGetValue(HandlerType, out result))
+        return result;
+      return null;
+    }
+
+    private bool IsCustomHandler
+    {
+      get
+      {
+        // Type.IsSubclassOf does't work for generic types.
+        // http://www.pvladov.com/2012/05/get-all-derived-types-of-class.html
+        var baseType = typeof (CustomValidationHandler<>).GetGenericTypeDefinition();
+        var type = HandlerType;
+        while (type != null)
+        {
+          var currentType = type.IsGenericType ? type.GetGenericTypeDefinition() : type;
+          if (currentType == baseType)
+            return true;
+          type = type.BaseType;
+        }
+        return false;
+      }
+    }
+
+    private bool NeedsSettings
+    {
+      get
+      {
+        return HandlerType.GetConstructor(new[] { typeof(IPasswordValidationSettings) }) != null;
+      }
     }
   }
 }

@@ -39,7 +39,7 @@ namespace Xander.PasswordValidator.Handlers
     {
     }
 
-    protected override bool ValidateImpl(string password)
+    public override bool Validate(string password)
     {
       var regex = GetRegexForPassword(password);
       foreach (var standardWordList in Settings.StandardWordLists)

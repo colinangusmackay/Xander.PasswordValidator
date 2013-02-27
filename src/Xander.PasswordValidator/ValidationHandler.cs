@@ -32,25 +32,6 @@ namespace Xander.PasswordValidator
 {
   public abstract class ValidationHandler
   {
-
-    public ValidationHandler Successor { get; set; }
-
-    public bool Validate(string password)
-    {
-      bool hasPassedValidation = ValidateImpl(password);
-
-      if (IsEndOfChain)
-        return hasPassedValidation;
-      if (hasPassedValidation)
-        return Successor.Validate(password);
-      return false;
-    }
-
-    private bool IsEndOfChain
-    {
-      get { return Successor == null; }
-    }
-
-    protected abstract bool ValidateImpl(string password);
+    public abstract bool Validate(string password);
   }
 }

@@ -2,7 +2,7 @@
 {
   public class AlwaysFailValidationHandler : ValidationHandler
   {
-    protected override bool ValidateImpl(string password)
+    public override bool Validate(string password)
     {
       return false;
     }
