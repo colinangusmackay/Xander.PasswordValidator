@@ -39,7 +39,7 @@ namespace Xander.PasswordValidator
     {
       StandardWordLists = new List<StandardWordList>();
       CustomWordLists = new List<string>();
-      WordListProcessOptions = new WordListProcessOptionsSettings();
+      WordListProcessOptions = new WordListProcessOptions();
       CustomValidators = new List<Type>();
       CustomSettings = new Dictionary<Type, object>();
     }

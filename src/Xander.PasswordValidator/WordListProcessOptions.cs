@@ -33,9 +33,9 @@ using System.Collections.Generic;
 
 namespace Xander.PasswordValidator
 {
-  public class WordListProcessOptionsSettings : IWordListProcessOptions
+  public class WordListProcessOptions : IWordListProcessOptions
   {
-    public WordListProcessOptionsSettings()
+    public WordListProcessOptions()
     {
       CustomBuilders = new List<Type>();
     }
