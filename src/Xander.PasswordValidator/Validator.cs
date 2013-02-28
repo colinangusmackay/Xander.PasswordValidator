@@ -33,20 +33,41 @@ using Xander.PasswordValidator.Handlers;
 
 namespace Xander.PasswordValidator
 {
+  /// <summary>
+  /// The Validator class is the main entry point for applications to validate 
+  /// a password.
+  /// </summary>
   public class Validator
   {
     private readonly ValidationHandlerNode _validationChain;
 
+    /// <summary>
+    /// Constructs an instance of the `Validator` class using the settings passed 
+    /// into the constructor.
+    /// </summary>
+    /// <param name="settings">The settings that define the rules by which
+    /// to validate a password.</param>
     public Validator(IPasswordValidationSettings settings)
     {
       _validationChain = ValidationServiceLocator.GetValidationHandlerChain(settings);
     }
 
+    /// <summary>
+    /// Constructs an instance of the `Validator` class using the settings in 
+    /// the application's .config file.
+    /// </summary>
     public Validator()
       : this(PasswordValidationSection.Get())
     {
     }
 
+    /// <summary>
+    /// Checks the given password to ensure that it passes the validation rules
+    /// that were given in the constructor.
+    /// </summary>
+    /// <param name="password">The password to check against the validation rules</param>
+    /// <returns>true if the validation has passed and the password is suitable; 
+    /// false indicates the password failed the validation.</returns>
     public bool Validate(string password)
     {
       return _validationChain.Validate(password);
