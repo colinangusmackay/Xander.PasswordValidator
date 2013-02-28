@@ -32,9 +32,9 @@ namespace Xander.PasswordValidator
 {
   public enum StandardWordList
   {
-    FemaleNames,
-    MaleNames,
-    MostCommon500Passwords,
-    Surnames
+    FemaleNames = 1,
+    MaleNames = 2,
+    MostCommon500Passwords = 3,
+    Surnames = 4
   }
 }
