@@ -37,7 +37,7 @@ namespace Xander.PasswordValidator
   /// The Validator class is the main entry point for applications to validate 
   /// a password.
   /// </summary>
-  public class Validator
+  public class Validator : IValidator
   {
     private readonly ValidationHandlerNode _validationChain;
 
