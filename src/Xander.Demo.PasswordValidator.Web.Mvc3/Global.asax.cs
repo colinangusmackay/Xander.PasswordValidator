@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
+using Xander.PasswordValidator.Web;
 
 namespace Xander.Demo.PasswordValidator.Web.Mvc3
 {
@@ -28,6 +29,7 @@ namespace Xander.Demo.PasswordValidator.Web.Mvc3
     protected void Application_Start()
     {
       AreaRegistration.RegisterAllAreas();
+      PasswordValidatorRegistration.Register();
 
       RegisterGlobalFilters(GlobalFilters.Filters);
       RegisterRoutes(RouteTable.Routes);

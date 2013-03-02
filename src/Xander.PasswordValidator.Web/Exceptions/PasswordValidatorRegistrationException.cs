@@ -1,4 +1,5 @@
-﻿/******************************************************************************
+﻿#region Copyright notice
+/******************************************************************************
  * Copyright (C) 2013 Colin Angus Mackay
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,37 +26,26 @@
  * https://github.com/colinangusmackay/Xander.PasswordValidator
  * 
  *****************************************************************************/
+#endregion
 
-using NUnit.Framework;
+using System;
+using System.Runtime.Serialization;
+using Xander.PasswordValidator.Exceptions;
 
-namespace Xander.PasswordValidator.TestSuite
+namespace Xander.PasswordValidator.Web.Exceptions
 {
-  [TestFixture]
-  public class CustomValidationTests
+  public class PasswordValidatorRegistrationException : PasswordValidatorException
   {
-    public class TestData
-    {
-    }
+    public PasswordValidatorRegistrationException(string message)
+      : base(message)
+    { }
 
-    public class TestCustomValidationHandler : CustomValidationHandler<TestData>
-    {
-      public TestCustomValidationHandler(TestData customData) : base(customData)
-      {
-      }
+    public PasswordValidatorRegistrationException(string message, Exception innerException)
+      : base(message, innerException)
+    { }
 
-      public override bool Validate(string password)
-      {
-        Assert.IsNotNull(CustomData);
-        return true;
-      }
-    }
-
-    [Test]
-    public void Constructor_CustomValidationHandler_DataObjectPassedBackInProperty()
-    {
-      TestData data = new TestData();
-      TestCustomValidationHandler test = new TestCustomValidationHandler(data);
-      test.Validate("SomePassword"); // Asserts are in the overriden Validate
-    }
+    public PasswordValidatorRegistrationException(SerializationInfo info, StreamingContext context)
+      : base(info, context)
+    { }
   }
 }

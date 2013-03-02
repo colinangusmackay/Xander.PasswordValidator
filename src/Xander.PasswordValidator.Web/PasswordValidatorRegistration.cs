@@ -26,36 +26,18 @@
  * 
  *****************************************************************************/
 
-using NUnit.Framework;
+using Xander.PasswordValidator.Web.Helpers;
 
-namespace Xander.PasswordValidator.TestSuite
+namespace Xander.PasswordValidator.Web
 {
-  [TestFixture]
-  public class CustomValidationTests
+  public static class PasswordValidatorRegistration
   {
-    public class TestData
+    internal static bool IsRegistered { get; private set; }
+ 
+    public static void Register()
     {
-    }
-
-    public class TestCustomValidationHandler : CustomValidationHandler<TestData>
-    {
-      public TestCustomValidationHandler(TestData customData) : base(customData)
-      {
-      }
-
-      public override bool Validate(string password)
-      {
-        Assert.IsNotNull(CustomData);
-        return true;
-      }
-    }
-
-    [Test]
-    public void Constructor_CustomValidationHandler_DataObjectPassedBackInProperty()
-    {
-      TestData data = new TestData();
-      TestCustomValidationHandler test = new TestCustomValidationHandler(data);
-      test.Validate("SomePassword"); // Asserts are in the overriden Validate
+      CustomWordListFactory.Configure(ServerPathMapper.MapPath);
+      IsRegistered = true;
     }
   }
 }

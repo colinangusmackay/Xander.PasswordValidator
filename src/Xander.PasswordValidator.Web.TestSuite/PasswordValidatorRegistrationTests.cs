@@ -26,36 +26,48 @@
  * 
  *****************************************************************************/
 
+using System;
+using System.Reflection;
 using NUnit.Framework;
+using Xander.PasswordValidator.Web.TestSuite.TestHelpers;
 
-namespace Xander.PasswordValidator.TestSuite
+namespace Xander.PasswordValidator.Web.TestSuite
 {
   [TestFixture]
-  public class CustomValidationTests
+  public class PasswordValidatorRegistrationTests
   {
-    public class TestData
+    [SetUp]
+    [TearDown]
+    public void ResetTests()
     {
-    }
-
-    public class TestCustomValidationHandler : CustomValidationHandler<TestData>
-    {
-      public TestCustomValidationHandler(TestData customData) : base(customData)
-      {
-      }
-
-      public override bool Validate(string password)
-      {
-        Assert.IsNotNull(CustomData);
-        return true;
-      }
+      ValidationRegistrationResetter.Reset();
     }
 
     [Test]
-    public void Constructor_CustomValidationHandler_DataObjectPassedBackInProperty()
+    public void IsRegisered_WithoutCallingRegister_IsFalse()
     {
-      TestData data = new TestData();
-      TestCustomValidationHandler test = new TestCustomValidationHandler(data);
-      test.Validate("SomePassword"); // Asserts are in the overriden Validate
+      Assert.IsFalse(PasswordValidatorRegistration.IsRegistered);
+    }
+
+    [Test]
+    public void IsRegistered_AfterCallingRegister_IsTrue()
+    {
+      PasswordValidatorRegistration.Register();
+      Assert.IsTrue(PasswordValidatorRegistration.IsRegistered);
+    }
+
+    [Test]
+    public void Register_SetsMapPath_MappedPath()
+    {
+      var t = typeof(CustomWordListFactory);
+      var fi = t.GetField("_mapPath", BindingFlags.NonPublic | BindingFlags.Static);
+      var mapPathValue = fi.GetValue(null);
+      Assert.IsNull(mapPathValue);
+
+      PasswordValidatorRegistration.Register();
+      mapPathValue = fi.GetValue(null);
+      Assert.IsNotNull(mapPathValue);
+
     }
   }
 }
