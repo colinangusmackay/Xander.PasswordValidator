@@ -1,0 +1,132 @@
+﻿body
+{
+  font-size: .85em;
+  font-family: "Trebuchet MS", Verdana, Helvetica, Sans-Serif;
+  color: #232323;
+  background-color: #fff;
+}
+
+header,
+footer,
+nav,
+section
+{
+  display: block;
+}
+
+/* Styles for basic forms
+-----------------------------------------------------------*/
+
+fieldset
+{
+  border: 1px solid gray;
+  padding: 0 1.4em 1.4em 1.4em;
+  margin: 0 0 1.5em 0;
+  box-shadow: 0 0 1em gray;
+  -moz-box-shadow: 0 0 1em gray;
+  -webkit-box-shadow: 0 0 1em gray;
+}
+
+legend
+{
+  font-size: 1.2em;
+  font-weight: bold;
+  background-color: whitesmoke;
+  box-shadow: 0 0 1em silver;
+  -moz-box-shadow: 0 0 1em silver;
+  -webkit-box-shadow: 0 0 1em silver;
+  padding: 0 .25em;
+}
+
+textarea
+{
+  min-height: 75px;
+}
+
+.editor-label
+{
+  margin: 1em 0 0 0;
+  float: left;
+  width: 8em;
+  font-weight: bold;
+}
+
+.editor-field
+{
+  margin: .85em 0 0 0;
+  float: left;
+}
+
+.form-item {
+  clear: both;
+}
+
+/* Styles for validation helpers
+-----------------------------------------------------------*/
+.field-validation-error
+{
+  color: #ff0000;
+}
+
+.field-validation-valid
+{
+  display: none;
+}
+
+.input-validation-error
+{
+  border: 1px solid #ff0000;
+  background-color: #ffeeee;
+}
+
+.validation-summary-errors
+{
+  font-weight: bold;
+  color: #ff0000;
+}
+
+.validation-summary-valid
+{
+  display: none;
+}
+
+
+.header, .footer, .main
+{
+  margin: 1em;
+  padding: 1em;
+  border: 1px solid gray;
+  background-color: antiquewhite;
+  box-shadow: 0 0 1em gray;
+  -moz-box-shadow: 0 0 1em gray;
+  -webkit-box-shadow: 0 0 1em gray;
+}
+
+a
+{
+  text-decoration: none;
+  color: inherit;
+}
+
+  a:hover
+  {
+    text-shadow: blueviolet 0 0 1px;
+    -moz-text-shadow: blueviolet 0 0 1px;
+    -webkit-shadow: blueviolet 0 0 1px;
+  }
+
+.title
+{
+  padding-left: 81px;
+  background: antiquewhite url('/Content/images/icon.png') no-repeat left center;
+}
+
+
+
+.tick {
+  margin: 0px;
+  width: 18px;
+  height: 18px;
+  border: 0;
+  padding: 0;
+}
