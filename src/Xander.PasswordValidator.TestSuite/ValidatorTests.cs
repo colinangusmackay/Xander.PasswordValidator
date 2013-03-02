@@ -29,7 +29,6 @@
 #endregion
 
 using System;
-using System.Linq;
 using NUnit.Framework;
 using Xander.PasswordValidator.Config;
 using Xander.PasswordValidator.TestSuite.TestHelpers;
@@ -46,6 +45,14 @@ namespace Xander.PasswordValidator.TestSuite
     public void Constructor_SettingsIsNull_ThrowsException()
     {
       var validator = new Validator(null);
+    }
+
+    [Test]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void Validate_PasswordIsNull_ThrowsException()
+    {
+      var validator = new Validator();
+      validator.Validate(null);
     }
 
     [Test]

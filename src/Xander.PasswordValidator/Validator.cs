@@ -72,6 +72,7 @@ namespace Xander.PasswordValidator
     /// false indicates the password failed the validation.</returns>
     public bool Validate(string password)
     {
+      if (password == null) throw new ArgumentNullException("password");
       return _validationChain.Validate(password);
     }
   }
