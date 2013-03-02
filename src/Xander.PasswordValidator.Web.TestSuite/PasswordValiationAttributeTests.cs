@@ -30,5 +30,17 @@ namespace Xander.PasswordValidator.Web.TestSuite
       var result = attr.IsValid("Short");
       Assert.IsFalse(result);      
     }
+
+    [Test]
+    public void IsValid_NullPassword_FailsValidation()
+    {
+      // Even although the minimum length is zero, a null password always fails
+      // the validation.
+      var attr = new PasswordValidationAttribute();
+      attr.Settings = new PasswordValidationSettings();
+      attr.Settings.MinimumPasswordLength = 0;
+      var result = attr.IsValid(null);
+      Assert.IsFalse(result);            
+    }
   }
 }
