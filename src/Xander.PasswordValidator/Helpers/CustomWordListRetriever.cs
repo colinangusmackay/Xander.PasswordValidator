@@ -34,11 +34,26 @@ using Xander.PasswordValidator.Exceptions;
 
 namespace Xander.PasswordValidator.Helpers
 {
-  internal static class CustomWordListRetriever
+  internal class CustomWordListRetriever
   {
-    public static string Retrieve(string fileName)
+    private Func<string, string> _mapPath;
+
+    internal CustomWordListRetriever()
+    {
+      _mapPath = null;
+    }
+
+    internal CustomWordListRetriever(Func<string, string> mapPath)
+    {
+      _mapPath = mapPath;
+    }
+
+    public string Retrieve(string fileName)
     {
       if (fileName == null) throw new ArgumentNullException("fileName");
+
+      fileName = MapPath(fileName);
+
       if (!File.Exists(fileName))
         throw new FileNotFoundException("A file containing a custom list of prohibited passwords was not found.", fileName);
 
@@ -52,7 +67,14 @@ namespace Xander.PasswordValidator.Helpers
       }
     }
 
-    private static string RetrieveImpl(string fileName)
+    private string MapPath(string fileName)
+    {
+      if (_mapPath == null)
+        return fileName;
+      return _mapPath(fileName);
+    }
+
+    private string RetrieveImpl(string fileName)
     {
       using (var fileStream = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
       {

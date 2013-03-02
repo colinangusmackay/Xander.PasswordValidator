@@ -36,6 +36,12 @@ namespace Xander.PasswordValidator.TestSuite.Handlers
   [TestFixture]
   public class CustomWordListValidationHandlerTests
   {
+    [SetUp]
+    [TearDown]
+    public void ResetTests()
+    {
+      CustomWordListFactory.Configure(null);
+    }
 
     [Test]
     public void Validate_CustomWordLists_FailValidation()

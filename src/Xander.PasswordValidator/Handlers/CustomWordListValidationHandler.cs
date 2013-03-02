@@ -28,8 +28,6 @@
  *****************************************************************************/
 #endregion
 
-using Xander.PasswordValidator.Helpers;
-
 namespace Xander.PasswordValidator.Handlers
 {
   internal class CustomWordListValidationHandler : WordListValidationHandler
@@ -42,9 +40,10 @@ namespace Xander.PasswordValidator.Handlers
     public override bool Validate(string password)
     {
       var regex = GetRegexForPassword(password);
+      var customWords = CustomWordListFactory.Create();
       foreach (string fileName in Settings.CustomWordLists)
       {
-        string wordList = CustomWordListRetriever.Retrieve(fileName);
+        string wordList = customWords.Retrieve(fileName);
         if (regex.IsMatch(wordList))
           return false;
       }
