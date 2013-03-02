@@ -28,6 +28,7 @@
  *****************************************************************************/
 #endregion
 
+using System;
 using Xander.PasswordValidator.Config;
 using Xander.PasswordValidator.Handlers;
 
@@ -49,6 +50,7 @@ namespace Xander.PasswordValidator
     /// to validate a password.</param>
     public Validator(IPasswordValidationSettings settings)
     {
+      if (settings == null) throw new ArgumentNullException("settings");
       _validationChain = ValidationServiceLocator.GetValidationHandlerChain(settings);
     }
 

@@ -11,7 +11,7 @@ namespace Xander.PasswordValidator.Web
     public override bool IsValid(object value)
     {
       var password = (string) value;
-      var validator = new Validator(Settings);
+      var validator = Settings == null ? new Validator() : new Validator(Settings);
       var result = validator.Validate(password);
       return result;
     }

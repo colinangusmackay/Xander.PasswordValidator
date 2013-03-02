@@ -23,5 +23,12 @@ namespace Xander.PasswordValidator.Web.TestSuite
       Assert.IsFalse(result);
     }
 
+    [Test]
+    public void IsValid_NoSettings_UsesConfigFile()
+    {
+      var attr = new PasswordValidationAttribute();
+      var result = attr.IsValid("Short");
+      Assert.IsFalse(result);      
+    }
   }
 }
