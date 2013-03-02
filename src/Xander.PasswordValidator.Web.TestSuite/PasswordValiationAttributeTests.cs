@@ -26,6 +26,7 @@
  * 
  *****************************************************************************/
 
+using System;
 using NUnit.Framework;
 using Xander.PasswordValidator.Web.Exceptions;
 using Xander.PasswordValidator.Web.TestSuite.TestHelpers;
@@ -100,6 +101,13 @@ namespace Xander.PasswordValidator.Web.TestSuite
     {
       var attr = new PasswordValidationAttribute();
       attr.IsValid("ThisIsMySuperSecretPassword");
+    }
+
+    [Test]
+    [ExpectedException(typeof(ArgumentNullException))]
+    public void Constructor_SettingsCacheKeyIsNull_ThrowsException()
+    {
+      var attr = new PasswordValidationAttribute(null);
     }
   }
 }

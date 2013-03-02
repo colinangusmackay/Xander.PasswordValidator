@@ -1,4 +1,5 @@
-﻿/******************************************************************************
+﻿#region copyright notice
+/******************************************************************************
  * Copyright (C) 2013 Colin Angus Mackay
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,6 +26,7 @@
  * https://github.com/colinangusmackay/Xander.PasswordValidator
  * 
  *****************************************************************************/
+#endregion
 
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -35,7 +37,17 @@ namespace Xander.PasswordValidator.Web
   [AttributeUsage(AttributeTargets.Property|AttributeTargets.Field, AllowMultiple = false)]
   public class PasswordValidationAttribute : ValidationAttribute
   {
-    public IPasswordValidationSettings Settings { get; set; }
+    public PasswordValidationAttribute()
+    {
+    }
+
+    public PasswordValidationAttribute(string settingsCacheKey)
+    {
+      if (settingsCacheKey == null) throw new ArgumentNullException("settingsCacheKey");
+      Settings = PasswordValidationSettingsCache.Get(settingsCacheKey);
+    }
+
+    internal IPasswordValidationSettings Settings { get; set; }
 
     public override bool IsValid(object value)
     {

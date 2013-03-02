@@ -1,5 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
+using Xander.Demo.PasswordValidator.Web.Mvc3.Helpers;
+using Xander.PasswordValidator;
 using Xander.PasswordValidator.Web;
 
 namespace Xander.Demo.PasswordValidator.Web.Mvc3
@@ -23,16 +25,27 @@ namespace Xander.Demo.PasswordValidator.Web.Mvc3
           "{controller}/{action}/{id}", // URL with parameters
           new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
       );
-
     }
 
     protected void Application_Start()
     {
       AreaRegistration.RegisterAllAreas();
-      PasswordValidatorRegistration.Register();
+      RegisterPasswordValidation();
 
       RegisterGlobalFilters(GlobalFilters.Filters);
       RegisterRoutes(RouteTable.Routes);
+    }
+
+    private static void RegisterPasswordValidation()
+    {
+      PasswordValidatorRegistration.Register();
+
+      var settings = new PasswordValidationSettings();
+      settings.NeedsNumber = true;
+      settings.NeedsSymbol = true;
+      settings.MinimumPasswordLength = 6;
+      settings.CustomValidators.Add(typeof(NoDatesValidationHandler));
+      PasswordValidationSettingsCache.Add("NoDates", settings);
     }
   }
 }
