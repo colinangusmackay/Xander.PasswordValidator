@@ -13,6 +13,9 @@ namespace Xander.PasswordValidator.Web
       if (value == null)
         return false;
 
+      if (!(value is string))
+        return false;
+
       var password = (string) value;
       var validator = Settings == null ? new Validator() : new Validator(Settings);
       var result = validator.Validate(password);

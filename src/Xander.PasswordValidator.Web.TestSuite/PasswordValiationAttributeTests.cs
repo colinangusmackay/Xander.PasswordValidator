@@ -42,5 +42,13 @@ namespace Xander.PasswordValidator.Web.TestSuite
       var result = attr.IsValid(null);
       Assert.IsFalse(result);            
     }
+
+    [Test]
+    public void IsValid_NonString_FailsValidation()
+    {
+      var attr = new PasswordValidationAttribute();
+      var result = attr.IsValid(123);
+      Assert.IsFalse(result);
+    }
   }
 }
