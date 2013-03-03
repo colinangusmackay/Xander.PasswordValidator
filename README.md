@@ -9,6 +9,12 @@ Overall design goals:
 * Can add word lists if desired
 * No substantial dependencies
 
+Current State
+-------------
+
+The project is currently pre-release.
+The two main assemblies exist and are broadly working. The [documentation](https://github.com/colinangusmackay/Xander.PasswordValidator/wiki) is incomplete. There are no NuGet packages available as yet.
+
 
 License
 -------
