@@ -1,0 +1,54 @@
+﻿@model Xander.Demo.PasswordValidator.Web.Mvc3.Models.SettingsFromConfigModel
+@{
+  ViewBag.Title = "Per User Settings";
+}
+
+<fieldset>
+  <legend>Per User Settings</legend>
+  
+  <p>The settings used here are taken from code in the global.asax file. 
+    A custom validator takes the logged in user and checks their password history.</p>
+  @if (User.Identity.IsAuthenticated)
+  {
+    <p>You are currently logged in as: <strong>@User.Identity.Name</strong></p>
+    using (Html.BeginForm("LogOut", "PerUserSettings", FormMethod.Post))
+    {
+      <input type="submit" value="Log out"/>
+    }
+  }
+  else
+  {
+    <p>You are not currently logged in.</p>
+    using (Html.BeginForm("LogIn", "PerUserSettings", FormMethod.Post))
+    {
+      <input type="hidden" name="User" value="Eddie"/>
+      <input type="submit" value="Log in as Eddie"/>
+    }
+    using (Html.BeginForm("LogIn", "PerUserSettings", FormMethod.Post))
+    {
+      <input type="hidden" name="User" value="Denise"/>
+      <input type="submit" value="Log in as Denise"/>
+    }
+  }
+
+  @using (Html.BeginForm())
+  { 
+    @Html.ValidationSummary()
+
+    <div class="form-item">
+      <div class="editor-label">
+        @Html.LabelFor(m => m.Password)
+      </div>
+      <div class="editor-field">
+        @Html.PasswordFor(m => m.Password)
+      </div>
+    </div>
+    <div class="form-item">
+      <input type="submit" value="Submit"/>
+      @if (IsPost && ViewContext.ViewData.ModelState.IsValid)
+      {
+        <img src="/Content/images/tick.png" class="tick"/>
+      }
+    </div>
+  }
+</fieldset>

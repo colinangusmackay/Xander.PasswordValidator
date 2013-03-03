@@ -46,6 +46,11 @@ namespace Xander.Demo.PasswordValidator.Web.Mvc3
       settings.MinimumPasswordLength = 6;
       settings.CustomValidators.Add(typeof(NoDatesValidationHandler));
       PasswordValidationSettingsCache.Add("NoDates", settings);
+
+      settings = new PasswordValidationSettings();
+      settings.MinimumPasswordLength = 6;
+      settings.CustomValidators.Add(typeof(PasswordHistoryValidationHandler));
+      PasswordValidationSettingsCache.Add("History", settings);
     }
   }
 }
