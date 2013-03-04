@@ -1,0 +1,36 @@
+﻿@model Xander.Demo.PasswordValidator.Web.Mvc3.Models.ManuallyRunningTheValidatorModel
+@{
+  ViewBag.Title = "Manually Running the validator";
+}
+
+<fieldset>
+  <legend>Manually Running the validator</legend>
+  
+  <p>The validator is created and used in code rather than as an attribute on the model.</p>
+
+  @using (Html.BeginForm())
+  { 
+    <div class="form-item">
+      <div class="editor-label">
+        @Html.LabelFor(m => m.Password)
+      </div>
+      <div class="editor-field">
+        @Html.PasswordFor(m => m.Password)
+      </div>
+    </div>
+    <div class="form-item">
+      <input type="submit" value="Submit"/>
+      @if (IsPost)
+      {
+        if (Model.IsPasswordAcceptable)
+        {
+          <img src="/Content/images/tick.png" class="tick"/>
+        }
+        else
+        {
+          <span>The password not acceptable</span>
+        }
+      }
+    </div>
+  }
+</fieldset>
