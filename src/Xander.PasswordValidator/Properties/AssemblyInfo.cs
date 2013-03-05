@@ -42,7 +42,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-[assembly: InternalsVisibleTo("Xander.PasswordValidator.TestSuite")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
@@ -64,3 +63,4 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("0.1.0.0")]
 [assembly: AssemblyFileVersion("0.1.0.0")]
+[assembly: InternalsVisibleTo("Xander.PasswordValidator.TestSuite, PublicKey=0024000004800000940000000602000000240000525341310004000001000100a5f89ec48384114d5c0076a2503c69d65139f9ba0791c34be08e528c6ca97812ebb45ef8cdc50ae44653c7c1160b246503af62a5cc6f2d85b1e32ccc6124a7168abb8b87d7993d145c5421d18cf647cce1766a1047c5b4c32315cdd0f561afad792606e8ca1c71eca24cd9ad958bb2dafed227cd251bed6792673a05b2a179af")]
