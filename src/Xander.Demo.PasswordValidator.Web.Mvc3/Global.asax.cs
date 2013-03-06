@@ -44,6 +44,10 @@ namespace Xander.Demo.PasswordValidator.Web.Mvc3
       settings.NeedsNumber = true;
       settings.NeedsSymbol = true;
       settings.MinimumPasswordLength = 6;
+      settings.StandardWordLists.Add(StandardWordList.FemaleNames);
+      settings.StandardWordLists.Add(StandardWordList.MaleNames);
+      settings.StandardWordLists.Add(StandardWordList.Surnames);
+      settings.StandardWordLists.Add(StandardWordList.MostCommon500Passwords);
       settings.CustomValidators.Add(typeof(NoDatesValidationHandler));
       PasswordValidationSettingsCache.Add("NoDates", settings);
 

@@ -30,11 +30,27 @@
 
 namespace Xander.PasswordValidator
 {
+  /// <summary>
+  /// Defines constants for referencing internal word lists.
+  /// </summary>
   public enum StandardWordList
   {
+    /// <summary>
+    /// A word list containing female names.
+    /// </summary>
     FemaleNames = 1,
+
+    /// <summary>
+    /// A word list containing male names
+    /// </summary>
     MaleNames = 2,
+
+    /// <summary>
+    /// A word list containing the 500 most common passwords.
+    /// </summary>
     MostCommon500Passwords = 3,
+
+    // A word list containing surnames.
     Surnames = 4
   }
 }
