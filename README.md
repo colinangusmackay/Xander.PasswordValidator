@@ -13,7 +13,8 @@ Current State
 -------------
 
 The project is currently pre-release.
-The two main assemblies exist and are broadly working. The [documentation](https://github.com/colinangusmackay/Xander.PasswordValidator/wiki) is incomplete. There are no NuGet packages available as yet.
+The two main assemblies exist and are broadly working. (There is a download link [here](http://colinmackay.co.uk/2013/03/06/xander-passwordvalidator-a-simple-demonstration/)) 
+The [documentation](https://github.com/colinangusmackay/Xander.PasswordValidator/wiki) is incomplete. There are no NuGet packages available as yet.
 
 
 License
