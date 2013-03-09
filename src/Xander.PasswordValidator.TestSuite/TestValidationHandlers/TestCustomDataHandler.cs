@@ -7,11 +7,6 @@
 
   public class TestCustomDataHandler : CustomValidationHandler<TestCustomData>
   {
-    public TestCustomDataHandler(TestCustomData customData)
-      : base(customData)
-    {
-    }
-
     public override bool Validate(string password)
     {
       return CustomData.ShouldPassValidation;

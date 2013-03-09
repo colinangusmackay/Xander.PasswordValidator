@@ -39,10 +39,6 @@ namespace Xander.PasswordValidator.TestSuite
 
     public class TestCustomValidationHandler : CustomValidationHandler<TestData>
     {
-      public TestCustomValidationHandler(TestData customData) : base(customData)
-      {
-      }
-
       public override bool Validate(string password)
       {
         Assert.IsNotNull(CustomData);
@@ -54,7 +50,8 @@ namespace Xander.PasswordValidator.TestSuite
     public void Constructor_CustomValidationHandler_DataObjectPassedBackInProperty()
     {
       TestData data = new TestData();
-      TestCustomValidationHandler test = new TestCustomValidationHandler(data);
+      TestCustomValidationHandler test = new TestCustomValidationHandler();
+      test.SetData(data);
       test.Validate("SomePassword"); // Asserts are in the overriden Validate
     }
   }

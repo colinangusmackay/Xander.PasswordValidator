@@ -33,5 +33,11 @@ namespace Xander.PasswordValidator
   public abstract class ValidationHandler
   {
     public abstract bool Validate(string password);
+
+    internal virtual void SetData(object data)
+    {
+      // No operation - This is used by the CustomValidationHandler so that
+      // it's derived classes don't have to create parameterised constructors
+    }
   }
 }

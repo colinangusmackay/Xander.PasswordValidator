@@ -55,7 +55,9 @@ namespace Xander.PasswordValidator.Handlers
     private ValidationHandler CreateCustomHandler(IPasswordValidationSettings settings)
     {
       object customData = GetCustomData(settings);
-      return (ValidationHandler) Activator.CreateInstance(HandlerType, customData);
+      var result = (ValidationHandler) Activator.CreateInstance(HandlerType);
+      result.SetData(customData);
+      return result;
     }
 
     private ValidationHandler CreateBasicHandler()
