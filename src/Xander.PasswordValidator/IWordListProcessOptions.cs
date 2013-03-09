@@ -33,12 +33,34 @@ using System.Collections.Generic;
 
 namespace Xander.PasswordValidator
 {
+  /// <summary>
+  /// Defines the options for the way that word lists are processed
+  /// </summary>
   public interface IWordListProcessOptions
   {
+
+    /// <summary>
+    /// Gets or sets whether to check to see if the password is simply in the 
+    /// word list with a digit appended.
+    /// </summary>
     bool CheckForNumberSuffix { get; set; }
+
+    /// <summary>
+    /// Gets of sets whether to check to see if the password is the same word
+    /// written twice and is in a word list.
+    /// </summary>
     bool CheckForDoubledUpWord { get; set; }
+
+    /// <summary>
+    /// Gets or sets whether to check to see if the password is simply a 
+    /// reversed form of a word that is in a word list.
+    /// </summary>
     bool CheckForReversedWord { get; set; }
 
+    /// <summary>
+    /// Gets a collection of types of custom regular expression builders.
+    /// </summary>
+    /// <seealso cref="WordListRegExBuilder"/>
     ICollection<Type> CustomBuilders { get; }
 
     

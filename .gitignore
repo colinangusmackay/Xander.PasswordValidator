@@ -2,6 +2,7 @@
 [Bb]in/
 [Oo]bj/
 built-assemblies/
+help/
 
 # mstest test results
 TestResults

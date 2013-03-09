@@ -30,6 +30,12 @@
 
 namespace Xander.PasswordValidator
 {
+
+  /// <summary>
+  /// Base class for validation handlers that require the Validator to pass in
+  /// custom data to the handler.
+  /// </summary>
+  /// <typeparam name="TData">The type of the custom data</typeparam>
   public abstract class CustomValidationHandler<TData> : ValidationHandler
   {
     /// <summary>

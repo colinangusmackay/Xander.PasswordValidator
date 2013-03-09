@@ -33,16 +33,55 @@ using System.Collections.Generic;
 
 namespace Xander.PasswordValidator
 {
+  /// <summary>
+  /// Defines the settings used to configure the password validator.
+  /// </summary>
   public interface IPasswordValidationSettings
   {
+    /// <summary>
+    /// Gets or sets the minimum number of character that a password is permitted to be.
+    /// </summary>
     int MinimumPasswordLength { get; set; }
+
+    /// <summary>
+    /// Gets or sets whether a password must contain a number.
+    /// </summary>
     bool NeedsNumber { get; set; }
+
+    /// <summary>
+    /// Gets or sets whether a password must contain a letter.
+    /// </summary>
     bool NeedsLetter { get; set; }
+
+    /// <summary>
+    /// Gets or sets whether a password must contain a symbol.
+    /// </summary>
+    /// <remarks>A symbol is defined as any character that is not a letter or a digit.</remarks>
     bool NeedsSymbol { get; set; }
+
+    /// <summary>
+    /// Gets a collection of standard word lists that the validator is to check against.
+    /// </summary>
     ICollection<StandardWordList> StandardWordLists { get; }
+
+    /// <summary>
+    /// Gets a collection of custom word lists that the validator is to check against.
+    /// </summary>
     ICollection<string> CustomWordLists { get; }
+
+    /// <summary>
+    /// Gets the options with which the word lists are to be processed.
+    /// </summary>
     IWordListProcessOptions WordListProcessOptions { get; }
+
+    /// <summary>
+    /// Gets a collection of custom validators to use to check the password.
+    /// </summary>
     ICollection<Type> CustomValidators { get; }
+
+    /// <summary>
+    /// Gets the dictionary that holds the data used to pass to custom validators.
+    /// </summary>
     IDictionary<Type, object> CustomSettings { get; } 
   }
 }

@@ -32,6 +32,9 @@ using System;
 using Xander.PasswordValidator.Helpers;
 namespace Xander.PasswordValidator
 {
+  /// <summary>
+  /// The factory that creates the class that retrieves the custom word lists
+  /// </summary>
   public static class CustomWordListFactory
   {
     private static Func<string,string> _mapPath = null;
@@ -43,6 +46,11 @@ namespace Xander.PasswordValidator
       return new CustomWordListRetriever(mapPath);
     }
 
+    /// <summary>
+    /// Configures the factory with the strategy for mapping the path to the
+    /// actual location.
+    /// </summary>
+    /// <param name="mapPath">The function that maps the path to its actual location.</param>
     public static void Configure(Func<string, string> mapPath)
     {
       _mapPath = mapPath;
