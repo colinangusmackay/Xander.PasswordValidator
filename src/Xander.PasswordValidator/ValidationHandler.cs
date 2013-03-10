@@ -30,8 +30,17 @@
 
 namespace Xander.PasswordValidator
 {
+
+  /// <summary>
+  /// A handler that processes a single aspect of the validation process.
+  /// </summary>
   public abstract class ValidationHandler
   {
+    /// <summary>
+    /// Validates the password.
+    /// </summary>
+    /// <param name="password">The password being validated.</param>
+    /// <returns>True if the password passes validation; false if it fails.</returns>
     public abstract bool Validate(string password);
 
     internal virtual void SetData(object data)

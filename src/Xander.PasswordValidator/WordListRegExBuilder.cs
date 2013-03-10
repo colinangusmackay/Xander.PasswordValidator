@@ -31,10 +31,26 @@
 using Xander.PasswordValidator.Helpers;
 namespace Xander.PasswordValidator
 {
+  /// <summary>
+  /// A builder that creates a fragment of a regular expression that is used
+  /// to validate against a word list.
+  /// </summary>
   public abstract class WordListRegExBuilder
   {
+
+    /// <summary>
+    /// Builds and returns a fragment of a regular expression.
+    /// </summary>
+    /// <param name="password">The password being validated</param>
+    /// <returns>A fragment of regular expression</returns>
     public abstract string GetRegularExpression(string password);
 
+    /// <summary>
+    /// Encodes a string as a regular expression so that the literal string can 
+    /// be searched for in the word list.
+    /// </summary>
+    /// <param name="value">The string to be encoded.</param>
+    /// <returns>The encoded string</returns>
     protected string RegExEncode(string value)
     {
       return RegExEncoder.Encode(value);

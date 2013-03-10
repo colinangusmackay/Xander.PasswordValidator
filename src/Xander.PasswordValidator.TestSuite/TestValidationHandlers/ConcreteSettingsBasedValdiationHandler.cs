@@ -1,7 +1,7 @@
 ﻿using Xander.PasswordValidator.Handlers;
 namespace Xander.PasswordValidator.TestSuite.TestValidationHandlers
 {
-  public class ConcreteSettingsBasedValdiationHandler : SettingsBasedValidationHandler
+  internal class ConcreteSettingsBasedValdiationHandler : SettingsBasedValidationHandler
   {
     public ConcreteSettingsBasedValdiationHandler(IPasswordValidationSettings settings) 
       : base(settings)

@@ -32,10 +32,16 @@ using System.Configuration;
 
 namespace Xander.PasswordValidator.Config
 {
+  /// <summary>
+  /// Represents a value in the config file for a standard word list.
+  /// </summary>
   public class StandardWordListItem : ConfigurationElement
   {
     private const string ValueKey = "value";
 
+    /// <summary>
+    /// The standard word list value in the config file.
+    /// </summary>
     [ConfigurationProperty(ValueKey, IsRequired = true, IsKey = true)]
     public StandardWordList Value
     {

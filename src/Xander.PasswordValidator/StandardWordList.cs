@@ -50,7 +50,9 @@ namespace Xander.PasswordValidator
     /// </summary>
     MostCommon500Passwords = 3,
 
+    /// <summary>
     // A word list containing surnames.
+    /// </summary>
     Surnames = 4
   }
 }

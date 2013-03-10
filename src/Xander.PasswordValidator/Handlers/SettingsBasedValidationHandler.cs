@@ -30,7 +30,7 @@
 
 namespace Xander.PasswordValidator.Handlers
 {
-  public abstract class SettingsBasedValidationHandler : ValidationHandler
+  internal abstract class SettingsBasedValidationHandler : ValidationHandler
   {
     internal SettingsBasedValidationHandler(IPasswordValidationSettings settings)
     {

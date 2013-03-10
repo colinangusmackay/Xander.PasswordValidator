@@ -33,8 +33,14 @@ using System.Collections.Generic;
 
 namespace Xander.PasswordValidator
 {
+  /// <summary>
+  /// Defines the settings used to configure the password validator.
+  /// </summary>
   public class PasswordValidationSettings : IPasswordValidationSettings
   {
+    /// <summary>
+    /// Constructs an instance of the PasswordValidationSettings class
+    /// </summary>
     public PasswordValidationSettings()
     {
       StandardWordLists = new List<StandardWordList>();
@@ -43,15 +49,36 @@ namespace Xander.PasswordValidator
       CustomValidators = new List<Type>();
       CustomSettings = new Dictionary<Type, object>();
     }
+
     public int MinimumPasswordLength { get; set; }
     public bool NeedsNumber { get; set; }
     public bool NeedsLetter { get; set; }
     public bool NeedsSymbol { get; set; }
-    public List<StandardWordList> StandardWordLists { get; private set; }
-    public List<string> CustomWordLists { get; private set; }
-    public List<Type> CustomValidators { get; private set; }
-    public Dictionary<Type, object> CustomSettings { get; private set; } 
 
+
+    /// <summary>
+    /// Gets a collection of standard word lists that the validator is to check against.
+    /// </summary>
+    public List<StandardWordList> StandardWordLists { get; private set; }
+
+    /// <summary>
+    /// Gets a collection of custom word lists that the validator is to check against.
+    /// </summary>
+    public List<string> CustomWordLists { get; private set; }
+
+    /// <summary>
+    /// Gets a collection of custom validators to use to check the password.
+    /// </summary>
+    public List<Type> CustomValidators { get; private set; }
+
+    /// <summary>
+    /// Gets the dictionary that holds the data used to pass to custom validators.
+    /// </summary>
+    public Dictionary<Type, object> CustomSettings { get; private set; }
+
+    /// <summary>
+    /// Gets the options with which the word lists are to be processed.
+    /// </summary>
     public IWordListProcessOptions WordListProcessOptions { get; private set; }
 
     ICollection<StandardWordList> IPasswordValidationSettings.StandardWordLists
