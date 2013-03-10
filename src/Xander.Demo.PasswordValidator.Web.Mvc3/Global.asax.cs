@@ -49,6 +49,7 @@ namespace Xander.Demo.PasswordValidator.Web.Mvc3
       settings.StandardWordLists.Add(StandardWordList.Surnames);
       settings.StandardWordLists.Add(StandardWordList.MostCommon500Passwords);
       settings.CustomValidators.Add(typeof(NoDatesValidationHandler));
+      settings.WordListProcessOptions.CustomBuilders.Add(typeof(NumericPrefixBuilder));
       PasswordValidationSettingsCache.Add("NoDates", settings);
 
       settings = new PasswordValidationSettings();
