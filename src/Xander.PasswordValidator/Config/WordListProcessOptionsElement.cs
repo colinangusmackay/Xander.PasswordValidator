@@ -33,11 +33,14 @@ using System.Collections.Generic;
 using System.Configuration;
 namespace Xander.PasswordValidator.Config
 {
+  /// <summary>
+  /// Defines the options in the config file for the way that word lists are processed.
+  /// </summary>
   public class WordListProcessOptionsElement : ConfigurationElement, IWordListProcessOptions
   {
-    public const string CheckForNumberSuffixKey = "checkForNumberSuffix";
-    public const string CheckForDoubledUpWordKey = "checkForDoubledUpWord";
-    public const string CheckForReversedWordKey = "checkForReversedWord";
+    private const string CheckForNumberSuffixKey = "checkForNumberSuffix";
+    private const string CheckForDoubledUpWordKey = "checkForDoubledUpWord";
+    private const string CheckForReversedWordKey = "checkForReversedWord";
 
     [ConfigurationProperty(CheckForNumberSuffixKey)]
     public bool CheckForNumberSuffix
