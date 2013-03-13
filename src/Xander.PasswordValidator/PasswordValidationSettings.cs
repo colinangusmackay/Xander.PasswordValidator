@@ -50,11 +50,28 @@ namespace Xander.PasswordValidator
       CustomSettings = new Dictionary<Type, object>();
     }
 
+    /// <summary>
+    /// Gets or Sets the minimum length a password is permitted to be.
+    /// </summary>
     public int MinimumPasswordLength { get; set; }
-    public bool NeedsNumber { get; set; }
-    public bool NeedsLetter { get; set; }
-    public bool NeedsSymbol { get; set; }
 
+    /// <summary>
+    /// Gets or sets whether a password requires a number in it.
+    /// </summary>
+    public bool NeedsNumber { get; set; }
+
+    /// <summary>
+    /// Gets or sets whether a password requires a letter in it.
+    /// </summary>
+    public bool NeedsLetter { get; set; }
+
+    /// <summary>
+    /// Gets of sets whether a password requires a symbol in it.
+    /// </summary>
+    /// <remarks>For the purpose of the validator a symbol is any character 
+    /// that is not a letter or a number. This is not the same definition
+    /// that is used by <see cref="Char.IsSymbol(Char)"/></remarks>
+    public bool NeedsSymbol { get; set; }
 
     /// <summary>
     /// Gets a collection of standard word lists that the validator is to check against.

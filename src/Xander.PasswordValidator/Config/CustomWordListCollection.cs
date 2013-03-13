@@ -35,14 +35,25 @@ using System.Linq;
 
 namespace Xander.PasswordValidator.Config
 {
+  /// <summary>
+  /// Represents a collection of custom list elements in the configuration file.
+  /// </summary>
   [ConfigurationCollection(typeof(CustomWordListItem), AddItemName = "add", ClearItemsName = "clear", RemoveItemName = "remove", CollectionType = ConfigurationElementCollectionType.AddRemoveClearMap)]
   public class CustomWordListCollection : ConfigurationElementCollection, ICollection<string>
   {
+    /// <summary>
+    /// Specifies the type of the collection.
+    /// </summary>
     public override ConfigurationElementCollectionType CollectionType
     {
       get { return ConfigurationElementCollectionType.AddRemoveClearMap; }
     }
 
+    /// <summary>
+    /// Gets the element key.
+    /// </summary>
+    /// <param name="element"></param>
+    /// <returns></returns>
     protected override object GetElementKey(ConfigurationElement element)
     {
       return ((CustomWordListItem) element).File;

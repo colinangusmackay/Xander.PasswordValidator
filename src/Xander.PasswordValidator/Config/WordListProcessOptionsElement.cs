@@ -42,6 +42,10 @@ namespace Xander.PasswordValidator.Config
     private const string CheckForDoubledUpWordKey = "checkForDoubledUpWord";
     private const string CheckForReversedWordKey = "checkForReversedWord";
 
+    /// <summary>
+    /// Indicates whether the password should be checked to see if it is a
+    /// word in the list with a digit appended to it.
+    /// </summary>
     [ConfigurationProperty(CheckForNumberSuffixKey)]
     public bool CheckForNumberSuffix
     {
@@ -49,6 +53,10 @@ namespace Xander.PasswordValidator.Config
       set { base[CheckForNumberSuffixKey] = value; }
     }
 
+    /// <summary>
+    /// Indicates whether the password should be checked to see if it is a
+    /// word in the list repeated.
+    /// </summary>
     [ConfigurationProperty(CheckForDoubledUpWordKey)]
     public bool CheckForDoubledUpWord
     {
@@ -56,6 +64,10 @@ namespace Xander.PasswordValidator.Config
       set { base[CheckForDoubledUpWordKey] = value; }
     }
 
+    /// <summary>
+    /// Indicates whether the password should be checked to see if it is a
+    /// word in the list in reverse.
+    /// </summary>
     [ConfigurationProperty(CheckForReversedWordKey)]
     public bool CheckForReversedWord
     {

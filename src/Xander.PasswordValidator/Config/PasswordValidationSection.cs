@@ -35,6 +35,9 @@ using Xander.PasswordValidator.Exceptions;
 
 namespace Xander.PasswordValidator.Config
 {
+  /// <summary>
+  /// Represents the validation rules in the config file.
+  /// </summary>
   public class PasswordValidationSection : ConfigurationSection, IPasswordValidationSettings
   {
     private const string MinimumPasswordLengthKey = "minimumPasswordLength";
@@ -46,6 +49,10 @@ namespace Xander.PasswordValidator.Config
     private const string WordListProcessOptionsKey = "wordListProcessOptions";
     private const string SectionNameKey = "passwordValidation/rules";
 
+    /// <summary>
+    /// Gets the password validation configuration from the config file.
+    /// </summary>
+    /// <returns></returns>
     public static PasswordValidationSection Get()
     {
       var section = ConfigurationManager.GetSection(SectionNameKey);
@@ -55,6 +62,9 @@ namespace Xander.PasswordValidator.Config
       return result;
     }
 
+    /// <summary>
+    /// Refreshes the password validation rules from the config file.
+    /// </summary>
     public static void Refresh()
     {
       ConfigurationManager.RefreshSection(SectionNameKey);

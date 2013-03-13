@@ -33,16 +33,41 @@ using System.Runtime.Serialization;
 
 namespace Xander.PasswordValidator.Exceptions
 {
+  /// <summary>
+  /// Represents an error in the password validator.
+  /// </summary>
   public class PasswordValidatorException : Exception
   {
+    /// <summary>
+    /// Initialises a new instance of the PasswordValidatorException class with
+    /// a specific error message.
+    /// </summary>
+    /// <param name="message">The message that describes the error</param>
     public PasswordValidatorException(string message)
       : base(message)
     {}
 
+    /// <summary>
+    /// Initialises a new instance of the PasswordValidatorException class with
+    /// a specific error message and a reference to the inner exception that is
+    /// the cause of this exception.
+    /// </summary>
+    /// <param name="message">The message that describes the error</param>
+    /// <param name="innerException">The exception that is the cause of the 
+    /// current exception, or a null reference if no inner exception is 
+    /// specified.</param>
     public PasswordValidatorException(string message, Exception innerException)
       : base(message, innerException)
     {}
 
+    /// <summary>
+    /// Initialises a new instance of the PasswordValidatorException class with
+    /// a serialised data.
+    /// </summary>
+    /// <param name="info">The SerializationInfo that holds the serialized 
+    /// object data about the exception being thrown. </param>
+    /// <param name="context">The StreamingContext that contains contextual
+    /// information about the source or destination. </param>
     public PasswordValidatorException(SerializationInfo info, StreamingContext context)
       : base(info, context)
     {}

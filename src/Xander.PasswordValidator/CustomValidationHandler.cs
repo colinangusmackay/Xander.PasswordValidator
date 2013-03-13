@@ -30,7 +30,6 @@
 
 namespace Xander.PasswordValidator
 {
-
   /// <summary>
   /// Base class for validation handlers that require the Validator to pass in
   /// custom data to the handler.
@@ -39,10 +38,10 @@ namespace Xander.PasswordValidator
   public abstract class CustomValidationHandler<TData> : ValidationHandler
   {
     /// <summary>
-    /// Gets the strongly typed object that contains the custom data for this 
+    /// Gets or Sets the strongly typed object that contains the custom data for this 
     /// validation handler
     /// </summary>
-    protected TData CustomData { get; private set; }
+    public TData CustomData { get; set; }
 
     internal override void SetData(object data)
     {

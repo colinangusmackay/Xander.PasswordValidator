@@ -33,24 +33,51 @@ using System.Runtime.Serialization;
 
 namespace Xander.PasswordValidator.Exceptions
 {
+  /// <summary>
+  /// Represents an error while retrieving custom word lists
+  /// </summary>
   public class CustomValidationFileException : PasswordValidatorException
   {
+    /// <summary>
+    /// Initialises a new instance of the CustomValidationFileException class with
+    /// a specific error message.
+    /// </summary>
+    /// <param name="message">The message that describes the error</param>
+    /// <param name="fileName">The name of the file that caused the issue.</param>
     public CustomValidationFileException(string message, string fileName) 
       : base(FullMessage(message, fileName))
     {
       FileName = fileName;
     }
 
+    /// <summary>
+    /// Initialises a new instance of the CustomValidationFileException class with
+    /// a specific error message and inner exception.
+    /// </summary>
+    /// <param name="message">The message that describes the error</param>
+    /// <param name="fileName">The name of the file that caused the issue.</param>
+    /// <param name="innerException">The exception that caused this error.</param>
     public CustomValidationFileException(string message, string fileName, Exception innerException) 
       : base(FullMessage(message, fileName), innerException)
     {
     }
 
+    /// <summary>
+    /// Initialises a new instance of the CustomValidationFileException class with
+    /// a serialised data.
+    /// </summary>
+    /// <param name="info">The SerializationInfo that holds the serialized 
+    /// object data about the exception being thrown. </param>
+    /// <param name="context">The StreamingContext that contains contextual
+    /// information about the source or destination. </param>
     public CustomValidationFileException(SerializationInfo info, StreamingContext context) 
       : base(info, context)
     {
     }
 
+    /// <summary>
+    /// The name of the offending file.
+    /// </summary>
     public string FileName { get; private set; }
 
     private static string FullMessage(string message , string fileName )
