@@ -34,18 +34,28 @@ using Xander.PasswordValidator.Exceptions;
 
 namespace Xander.PasswordValidator.Web.Exceptions
 {
+  /// <summary>
+  /// Represents an error retrieving the settings from the cache.
+  /// </summary>
   public class PasswordSettingsCacheException : PasswordValidatorException
   {
+    /// <summary>
+    /// Initialises the PasswordSettingsCacheException with the given message.
+    /// </summary>
+    /// <param name="message">The message the exception will have.</param>
     public PasswordSettingsCacheException(string message) 
       : base(message)
     {
     }
 
-    public PasswordSettingsCacheException(string message, Exception innerException) 
-      : base(message, innerException)
-    {
-    }
-
+    /// <summary>
+    /// Initialises a new instance of the PasswordSettingsCacheException class with
+    /// a serialised data.
+    /// </summary>
+    /// <param name="info">The SerializationInfo that holds the serialized 
+    /// object data about the exception being thrown. </param>
+    /// <param name="context">The StreamingContext that contains contextual
+    /// information about the source or destination. </param>
     public PasswordSettingsCacheException(SerializationInfo info, StreamingContext context) 
       : base(info, context)
     {

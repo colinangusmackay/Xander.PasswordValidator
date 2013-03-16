@@ -32,6 +32,9 @@ using Xander.PasswordValidator.Web.Helpers;
 
 namespace Xander.PasswordValidator.Web
 {
+  /// <summary>
+  /// Processes the registration of the password validator in a web application.
+  /// </summary>
   public static class PasswordValidatorRegistration
   {
     internal static bool IsRegistered { get; private set; }

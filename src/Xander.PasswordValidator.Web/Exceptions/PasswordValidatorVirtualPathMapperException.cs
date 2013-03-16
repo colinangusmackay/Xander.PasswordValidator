@@ -28,19 +28,35 @@
  *****************************************************************************/
 #endregion
 
-using System;
 using System.Runtime.Serialization;
 using Xander.PasswordValidator.Exceptions;
 
 namespace Xander.PasswordValidator.Web.Exceptions
 {
-  class PasswordValidatorVirtualPathMapperException : PasswordValidatorException
+  /// <summary>
+  /// Represents an error caused by an inability to correctly map the virtual path 
+  /// to the physical path in a web application.
+  /// </summary>
+  public class PasswordValidatorVirtualPathMapperException : PasswordValidatorException
   {
+    /// <summary>
+    /// Initialises the PasswordValidatorVirtualPathMapperException with
+    /// the specified message.
+    /// </summary>
+    /// <param name="message">The message for the exception.</param>
     public PasswordValidatorVirtualPathMapperException(string message) 
       : base(message)
     {
     }
 
+    /// <summary>
+    /// Initialises a new instance of the PasswordValidatorVirtualPathMapperException class with
+    /// a serialised data.
+    /// </summary>
+    /// <param name="info">The SerializationInfo that holds the serialized 
+    /// object data about the exception being thrown. </param>
+    /// <param name="context">The StreamingContext that contains contextual
+    /// information about the source or destination. </param>
     public PasswordValidatorVirtualPathMapperException(SerializationInfo info, StreamingContext context) 
       : base(info, context)
     {

@@ -91,7 +91,7 @@ namespace Xander.PasswordValidator.Web
 
     private static void CheckValidatorState()
     {
-      if (!IsInValidState)
+      if (!IsInAValidState)
       {
         string message = "Password Validation support has not been registered in the web application." +
                          Environment.NewLine +
@@ -113,7 +113,7 @@ namespace Xander.PasswordValidator.Web
       return value == null;
     }
 
-    private static bool IsInValidState
+    private static bool IsInAValidState
     {
       get { return PasswordValidatorRegistration.IsRegistered; }
     }

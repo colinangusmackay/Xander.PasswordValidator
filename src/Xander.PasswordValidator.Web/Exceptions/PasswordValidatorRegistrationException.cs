@@ -34,16 +34,28 @@ using Xander.PasswordValidator.Exceptions;
 
 namespace Xander.PasswordValidator.Web.Exceptions
 {
+  /// <summary>
+  /// Represents an error causes by incorrect or incomplete registration of
+  /// the <see cref="PasswordValidationAttribute"/> in a web application.
+  /// </summary>
   public class PasswordValidatorRegistrationException : PasswordValidatorException
   {
+    /// <summary>
+    /// Initialises the exception.
+    /// </summary>
+    /// <param name="message"></param>
     public PasswordValidatorRegistrationException(string message)
       : base(message)
     { }
 
-    public PasswordValidatorRegistrationException(string message, Exception innerException)
-      : base(message, innerException)
-    { }
-
+    /// <summary>
+    /// Initialises a new instance of the PasswordValidatorRegistrationException class with
+    /// a serialised data.
+    /// </summary>
+    /// <param name="info">The SerializationInfo that holds the serialized 
+    /// object data about the exception being thrown. </param>
+    /// <param name="context">The StreamingContext that contains contextual
+    /// information about the source or destination. </param>
     public PasswordValidatorRegistrationException(SerializationInfo info, StreamingContext context)
       : base(info, context)
     { }
