@@ -68,6 +68,15 @@ namespace Xander.PasswordValidator.Config
       }
     }
 
+    /// <summary>
+    /// Adds a <see cref="StandardWordListItem"/> to the collection.
+    /// </summary>
+    /// <param name="item">The <see cref="StandardWordList"/> enum representing the item to 
+    /// add</param>
+    /// <remarks>The underlying collection takes <see cref="StandardWordListItem"/> which derives
+    /// from <see cref="ConfigurationElement"/>. However the <see cref="System.Collections.ICollection"/> 
+    /// interface demands the enum. This method creates a <see cref="StandardWordListItem"/>
+    /// internally.</remarks>
     public void Add(StandardWordList item)
     {
       var element = new StandardWordListItem();
@@ -75,6 +84,9 @@ namespace Xander.PasswordValidator.Config
       base.BaseAdd(element);
     }
 
+    /// <summary>
+    /// Removes all configuration elements from the collection.
+    /// </summary>
     public void Clear()
     {
       BaseClear();

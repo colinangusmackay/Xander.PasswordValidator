@@ -50,15 +50,19 @@ namespace Xander.PasswordValidator.Config
     }
 
     /// <summary>
-    /// Gets the element key.
+    /// Gets the element key, in this case the file name.
     /// </summary>
-    /// <param name="element"></param>
-    /// <returns></returns>
+    /// <param name="element">The element for which to get the key/file name.</param>
+    /// <returns>The file name</returns>
     protected override object GetElementKey(ConfigurationElement element)
     {
       return ((CustomWordListItem) element).File;
     }
 
+    /// <summary>
+    /// Creates a new <see cref="CustomWordListItem"/>
+    /// </summary>
+    /// <returns>a newly created <see cref="CustomWordListItem"/></returns>
     protected override ConfigurationElement CreateNewElement()
     {
       return new CustomWordListItem();
@@ -73,6 +77,15 @@ namespace Xander.PasswordValidator.Config
       }
     }
 
+    /// <summary>
+    /// Adds a <see cref="string"/> representing the file name of the custom word list to the 
+    /// collection.
+    /// </summary>
+    /// <param name="item">The string representing the file name to add.</param>
+    /// <remarks>The underlying collection takes <see cref="CustomWordListItem"/> which derives
+    /// from <see cref="ConfigurationElement"/>. However the <see cref="System.Collections.ICollection"/> 
+    /// interface demands the string. This method creates a <see cref="CustomWordListItem"/>
+    /// internally.</remarks>
     public void Add(string item)
     {
       var element = new CustomWordListItem();
