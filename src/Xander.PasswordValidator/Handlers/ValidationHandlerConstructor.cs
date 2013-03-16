@@ -72,7 +72,7 @@ namespace Xander.PasswordValidator.Handlers
 
     private object GetCustomData(IPasswordValidationSettings settings)
     {
-      var allCustomData = settings.CustomSettings;
+      var allCustomData = settings.CustomData;
       object result;
       if (allCustomData.TryGetValue(HandlerType, out result))
         return result;

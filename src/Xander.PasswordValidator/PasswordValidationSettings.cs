@@ -107,6 +107,6 @@ namespace Xander.PasswordValidator
     ICollection<Type> IPasswordValidationSettings.CustomValidators 
     { get { return CustomValidators; } }
 
-    IDictionary<Type, object> IPasswordValidationSettings.CustomSettings { get { return CustomSettings; } } 
+    IDictionary<Type, object> IPasswordValidationSettings.CustomData { get { return CustomSettings; } } 
   }
 }

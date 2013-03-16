@@ -82,6 +82,6 @@ namespace Xander.PasswordValidator
     /// <summary>
     /// Gets the dictionary that holds the data used to pass to custom validators.
     /// </summary>
-    IDictionary<Type, object> CustomSettings { get; } 
+    IDictionary<Type, object> CustomData { get; } 
   }
 }
