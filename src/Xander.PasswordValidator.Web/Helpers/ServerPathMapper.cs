@@ -34,9 +34,9 @@ using Xander.PasswordValidator.Web.Exceptions;
 
 namespace Xander.PasswordValidator.Web.Helpers
 {
-  public static class ServerPathMapper
+  internal static class ServerPathMapper
   {
-     public static string MapPath(string path)
+     internal static string MapPath(string path)
      {
        var currentContext = HttpContext.Current;
        CheckHttpContext(currentContext);
