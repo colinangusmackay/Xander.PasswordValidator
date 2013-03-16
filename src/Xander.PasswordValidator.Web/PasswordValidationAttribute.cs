@@ -34,13 +34,24 @@ using Xander.PasswordValidator.Web.Exceptions;
 
 namespace Xander.PasswordValidator.Web
 {
+  /// <summary>
+  /// Specifies the rules for validating a password in a data field.
+  /// </summary>
   [AttributeUsage(AttributeTargets.Property|AttributeTargets.Field, AllowMultiple = false)]
   public class PasswordValidationAttribute : ValidationAttribute
   {
+    /// <summary>
+    /// Initialises a new instance of the PasswordValidationAttribute.
+    /// </summary>
     public PasswordValidationAttribute()
     {
     }
 
+    /// <summary>
+    /// Initialises a new instance of the PasswordValidationAtttibute.
+    /// </summary>
+    /// <param name="settingsCacheKey">The key to looking up the settings
+    /// that contain the rules for this validation.</param>
     public PasswordValidationAttribute(string settingsCacheKey)
     {
       if (settingsCacheKey == null) throw new ArgumentNullException("settingsCacheKey");
