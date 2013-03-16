@@ -49,11 +49,20 @@ namespace Xander.PasswordValidator.Config
       get { return ConfigurationElementCollectionType.AddRemoveClearMap; }
     }
 
+    /// <summary>
+    /// Gets the element key, in this case the value from the <see cref="StandardWordList"/> enum.
+    /// </summary>
+    /// <param name="element">The element for which to get the key/standard word list.</param>
+    /// <returns>The standard word list.</returns>
     protected override object GetElementKey(ConfigurationElement element)
     {
       return ((StandardWordListItem) element).Value;
     }
-    
+
+    /// <summary>
+    /// Creates a new <see cref="StandardWordListItem"/>
+    /// </summary>
+    /// <returns>A newly created <see cref="StandardWordListItem"/>.</returns>
     protected override ConfigurationElement CreateNewElement()
     {
       return new StandardWordListItem();
@@ -73,15 +82,11 @@ namespace Xander.PasswordValidator.Config
     /// </summary>
     /// <param name="item">The <see cref="StandardWordList"/> enum representing the item to 
     /// add</param>
-    /// <remarks>The underlying collection takes <see cref="StandardWordListItem"/> which derives
-    /// from <see cref="ConfigurationElement"/>. However the <see cref="System.Collections.ICollection"/> 
-    /// interface demands the enum. This method creates a <see cref="StandardWordListItem"/>
-    /// internally.</remarks>
     public void Add(StandardWordList item)
     {
       var element = new StandardWordListItem();
       element.Value = item;
-      base.BaseAdd(element);
+      BaseAdd(element);
     }
 
     /// <summary>
@@ -92,18 +97,33 @@ namespace Xander.PasswordValidator.Config
       BaseClear();
     }
 
+    /// <summary>
+    /// Determines whther an element is in the collection.
+    /// </summary>
+    /// <param name="item">The object to locate in this collection.</param>
+    /// <returns>True if the item is found; otherwise false.</returns>
     public bool Contains(StandardWordList item)
     {
       return this.Any(swl => item == swl);
     }
 
+    /// <summary>
+    /// Copies the collection, or a portion of it, to an array.
+    /// </summary>
+    /// <param name="array">The one-dimensional array that is the destination
+    /// of the elements copies from this collection.</param>
+    /// <param name="arrayIndex">The zero based index in the array at which copying begins.</param>
+    /// <exception cref="ArgumentNullException">array is null.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">arrayIndex is less thatn zero.</exception>
+    /// <exception cref="ArgumentException">The number of elements in this collection is greater
+    /// thatn the available space from arrayIndex to the end of the array.</exception>
     public void CopyTo(StandardWordList[] array, int arrayIndex)
     {
       if (array == null) 
         throw new ArgumentNullException("array");
       if (arrayIndex < 0) 
         throw new ArgumentOutOfRangeException("arrayIndex", "Cannot be a negative number.");
-      if (array.Length < arrayIndex + this.Count)
+      if (array.Length < arrayIndex + Count)
         throw new ArgumentException("arrayIndex",
                                     "The number of elements in this collection ("+Count+") is greater than the available space from index ("+arrayIndex+") to the end of the destination array (Length="+array.Length+").");
       CopyToImpl(array, arrayIndex);
@@ -119,6 +139,12 @@ namespace Xander.PasswordValidator.Config
       }
     }
 
+    /// <summary>
+    /// Removes the first occurrence of a specific object from this collection
+    /// </summary>
+    /// <param name="item">The item to remove.</param>
+    /// <returns>true is the item is successfully removed; otherwise false. This method
+    /// also returns false if the item was not found in the collection.</returns>
     public bool Remove(StandardWordList item)
     {
       int startCount = Count;
@@ -126,6 +152,12 @@ namespace Xander.PasswordValidator.Config
       return Count < startCount;
     }
 
+    /// <summary>
+    /// Gets a value indicating whether the <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only.
+    /// </summary>
+    /// <returns>
+    /// true if the <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only; otherwise, false.
+    /// </returns>
     bool ICollection<StandardWordList>.IsReadOnly
     {
       get { return base.IsReadOnly(); }

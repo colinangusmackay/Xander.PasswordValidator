@@ -62,7 +62,7 @@ namespace Xander.PasswordValidator.Config
     /// <summary>
     /// Creates a new <see cref="CustomWordListItem"/>
     /// </summary>
-    /// <returns>a newly created <see cref="CustomWordListItem"/></returns>
+    /// <returns>A newly created <see cref="CustomWordListItem"/>.</returns>
     protected override ConfigurationElement CreateNewElement()
     {
       return new CustomWordListItem();
@@ -93,16 +93,34 @@ namespace Xander.PasswordValidator.Config
       base.BaseAdd(element);
     }
 
+    /// <summary>
+    /// Removes all configuration elements from the collection.
+    /// </summary>
     public void Clear()
     {
       BaseClear();
     }
 
+    /// <summary>
+    /// Determines whther an element is in the collection.
+    /// </summary>
+    /// <param name="item">The object to locate in this collection.</param>
+    /// <returns>True if the item is found; otherwise false.</returns>
     public bool Contains(string item)
     {
       return this.Any(file => item == file);
     }
 
+    /// <summary>
+    /// Copies the collection, or a portion of it, to an array.
+    /// </summary>
+    /// <param name="array">The one-dimensional array that is the destination
+    /// of the elements copies from this collection.</param>
+    /// <param name="arrayIndex">The zero based index in the array at which copying begins.</param>
+    /// <exception cref="ArgumentNullException">array is null.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">arrayIndex is less thatn zero.</exception>
+    /// <exception cref="ArgumentException">The number of elements in this collection is greater
+    /// thatn the available space from arrayIndex to the end of the array.</exception>
     public void CopyTo(string[] array, int arrayIndex)
     {
       if (array == null)
@@ -125,6 +143,12 @@ namespace Xander.PasswordValidator.Config
       }
     }
 
+    /// <summary>
+    /// Removes the first occurrence of a specific object from this collection
+    /// </summary>
+    /// <param name="item">The item to remove.</param>
+    /// <returns>true is the item is successfully removed; otherwise false. This method
+    /// also returns false if the item was not found in the collection.</returns>
     public bool Remove(string item)
     {
       int startCount = Count;
@@ -132,6 +156,12 @@ namespace Xander.PasswordValidator.Config
       return Count < startCount;
     }
 
+    /// <summary>
+    /// Gets a value indicating whether the <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only.
+    /// </summary>
+    /// <returns>
+    /// true if the <see cref="T:System.Collections.Generic.ICollection`1"/> is read-only; otherwise, false.
+    /// </returns>
     bool ICollection<string>.IsReadOnly
     {
       get { return base.IsReadOnly(); }
