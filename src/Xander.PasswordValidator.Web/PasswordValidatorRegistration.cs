@@ -1,4 +1,5 @@
-﻿/******************************************************************************
+﻿#region Copyright Notice
+/******************************************************************************
  * Copyright (C) 2013 Colin Angus Mackay
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,6 +26,7 @@
  * https://github.com/colinangusmackay/Xander.PasswordValidator
  * 
  *****************************************************************************/
+#endregion
 
 using Xander.PasswordValidator.Web.Helpers;
 
@@ -34,6 +36,11 @@ namespace Xander.PasswordValidator.Web
   {
     internal static bool IsRegistered { get; private set; }
  
+    /// <summary>
+    /// Registers the <see cref="PasswordValidationAttribute"/> with the web
+    /// application allowing it to map the virtual path specified in custom word 
+    /// list settings on the web server to the physical file path.
+    /// </summary>
     public static void Register()
     {
       CustomWordListFactory.Configure(ServerPathMapper.MapPath);

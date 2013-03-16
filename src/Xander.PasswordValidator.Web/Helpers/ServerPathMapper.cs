@@ -1,4 +1,5 @@
-﻿/******************************************************************************
+﻿#region Copyright Notice
+/******************************************************************************
  * Copyright (C) 2013 Colin Angus Mackay
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,8 +26,11 @@
  * https://github.com/colinangusmackay/Xander.PasswordValidator
  * 
  *****************************************************************************/
+#endregion
 
+using System;
 using System.Web;
+using Xander.PasswordValidator.Web.Exceptions;
 
 namespace Xander.PasswordValidator.Web.Helpers
 {
@@ -34,7 +38,20 @@ namespace Xander.PasswordValidator.Web.Helpers
   {
      public static string MapPath(string path)
      {
-       return HttpContext.Current.Server.MapPath(path);
+       var currentContext = HttpContext.Current;
+       CheckHttpContext(currentContext);
+       return currentContext.Server.MapPath(path);
      }
+
+    private static void CheckHttpContext(HttpContext currentContext)
+    {
+      if (currentContext == null)
+      {
+        throw new PasswordValidatorVirtualPathMapperException(
+          "There is no current HttpContext."+Environment.NewLine+
+          "Have you called PasswordValidatorRegistration.Register() outside an ASP.NET web application? " +
+          "Is this code running in a separate thread from the one in which the HTTP Request is being handled?");
+      }
+    }
   }
 }

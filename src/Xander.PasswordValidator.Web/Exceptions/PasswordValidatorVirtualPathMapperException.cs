@@ -34,19 +34,14 @@ using Xander.PasswordValidator.Exceptions;
 
 namespace Xander.PasswordValidator.Web.Exceptions
 {
-  public class PasswordSettingsCacheException : PasswordValidatorException
+  class PasswordValidatorVirtualPathMapperException : PasswordValidatorException
   {
-    public PasswordSettingsCacheException(string message) 
+    public PasswordValidatorVirtualPathMapperException(string message) 
       : base(message)
     {
     }
 
-    public PasswordSettingsCacheException(string message, Exception innerException) 
-      : base(message, innerException)
-    {
-    }
-
-    public PasswordSettingsCacheException(SerializationInfo info, StreamingContext context) 
+    public PasswordValidatorVirtualPathMapperException(SerializationInfo info, StreamingContext context) 
       : base(info, context)
     {
     }

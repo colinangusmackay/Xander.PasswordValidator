@@ -48,7 +48,8 @@ namespace Xander.PasswordValidator.Web
     }
 
     /// <summary>
-    /// Initialises a new instance of the PasswordValidationAtttibute.
+    /// Initialises a new instance of the PasswordValidationAtttibute based on
+    /// settings in a cache.
     /// </summary>
     /// <param name="settingsCacheKey">The key to looking up the settings
     /// that contain the rules for this validation.</param>
@@ -60,6 +61,17 @@ namespace Xander.PasswordValidator.Web
 
     internal IPasswordValidationSettings Settings { get; set; }
 
+    /// <summary>
+    /// Determines whether the specified value of the object is valid. 
+    /// </summary>
+    /// <returns>
+    /// true if the specified value is valid; otherwise, false.
+    /// </returns>
+    /// <param name="value">The value of the object to validate. </param>
+    /// <exception cref="PasswordValidatorRegistrationException">Thrown if
+    /// the password validation support has not been registered in the 
+    /// web application. See <see cref="PasswordValidatorRegistration.Register()"/>
+    /// for more information.</exception>
     public override bool IsValid(object value)
     {
       CheckValidatorState();
