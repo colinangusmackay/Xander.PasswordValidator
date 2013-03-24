@@ -1,0 +1,3 @@
+﻿MyCustomPassword
+ThisIsn'tAllowedEither
+Nope!
