@@ -43,8 +43,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Xander.PasswordValidator">
-      <HintPath>packages\Xander.PasswordValidator.0.3.3-prerelease\lib\net40\Xander.PasswordValidator.dll</HintPath>
+    <Reference Include="Xander.PasswordValidator, Version=1.0.0.0, Culture=neutral, PublicKeyToken=fe72000dffcf195f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\Xander.PasswordValidator.1.0.0\lib\net40\Xander.PasswordValidator.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
