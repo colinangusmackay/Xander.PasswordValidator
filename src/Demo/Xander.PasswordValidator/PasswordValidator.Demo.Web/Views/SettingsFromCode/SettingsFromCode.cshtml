@@ -1,0 +1,32 @@
+﻿@model PasswordValidator.Demo.Web.Models.SettingsFromConfigModel
+@{
+  ViewBag.Title = "Settings From Code";
+}
+
+<fieldset>
+  <legend>Settings From Code</legend>
+  
+  <p>The settings used here are taken from code in the global.asax file.</p>
+  <p>A custom validation handler has been set up that refuses passwords that look like dates.</p>
+
+  @using (Html.BeginForm())
+  { 
+    @Html.ValidationSummary()
+
+    <div class="form-item">
+      <div class="editor-label">
+        @Html.LabelFor(m => m.Password)
+      </div>
+      <div class="editor-field">
+        @Html.PasswordFor(m => m.Password)
+      </div>
+    </div>
+    <div class="form-item">
+      <input type="submit" value="Submit"/>
+      @if (IsPost && ViewContext.ViewData.ModelState.IsValid)
+      {
+        <img src="/Content/images/tick.png" class="tick"/>
+      }
+    </div>
+  }
+</fieldset>

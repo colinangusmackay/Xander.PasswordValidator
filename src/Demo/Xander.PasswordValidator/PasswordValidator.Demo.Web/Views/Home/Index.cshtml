@@ -1,0 +1,23 @@
+﻿@using Xander.PasswordValidator
+@using Xander.PasswordValidator.Web
+@using Validator = Xander.PasswordValidator.Validator
+@{
+    ViewBag.Title = "Password Validator MVC 3 Demo";
+}
+
+<h2>Password Validator MVC 4 Demo</h2>
+
+<p>List of demos</p>
+
+<ul>
+  <li><a href="/SettingsFromConfig">Settings from configuration file</a></li>
+  <li><a href="/SettingsFromCode">Settings from Code</a></li>
+  <li><a href="/PerUserSettings">Per User Settings</a></li>
+  <li><a href="/ManuallyRunningTheValidator">Manually Running The Validator</a></li>
+</ul>
+
+<p>Assemblies that make up Xander.PasswordValidator</p>
+<ul>
+  <li>@typeof(Validator).Assembly.FullName</li>
+  <li>@typeof(PasswordValidationAttribute).Assembly.FullName</li>
+</ul>

@@ -1,0 +1,31 @@
+﻿@model PasswordValidator.Demo.Web.Models.SettingsFromConfigModel
+@{
+  ViewBag.Title = "Settings From Configuration File";
+}
+
+<fieldset>
+  <legend>Settings From Configuration File</legend>
+  
+  <p>The settings used here is taken from the web.config file.</p>
+
+  @using (Html.BeginForm())
+  { 
+    @Html.ValidationSummary()
+
+    <div class="form-item">
+      <div class="editor-label">
+        @Html.LabelFor(m => m.Password)
+      </div>
+      <div class="editor-field">
+        @Html.PasswordFor(m => m.Password)
+      </div>
+    </div>
+    <div class="form-item">
+      <input type="submit" value="Submit"/>
+      @if (IsPost && ViewContext.ViewData.ModelState.IsValid)
+      {
+        <img src="/Content/images/tick.png" class="tick"/>
+      }
+    </div>
+  }
+</fieldset>
