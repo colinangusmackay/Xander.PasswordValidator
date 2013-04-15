@@ -12,10 +12,9 @@ Overall design goals:
 Current State
 -------------
 
-The project is currently pre-release.
-The two main assemblies exist and are broadly working. (There is a download link [here](http://docs.xander-framework.org/downloads/Xander.PasswordValidator.0.3.0.0.zip)) 
-The [documentation](http://docs.xander-framework.org/) is incomplete. There are no NuGet packages available as yet.
-
+Version 1.0 is now available on NuGet: 
+* https://nuget.org/packages/Xander.PasswordValidator/
+* https://nuget.org/packages/Xander.PasswordValidator.Web/
 
 License
 -------
