@@ -26,38 +26,46 @@
  * https://github.com/colinangusmackay/Xander.PasswordValidator
  * 
  *****************************************************************************/
+jQuery(document).ready(function () {
 
-jQuery.validator.addMethod(
-  "xander-needs-number",
-  function (value, element, parameters) {
-  },
-  "The password requires a number."
-);
+  jQuery.validator.addMethod(
+    "xanderNeedsNumber",
+    function (value, element, parameters) {
+      if (this.optional(element))
+        return true;
+      for (var i = 0; i < value.length; i++)
+        if (value[i] >= '0' && value[i] <= '9')
+          return true;
+      return false;
+    },
+    "The password requires a number."
+  );
 
-jQuery.validator.addMethod(
-  "xander-needs-letter",
-  function(value, element, parameters) {
-  },
-  "The password requires a letter."
-);
+  jQuery.validator.addMethod(
+    "xander-needs-letter",
+    function (value, element, parameters) {
+    },
+    "The password requires a letter."
+  );
 
-jQuery.validator.addMethod(
-  "xander-needs-symbol",
-  function(value, element, parameters) {
-  },
-  "The password requires a symbol."
-);
+  jQuery.validator.addMethod(
+    "xander-needs-symbol",
+    function (value, element, parameters) {
+    },
+    "The password requires a symbol."
+  );
 
-jQuery.validator.addMethod(
-  "xander-standard-word-lists",
-  function(value, element, parameters) {
-  },
-  "The password cannot contain a disallowed word."
-);
+  jQuery.validator.addMethod(
+    "xander-standard-word-lists",
+    function (value, element, parameters) {
+    },
+    "The password cannot contain a disallowed word."
+  );
 
-jQuery.validator.addMethod(
-  "xander-custom-word-lists",
-  function(value, element, parameters) {
-  },
-  "The password cannot contain a disallowed word."
-);
+  jQuery.validator.addMethod(
+    "xander-custom-word-lists",
+    function (value, element, parameters) {
+    },
+    "The password cannot contain a disallowed word."
+  );
+});
