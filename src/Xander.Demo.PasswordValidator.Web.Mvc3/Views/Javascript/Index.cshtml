@@ -18,6 +18,16 @@
       </div>
     </div>
     <div class="form-item">
+      <div class="editor-label">
+        <label for="RequireLetters">Require Letters</label>
+      </div>
+      <div class="editor-field">
+        <input type="text" id="RequireLetters" name="RequireLetters" required xanderNeedsLetter="true" class="xanderPasswordValidator" />
+      </div>
+    </div>
+
+
+    <div class="form-item">
       <input type="submit" value="Submit" />
     </div>
   </form>
@@ -25,10 +35,8 @@
 @section ScriptFooter
 {
   <script>
-    $(function() {
+    $(function () {
       $("#validateMe").validate({ debug: true });
-
-      console.log($.validator.attributeRules($("#RequireNumbers")));
     });
-  </script>  
+  </script>
 }
