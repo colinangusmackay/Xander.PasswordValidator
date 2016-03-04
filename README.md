@@ -16,9 +16,6 @@ Version 1.0 is now available on NuGet:
 * https://nuget.org/packages/Xander.PasswordValidator/
 * https://nuget.org/packages/Xander.PasswordValidator.Web/
 
-Version 1.1 is in progress
-* Initial work has begun to producing a v1.1 which includes javsScript validation. At this time it is estimated that v1.1 will be released sometime in September 2013 (time permitting)
-
 License
 -------
 
